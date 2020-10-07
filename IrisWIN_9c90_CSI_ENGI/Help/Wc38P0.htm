@@ -1,0 +1,54 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title> Bollatrice virtuale </title>
+<link rel="stylesheet" type="text/css" href="stylesheet.css">
+<meta name="Generator" content="Author-it">
+<meta name="Keywords" content="Bollatrice virtuale">
+<link rel="stylesheet" type="text/css" href="44.css">
+</head>
+<body text="#000000" link="#0000A0" alink="#008000" vlink="#FF0000"><table class="relatedtopics aboveheading" cellpadding="0" cellspacing="0" border="0">
+<tr valign="top">
+<td width= "18">
+<p class="testo"><a href="W033P0.htm" target="_self"><img id="f125" src="125.gif" class="embeddediconfiletemplate" alt="Previous Topic" height="17" width="18" vspace="0" hspace="0" align="bottom" border="0"></a></p></td>
+<td width= "18">
+<p class="testo"><a href="W018P0.htm" target="_self"><img id="f124" src="124.gif" class="embeddediconfiletemplate" alt="Next Topic" height="17" width="18" vspace="0" hspace="0" align="bottom" border="0"></a></p></td>
+<td width= "48">
+<p class="testo"><a href="toc212415.htm" target="TOC"><img id="f122" src="122.png" class="embeddediconfiletemplate" alt="Book Contents" height="17" width="48" vspace="0" hspace="0" align="bottom" border="0"></a></p></td>
+<td width= "48">
+<p class="testo"><a href="indexpage.htm" target="TOC"><img id="f123" src="123.gif" class="embeddediconfiletemplate" alt="Book Index" height="17" width="48" vspace="0" hspace="0" align="bottom" border="0"></a></p></td>
+</tr>
+</table>
+<h2 id="t3138" class="heading2">Bollatrice virtuale</h2>
+<p id="p717873" fragmentId="92" class="paragrafo">Introduzione</p>
+<p id="p717874" fragmentId="42428" class="testo">Inserisce sul cartellino del dipendente una timbratura come se questa fosse stata timbrata su una bollatrice, e pertanto registrata come <span class="nomecostante">originale</span>.</p>
+<p id="p717875" fragmentId="42433" class="testo">Questo modulo è configurabile tramite i parametri aziendali del gruppo <span class="nomecostante">IrisWEB-Bollatrice virtuale</span></p>
+<ul class="elencopuntato"><li id="p717876" fragmentId="42455" class="elencopuntato"><span class="nomecostante">Web: codice bollatrice virtuale</span><p id="p717877" fragmentId="42456" class="testoindentato">consente di indicare il codice del rilevatore da associare alla timbratura.</p>
+</li><li id="p717878" fragmentId="42434" class="elencopuntato"><span class="nomecostante">Web: bollatura virtuale con causale</span><p id="p717879" fragmentId="42458" class="testoindentato">Consente la possibilità di causalizzare la timbratura.<br>Indicando il valore <span class="nomecostante">S</span>, nella pagina web sarà visibile un menu a discesa con l'elenco delle causali di presenza e giustificazione disponibili per l'utente, che potrà selezionare la causale desiderata e quindi confermare la timbratura.</p>
+</li><li id="p717880" fragmentId="42438" class="elencopuntato"><span class="nomecostante">Web: tolleranza bollatura virtuale in E </span><p id="p717881" fragmentId="42439" class="testoindentato">E' un parametro numerico, che consente di specificare il numero di minuti di cui anticipare la timbratura effettiva di entrata.</p>
+<p id="p717882" fragmentId="42440" class="testoindentato">Il valore di default nullo, oppure 0, indica al sistema che la timbratura sarà inserita con l'orario corrente.</p>
+<p id="p717883" fragmentId="42441" class="testoindentato">Indicando un valore positivo, ad es. di 2 minuti, la timbratura di entrata sarà invece anticipata di 2 minuti rispetto all'orario corrente.</p>
+<p id="p717884" fragmentId="42442" class="testoindentato">Orario corrente: 10.49:23</p>
+<p id="p717885" fragmentId="42443" class="testoindentato">Timbratura di entrata effettiva registrata: 10.47.23</p>
+</li><li id="p717886" fragmentId="42444" class="elencopuntato"><span class="nomecostante">Web: tolleranza bollatura virtuale in U</span><p id="p717887" fragmentId="42445" class="testoindentato">E' un parametro numerico, che consente di specificare il numero di minuti di cui posticipare la timbratura effettiva di uscita.</p>
+<p id="p717888" fragmentId="42440" class="testoindentato">Il valore di default nullo, oppure 0, indica al sistema che la timbratura sarà inserita con l'orario corrente.</p>
+<p id="p717889" fragmentId="42446" class="testoindentato">Indicando un valore positivo, ad es. di 3 minuti, la timbratura di uscita sarà invece posticipata di 3 minuti rispetto all'orario corrente.</p>
+<p id="p717890" fragmentId="42442" class="testoindentato">Orario corrente: 10.49:23</p>
+<p id="p717891" fragmentId="42447" class="testoindentato">Timbratura di uscita effettiva registrata: 10.52.23</p>
+</li></ul><p id="p717892" fragmentId="42457" class="testo">Facendo click sui pulsanti il programma verifica la corretta sequenza della timbratura effettuata rispetto alle precedenti, e in caso di anomalia visualizza un messaggio non bloccante.</p>
+<p id="p717893" fragmentId="42432" class="testo">Se i controlli risultano corretti, il programma chiede comunque la conferma di inserimento della timbratura.</p>
+<p id="p717894" fragmentId="145" class="paragrafo">Riferimenti sul database</p>
+<p id="p717895" fragmentId="40826" class="testo">T100_TIMBRATURE, T361_OROLOGI</p>
+<p id="p717896" fragmentId="184" class="paragrafo">Dettaglio scheda</p>
+<p id="p717897" fragmentId="598" class="testo"><span class="nomedato">Causale</span></p>
+<p id="p717898" fragmentId="42449" class="testoindentato">E' visibile solo se il parametro aziendale <span class="nomecostante">Web: bollatura virtuale con causale</span> è impostato a <span class="nomecostante">S, </span>e l'utente è abilitato all'utilizzo di almeno una causale di presenza o di giustificazione (raggruppamento <span class="nomecostante">B</span>).</p>
+<p id="p717899" fragmentId="42450" class="testoindentato">Consente di selezionare la causale di presenza (o giustificazione) da attribuire alla bollatura da inserire.</p>
+<p id="p717900" fragmentId="42451" class="testo"><span class="menu">ENTRA</span></p>
+<p id="p717901" fragmentId="42452" class="testoindentato">Viene inserita sul cartellino dell'anagrafica selezionata la timbratura all'ora corrente (eventualmente anticipata dei minuti indicati in <span class="nomecostante">Web: tolleranza bollatura virtuale in E) </span>con il verso di <span class="nomecostante">Entrata </span>e l'eventuale causale selezionata.</p>
+<p id="p717902" fragmentId="42453" class="testo"><span class="pulsante">ESCI</span></p>
+<p id="p717903" fragmentId="42454" class="testoindentato">Viene inserita sul cartellino dell'anagrafica selezionata la timbratura all'ora corrente (eventualmente posticipata dei minuti indicati in <span class="nomecostante">Web: tolleranza bollatura virtuale in U) </span>con il verso di <span class="nomecostante">Uscita </span>e l'eventuale causale selezionata.</p>
+<p id="p717904" fragmentId="1" class="testo"></p>
+
+</body>
+</html>

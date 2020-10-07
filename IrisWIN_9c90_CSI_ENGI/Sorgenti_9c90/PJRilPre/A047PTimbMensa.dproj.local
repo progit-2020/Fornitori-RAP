@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2014/03/24 14.00.00.000.850,D:\SVN\Sviluppo\PJRilPre\Unit1.dfm=D:\SVN\Sviluppo\MWRilPre\A047UTimbMensaMW.dfm</Transaction>
+    <Transaction>2014/03/24 14.00.00.000.805,D:\SVN\Sviluppo\PJRilPre\Unit1.dfm=D:\SVN\Sviluppo\MWRilPre\WA047UTimbMensaDM.dfm</Transaction>
+    <Transaction>2014/03/24 14.00.00.000.822,=D:\SVN\Sviluppo\Repositary\R005UDataModuleMW.pas</Transaction>
+    <Transaction>2014/03/24 14.00.00.000.732,D:\SVN\Sviluppo\MWRilPre\WA047UTimbMensaDM.pas=</Transaction>
+    <Transaction>2014/03/24 14.00.00.000.850,D:\SVN\Sviluppo\PJRilPre\Unit1.pas=D:\SVN\Sviluppo\MWRilPre\A047UTimbMensaMW.pas</Transaction>
+    <Transaction>2014/03/24 14.00.00.000.805,D:\SVN\Sviluppo\PJRilPre\Unit1.pas=D:\SVN\Sviluppo\MWRilPre\WA047UTimbMensaDM.pas</Transaction>
+    <Transaction>2014/03/24 14.00.00.000.223,=D:\SVN\Sviluppo\PJRilPre\Unit1.pas</Transaction>
+    <Transaction>2014/03/24 14.00.00.000.811,=D:\SVN\Sviluppo\PJRilPre\Unit1.pas</Transaction>
+    <Transaction>2014/04/01 11.00.00.000.896,=D:\SVN\Sviluppo\Copy\A000UCostanti.pas</Transaction>
+    <Transaction>2014/04/07 14.00.00.000.747,=D:\SVN\Sviluppo\MWRilPre\A000UGestioneTimbraGiustMW.pas</Transaction>
+  </Transactions>
+</BorlandProject>

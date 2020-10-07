@@ -1,0 +1,98 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{297fd9d0-7431-4c5d-bba7-f26adf029276}</ProjectGuid>
+    <MainSource>A018PRaggrPres.dpr</MainSource>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <DCC_DCCCompiler>DCC32</DCC_DCCCompiler>
+    <DCC_DependencyCheckOutputName>..\Eseguibili\A018PRaggrPres.exe</DCC_DependencyCheckOutputName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <Version>7.0</Version>
+    <DCC_AssertionsAtRuntime>False</DCC_AssertionsAtRuntime>
+    <DCC_DebugInformation>False</DCC_DebugInformation>
+    <DCC_WriteableConstants>True</DCC_WriteableConstants>
+    <DCC_LocalDebugSymbols>False</DCC_LocalDebugSymbols>
+    <DCC_SymbolReferenceInfo>0</DCC_SymbolReferenceInfo>
+    <DCC_Hints>False</DCC_Hints>
+    <DCC_Warnings>False</DCC_Warnings>
+    <DCC_ExeOutput>..\Eseguibili</DCC_ExeOutput>
+    <DCC_UnitSearchPath>..\Copy;..\Repositary;..\MWRilPre;..\IntegrazioneAnagrafico;..\Componenti</DCC_UnitSearchPath>
+    <DCC_ResourcePath>..\Copy;..\Repositary;..\MWRilPre;..\IntegrazioneAnagrafico;..\Componenti</DCC_ResourcePath>
+    <DCC_ObjPath>..\Copy;..\Repositary;..\MWRilPre;..\IntegrazioneAnagrafico;..\Componenti</DCC_ObjPath>
+    <DCC_IncludePath>..\Copy;..\Repositary;..\MWRilPre;..\IntegrazioneAnagrafico;..\Componenti</DCC_IncludePath>
+    <DCC_Define>RELEASE</DCC_Define>
+    <DCC_RangeChecking>True</DCC_RangeChecking>
+    <DCC_UNSAFE_TYPE>True</DCC_UNSAFE_TYPE>
+    <DCC_UNSAFE_CODE>True</DCC_UNSAFE_CODE>
+    <DCC_UNSAFE_CAST>True</DCC_UNSAFE_CAST>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <Version>7.0</Version>
+    <DCC_AssertionsAtRuntime>False</DCC_AssertionsAtRuntime>
+    <DCC_WriteableConstants>True</DCC_WriteableConstants>
+    <DCC_SymbolReferenceInfo>0</DCC_SymbolReferenceInfo>
+    <DCC_Hints>False</DCC_Hints>
+    <DCC_Warnings>False</DCC_Warnings>
+    <DCC_ExeOutput>..\Eseguibili</DCC_ExeOutput>
+    <DCC_UnitSearchPath>..\Copy;..\Repositary;..\MWRilPre;..\IntegrazioneAnagrafico;..\Componenti</DCC_UnitSearchPath>
+    <DCC_ResourcePath>..\Copy;..\Repositary;..\MWRilPre;..\IntegrazioneAnagrafico;..\Componenti</DCC_ResourcePath>
+    <DCC_ObjPath>..\Copy;..\Repositary;..\MWRilPre;..\IntegrazioneAnagrafico;..\Componenti</DCC_ObjPath>
+    <DCC_IncludePath>..\Copy;..\Repositary;..\MWRilPre;..\IntegrazioneAnagrafico;..\Componenti</DCC_IncludePath>
+    <DCC_Define>DEBUG</DCC_Define>
+    <DCC_RangeChecking>True</DCC_RangeChecking>
+    <DCC_UNSAFE_TYPE>True</DCC_UNSAFE_TYPE>
+    <DCC_UNSAFE_CODE>True</DCC_UNSAFE_CODE>
+    <DCC_UNSAFE_CAST>True</DCC_UNSAFE_CAST>
+  </PropertyGroup>
+  <ProjectExtensions>
+    <Borland.Personality>Delphi.Personality</Borland.Personality>
+    <Borland.ProjectType>VCLApplication</Borland.ProjectType>
+    <BorlandProject>
+<BorlandProject xmlns=""> <Delphi.Personality>   <Parameters>
+      <Parameters Name="UseLauncher">False</Parameters>
+      <Parameters Name="LoadAllSymbols">True</Parameters>
+      <Parameters Name="LoadUnspecifiedSymbols">False</Parameters>
+    </Parameters>
+    <VersionInfo>
+      <VersionInfo Name="IncludeVerInfo">False</VersionInfo>
+      <VersionInfo Name="AutoIncBuild">False</VersionInfo>
+      <VersionInfo Name="MajorVer">1</VersionInfo>
+      <VersionInfo Name="MinorVer">0</VersionInfo>
+      <VersionInfo Name="Release">0</VersionInfo>
+      <VersionInfo Name="Build">0</VersionInfo>
+      <VersionInfo Name="Debug">False</VersionInfo>
+      <VersionInfo Name="PreRelease">False</VersionInfo>
+      <VersionInfo Name="Special">False</VersionInfo>
+      <VersionInfo Name="Private">False</VersionInfo>
+      <VersionInfo Name="DLL">False</VersionInfo>
+      <VersionInfo Name="Locale">1040</VersionInfo>
+      <VersionInfo Name="CodePage">1252</VersionInfo>
+    </VersionInfo>
+    <VersionInfoKeys>
+      <VersionInfoKeys Name="FileVersion">1.0.0.0</VersionInfoKeys>
+      <VersionInfoKeys Name="ProductVersion">1.0.0.0</VersionInfoKeys>
+    </VersionInfoKeys>
+    <Source>
+      <Source Name="MainSource">A018PRaggrPres.dpr</Source>
+    </Source>
+  </Delphi.Personality> </BorlandProject></BorlandProject>
+  </ProjectExtensions>
+  <ItemGroup />
+  <ItemGroup>
+    <DelphiCompile Include="A018PRaggrPres.dpr">
+      <MainSource>MainSource</MainSource>
+    </DelphiCompile>
+    <DCCReference Include="..\Repositary\R001UGESTTAB.pas">
+      <Form>R001FGestTab</Form>
+    </DCCReference>
+    <DCCReference Include="A018URaggrPres.pas">
+      <Form>A018FRaggrPres</Form>
+    </DCCReference>
+    <DCCReference Include="A018URaggrPresDtM1.pas">
+      <Form>A018FRaggrPresDtM1</Form>
+      <DesignClass>TDataModule</DesignClass>
+    </DCCReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Borland.Delphi.Targets" />
+</Project>

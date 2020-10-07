@@ -1,0 +1,26 @@
+{%DocType%}
+<html>
+  <head>
+  </head>
+  <body>
+    <style type="text/css">
+      .WC026note {
+        min-width: 18em;
+        *width: 18em; /* bugfix IE */
+      }
+    </style>
+
+    <div class="grigliaDatiNav">
+    {%PagNavBarAllegati%}
+    </div>
+    <div class="grigliaDati" style="height:auto; overflow:auto;">
+     {%grdAllegati%}
+    </div>
+    
+    <div style="margin-top: 1em;">{%lblInfo%}</div>
+
+    <div class="align_right" style="visibility: hidden; width: 100%; margin-top: 1em;">
+      {%btnChiudi%}
+    </div>
+  </body>
+</html>
