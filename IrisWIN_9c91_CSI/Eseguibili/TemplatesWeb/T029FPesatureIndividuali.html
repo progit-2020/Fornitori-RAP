@@ -1,0 +1,34 @@
+{%DocType%}
+<html>
+  <head>
+  </head>
+  <body>
+    {%T000Intestazione%}
+    <div class="RigaDatiColorata"> {%lblAnno%} {%cmbAnno%} </div>
+    <div class="RigaBase"> {%lblQuota%} {%cmbQuota%} </div>
+    <div class="RigaDatiColorata"> {%lblGruppo%} {%cmbGruppo%} </div>
+
+    <div class="RigaBase">
+      <div class="BordoDiv">
+        <div class="Riepilogo">{%lblNumDip%}</div>
+        <div class="FloatDestra">{%grdRiepilogo%}</div>
+      </div>
+    </div>
+
+    <div class="RigaBase"> 
+      <div class="FloatDestra50"> {%btnModifica%} {%btnConferma%} {%btnAnnulla%} </div>
+    </div>
+
+   <div class="clearDiv"></div>
+   <div class="grigliaDatiNav">
+   {%PagNavBarPesiDip%}
+   </div>
+   <div class="grigliaDati">
+   {%grdPesiDip%}
+   </div>
+
+   {%<frm>WC002FDatiAnagraficiFM</frm>%}
+   {%<frm>WC012FVisualizzaFileFM</frm>%}
+
+  </body>
+</html>

@@ -1,0 +1,191 @@
+package rcl_meIW14Components;
+
+{$R *.res}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO OFF}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS OFF}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION ON}
+{$OVERFLOWCHECKS ON}
+{$RANGECHECKS ON}
+{$REFERENCEINFO OFF}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES OFF}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DEFINE RELEASE}
+{$DEFINE TMSIW5}
+{$ENDIF IMPLICITBUILDING}
+{$DESCRIPTION 'MEDP_IntraWEB12'}
+{$RUNONLY}
+{$IMPLICITBUILD ON}
+
+requires
+  rtl,
+  vcl,
+  vclimg,
+  vcldb,
+  dbrtl,
+  inet,
+  iw14tmsgriddxe3,
+  iw14tmsdxe3,
+  Intraweb_14_DXE3,
+  dclIntraweb_14_DXE3;
+
+contains
+  meIWActiveX in '..\Componenti_meIW\meIWActiveX.pas',
+  meIWApplet in '..\Componenti_meIW\meIWApplet.pas',
+  meIWBaseSilverlight in '..\Componenti_meIW\meIWBaseSilverlight.pas',
+  meIWButton in '..\Componenti_meIW\meIWButton.pas',
+  meIWCalendar in '..\Componenti_meIW\meIWCalendar.pas',
+  meIWCheckBox in '..\Componenti_meIW\meIWCheckBox.pas',
+  meIWComboBox in '..\Componenti_meIW\meIWComboBox.pas',
+  meIWDBCheckBox in '..\Componenti_meIW\meIWDBCheckBox.pas',
+  meIWDBComboBox in '..\Componenti_meIW\meIWDBComboBox.pas',
+  meIWDBEdit in '..\Componenti_meIW\meIWDBEdit.pas',
+  meIWDBFile in '..\Componenti_meIW\meIWDBFile.pas',
+  meIWDBGrid in '..\Componenti_meIW\meIWDBGrid.pas',
+  meIWDBImage in '..\Componenti_meIW\meIWDBImage.pas',
+  meIWDBLabel in '..\Componenti_meIW\meIWDBLabel.pas',
+  meIWDBListbox in '..\Componenti_meIW\meIWDBListbox.pas',
+  meIWDBLookupComboBox in '..\Componenti_meIW\meIWDBLookupComboBox.pas',
+  meIWDBLookupListBox in '..\Componenti_meIW\meIWDBLookupListBox.pas',
+  meIWDBMemo in '..\Componenti_meIW\meIWDBMemo.pas',
+  meIWDBNavigator in '..\Componenti_meIW\meIWDBNavigator.pas',
+  meIWDBRadioGroup in '..\Componenti_meIW\meIWDBRadioGroup.pas',
+  meIWDBText in '..\Componenti_meIW\meIWDBText.pas',
+  meIWEdit in '..\Componenti_meIW\meIWEdit.pas',
+  meIWFile in '..\Componenti_meIW\meIWFile.pas',
+  meIWFlash in '..\Componenti_meIW\meIWFlash.pas',
+  meIWGrid in '..\Componenti_meIW\meIWGrid.pas',
+  meIWHRule in '..\Componenti_meIW\meIWHRule.pas',
+  meIWImage in '..\Componenti_meIW\meIWImage.pas',
+  meIWImageButton in '..\Componenti_meIW\meIWImageButton.pas',
+  meIWImageFile in '..\Componenti_meIW\meIWImageFile.pas',
+  meIWLabel in '..\Componenti_meIW\meIWLabel.pas',
+  meIWLink in '..\Componenti_meIW\meIWLink.pas',
+  meIWList in '..\Componenti_meIW\meIWList.pas',
+  meIWListbox in '..\Componenti_meIW\meIWListbox.pas',
+  meIWMemo in '..\Componenti_meIW\meIWMemo.pas',
+  meIWMenu in '..\Componenti_meIW\meIWMenu.pas',
+  meIWMPEG in '..\Componenti_meIW\meIWMPEG.pas',
+  meIWOrderedListbox in '..\Componenti_meIW\meIWOrderedListbox.pas',
+  meIWProgressBar in '..\Componenti_meIW\meIWProgressBar.pas',
+  meIWQuickTime in '..\Componenti_meIW\meIWQuickTime.pas',
+  meIWRadioButton in '..\Componenti_meIW\meIWRadioButton.pas',
+  meIWRadioGroup in '..\Componenti_meIW\meIWRadioGroup.pas',
+  meIWRectangle in '..\Componenti_meIW\meIWRectangle.pas',
+  meIWRegion in '..\Componenti_meIW\meIWRegion.pas',
+  meIWSilverlightVideo in '..\Componenti_meIW\meIWSilverlightVideo.pas',
+  meIWTabControl in '..\Componenti_meIW\meIWTabControl.pas',
+  meIWText in '..\Componenti_meIW\meIWText.pas',
+  meIWTimeEdit in '..\Componenti_meIW\meIWTimeEdit.pas',
+  meIWTimer in '..\Componenti_meIW\meIWTimer.pas',
+  meIWTreeView in '..\Componenti_meIW\meIWTreeView.pas',
+  meIWURL in '..\Componenti_meIW\meIWURL.pas',
+  meIWURLWindow in '..\Componenti_meIW\meIWURLWindow.pas',
+  meTIWAdvCheckGroup in '..\Componenti_meIW\meTIWAdvCheckGroup.pas',
+  meTIWAdvDateEdit in '..\Componenti_meIW\meTIWAdvDateEdit.pas',
+  meTIWAdvDetailWebGrid in '..\Componenti_meIW\meTIWAdvDetailWebGrid.pas',
+  meTIWAdvEdit in '..\Componenti_meIW\meTIWAdvEdit.pas',
+  meTIWAdvImage in '..\Componenti_meIW\meTIWAdvImage.pas',
+  meTIWAdvImageButton in '..\Componenti_meIW\meTIWAdvImageButton.pas',
+  meTIWAdvLUEdit in '..\Componenti_meIW\meTIWAdvLUEdit.pas',
+  meTIWAdvRadioGroup in '..\Componenti_meIW\meTIWAdvRadioGroup.pas',
+  meTIWAdvSelector in '..\Componenti_meIW\meTIWAdvSelector.pas',
+  meTIWAdvSpinEdit in '..\Componenti_meIW\meTIWAdvSpinEdit.pas',
+  meTIWAdvTimeEdit in '..\Componenti_meIW\meTIWAdvTimeEdit.pas',
+  meTIWAdvToolButton in '..\Componenti_meIW\meTIWAdvToolButton.pas',
+  meTIWAdvTreeView in '..\Componenti_meIW\meTIWAdvTreeView.pas',
+  meTIWAdvWebGrid in '..\Componenti_meIW\meTIWAdvWebGrid.pas',
+  meTIWAutoFormFill in '..\Componenti_meIW\meTIWAutoFormFill.pas',
+  meTIWCalculatingLabel in '..\Componenti_meIW\meTIWCalculatingLabel.pas',
+  meTIWCalendar in '..\Componenti_meIW\meTIWCalendar.pas',
+  meTIWCaptchaImage in '..\Componenti_meIW\meTIWCaptchaImage.pas',
+  meTIWCCExpEdit in '..\Componenti_meIW\meTIWCCExpEdit.pas',
+  meTIWCCNumEdit in '..\Componenti_meIW\meTIWCCNumEdit.pas',
+  meTIWCheckList in '..\Componenti_meIW\meTIWCheckList.pas',
+  meTIWCheckListBox in '..\Componenti_meIW\meTIWCheckListBox.pas',
+  meTIWClientCode in '..\Componenti_meIW\meTIWClientCode.pas',
+  meTIWClientDebugOut in '..\Componenti_meIW\meTIWClientDebugOut.pas',
+  meTIWClientWatch in '..\Componenti_meIW\meTIWClientWatch.pas',
+  meTIWClock in '..\Componenti_meIW\meTIWClock.pas',
+  meTIWColorComboBox in '..\Componenti_meIW\meTIWColorComboBox.pas',
+  meTIWColorPicker in '..\Componenti_meIW\meTIWColorPicker.pas',
+  meTIWComboListLink in '..\Componenti_meIW\meTIWComboListLink.pas',
+  meTIWCountryComboBox in '..\Componenti_meIW\meTIWCountryComboBox.pas',
+  meTIWDateLabel in '..\Componenti_meIW\meTIWDateLabel.pas',
+  meTIWDatePicker in '..\Componenti_meIW\meTIWDatePicker.pas',
+  meTIWDateSelector in '..\Componenti_meIW\meTIWDateSelector.pas',
+  meTIWDBAdvCheckGroup in '..\Componenti_meIW\meTIWDBAdvCheckGroup.pas',
+  meTIWDBAdvDateEdit in '..\Componenti_meIW\meTIWDBAdvDateEdit.pas',
+  meTIWDBAdvDetailWebGrid in '..\Componenti_meIW\meTIWDBAdvDetailWebGrid.pas',
+  meTIWDBAdvEdit in '..\Componenti_meIW\meTIWDBAdvEdit.pas',
+  meTIWDBAdvLUEdit in '..\Componenti_meIW\meTIWDBAdvLUEdit.pas',
+  meTIWDBAdvRadioGroup in '..\Componenti_meIW\meTIWDBAdvRadioGroup.pas',
+  meTIWDBAdvSpinEdit in '..\Componenti_meIW\meTIWDBAdvSpinEdit.pas',
+  meTIWDBAdvTimeEdit in '..\Componenti_meIW\meTIWDBAdvTimeEdit.pas',
+  meTIWDBAdvWebGrid in '..\Componenti_meIW\meTIWDBAdvWebGrid.pas',
+  meTIWDBCalendar in '..\Componenti_meIW\meTIWDBCalendar.pas',
+  meTIWDBCountryComboBox in '..\Componenti_meIW\meTIWDBCountryComboBox.pas',
+  meTIWDBDatePicker in '..\Componenti_meIW\meTIWDBDatePicker.pas',
+  meTIWDBHTMLEdit in '..\Componenti_meIW\meTIWDBHTMLEdit.pas',
+  meTIWDBHTMLLabel in '..\Componenti_meIW\meTIWDBHTMLLabel.pas',
+  meTIWDBScrollPanel in '..\Componenti_meIW\meTIWDBScrollPanel.pas',
+  meTIWDBSmartPanel in '..\Componenti_meIW\meTIWDBSmartPanel.pas',
+  meTIWDBStateComboBox in '..\Componenti_meIW\meTIWDBStateComboBox.pas',
+  meTIWDocumentPopupMenu in '..\Componenti_meIW\meTIWDocumentPopupMenu.pas',
+  meTIWEditListLink in '..\Componenti_meIW\meTIWEditListLink.pas',
+  meTIWEmailEdit in '..\Componenti_meIW\meTIWEmailEdit.pas',
+  meTIWExchangeBar in '..\Componenti_meIW\meTIWExchangeBar.pas',
+  meTIWFadeImage in '..\Componenti_meIW\meTIWFadeImage.pas',
+  meTIWFilePicker in '..\Componenti_meIW\meTIWFilePicker.pas',
+  meTIWGradient in '..\Componenti_meIW\meTIWGradient.pas',
+  meTIWGradientLabel in '..\Componenti_meIW\meTIWGradientLabel.pas',
+  meTIWHelpTip in '..\Componenti_meIW\meTIWHelpTip.pas',
+  meTIWHotSpotImage in '..\Componenti_meIW\meTIWHotSpotImage.pas',
+  meTIWHTMLCheckBox in '..\Componenti_meIW\meTIWHTMLCheckBox.pas',
+  meTIWHTMLEdit in '..\Componenti_meIW\meTIWHTMLEdit.pas',
+  meTIWHTMLLabel in '..\Componenti_meIW\meTIWHTMLLabel.pas',
+  meTIWHTMLList in '..\Componenti_meIW\meTIWHTMLList.pas',
+  meTIWHTMLRadioGroup in '..\Componenti_meIW\meTIWHTMLRadioGroup.pas',
+  meTIWListLink in '..\Componenti_meIW\meTIWListLink.pas',
+  meTIWListOrganizer in '..\Componenti_meIW\meTIWListOrganizer.pas',
+  meTIWMainMenu in '..\Componenti_meIW\meTIWMainMenu.pas',
+  meTIWMonthPlanner in '..\Componenti_meIW\meTIWMonthPlanner.pas',
+  meTIWMultiColumnComboBox in '..\Componenti_meIW\meTIWMultiColumnComboBox.pas',
+  meTIWNoSpamEmailLabel in '..\Componenti_meIW\meTIWNoSpamEmailLabel.pas',
+  meTIWOutlookBar in '..\Componenti_meIW\meTIWOutlookBar.pas',
+  meTIWPaintBox in '..\Componenti_meIW\meTIWPaintBox.pas',
+  meTIWPersistentEdit in '..\Componenti_meIW\meTIWPersistentEdit.pas',
+  meTIWPopupMenuButton in '..\Componenti_meIW\meTIWPopupMenuButton.pas',
+  meTIWPopupMenuLabel in '..\Componenti_meIW\meTIWPopupMenuLabel.pas',
+  meTIWRadioButton in '..\Componenti_meIW\meTIWRadioButton.pas',
+  meTIWScrollBarColors in '..\Componenti_meIW\meTIWScrollBarColors.pas',
+  meTIWScrollBarPersistence in '..\Componenti_meIW\meTIWScrollBarPersistence.pas',
+  meTIWScrollPanel in '..\Componenti_meIW\meTIWScrollPanel.pas',
+  meTIWSideMenu in '..\Componenti_meIW\meTIWSideMenu.pas',
+  meTIWSideNavBar in '..\Componenti_meIW\meTIWSideNavBar.pas',
+  meTIWSmartPanel in '..\Componenti_meIW\meTIWSmartPanel.pas',
+  meTIWSmoothGauge in '..\Componenti_meIW\meTIWSmoothGauge.pas',
+  meTIWSmoothLabel in '..\Componenti_meIW\meTIWSmoothLabel.pas',
+  meTIWSmoothLEDLabel in '..\Componenti_meIW\meTIWSmoothLEDLabel.pas',
+  meTIWSmoothTimeLine in '..\Componenti_meIW\meTIWSmoothTimeLine.pas',
+  meTIWStateComboBox in '..\Componenti_meIW\meTIWStateComboBox.pas',
+  meTIWStaticMenu in '..\Componenti_meIW\meTIWStaticMenu.pas',
+  meTIWTextAreaLimiter in '..\Componenti_meIW\meTIWTextAreaLimiter.pas',
+  meTIWTickerPanel in '..\Componenti_meIW\meTIWTickerPanel.pas',
+  meIWImageList in '..\Componenti_meIW\meIWImageList.pas';
+
+end.
+

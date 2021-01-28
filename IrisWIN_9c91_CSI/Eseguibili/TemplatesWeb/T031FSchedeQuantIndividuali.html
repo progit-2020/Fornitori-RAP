@@ -1,0 +1,33 @@
+{%DocType%}
+<html>
+  <head>
+  </head>
+  <body>
+    {%T000Intestazione%}
+    <div class="RigaDatiColorata"> {%lblAnno%} {%cmbAnno%} </div>
+    <div class="RigaBase"> {%lblQuota%} {%cmbQuota%} </div>
+    <div class="RigaDatiColorata"> {%lblGruppo%} {%cmbGruppo%} </div>
+    <div class="RigaBase"> 
+      <div class="FloatSinistra">{%lnkIstruzioni%}</div>
+      {%chkSupervisore%} {%cmbSupervisore%} {%btnApplica%}
+    </div>
+
+    <div class="RigaBase"> 
+      <div class="BordoDiv">
+        <div class="FloatDestra">{%grdRiepilogo%}</div>
+        <div class="FloatDestra">{%lblNumDip%}</div>
+      </div>
+    </div>
+
+    <div class="RigaBaseNoPad">
+      <div class="FloatDestra">{%tbSchede%}</div>
+    </div>
+    <div>{%W031SchedeIndividualiRG%} {%W031QuoteQualitativeRG%} </div>
+
+    {%<frm>WC002FDatiAnagraficiFM</frm>%}
+    {%<frm>WC012FVisualizzaFileFM</frm>%}
+    {%<frm>W031FLegendaFlexFM</frm>%}
+    {%<frm>W031FSchedeQuantPosizionatiFM</frm>%}
+
+  </body>
+</html>

@@ -1,0 +1,28 @@
+{%DocType%}
+<html>
+  <body>
+    {%T000Intestazione%}
+    <div class="dipendente">{%lnkDipendente%} {%cmbDipendentiDisponibili%}</div>
+
+    <div class="RigaDatiColorata">
+      <span>{%lblPeriodoDal%} {%edtDal%}</span>
+      <span>{%lblPeriodoAl%} {%edtAl%}</span>
+      <span>{%btnEsegui%}</span>
+      <span>{%btnInserisci%}</span>
+      <span>{%btnCancella%}</span>
+    </div>
+
+    <!-- elenco pianificazioni -->
+    <div class="spazio_verticale"></div>
+    <div class="grigliaDatiNav">
+    {%PagNavBarPianif%}
+    </div>
+    <div class="grigliaDati">
+    {%grdPianif%}
+    </div>
+
+    {%<frm>WC002FDatiAnagraficiFM</frm>%}
+    {%<frm>WC012FVisualizzaFileFM</frm>%}
+
+  </body>
+</html>

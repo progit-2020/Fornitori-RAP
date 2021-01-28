@@ -1,0 +1,29 @@
+{%DocType%}
+<html>
+  <body>
+    {%T000Intestazione%}
+    <div class="dipendente">{%lnkDipendente%} {%cmbDipendentiDisponibili%}</div>
+
+    <div class="RigaBase">
+      <span>{%lblDataCedolinoDal%} {%edtDataCedolinoDal%}</span>
+      <span>{%lblDataCedolinoAl%} {%edtDataCedolinoAl%}</span>
+      <span>{%btnDataCedolino%}</span>
+    </div>
+
+    <div class="RigaDatiColorata">
+      <div class="groupbox" style="float:right;" id="grbOpzioni">
+      <fieldset>
+        <legend>{%lblOpzioni%}</legend>
+        {%chkCumuloVociArretrate%} {%chkStampaOrigine%}
+      </fieldset>
+      </div>
+    </div>
+
+    <div class="grigliaDati">
+      {%dgrdCedolini%}
+    </div>
+
+    {%<frm>WC002FDatiAnagraficiFM</frm>%}
+    {%<frm>WC012FVisualizzaFileFM</frm>%}
+  </body>
+</html>

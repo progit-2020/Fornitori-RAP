@@ -1,0 +1,46 @@
+package dcl_R013IterBase;
+
+{$R *.res}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO ON}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS ON}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION ON}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO ON}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES OFF}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$IMPLICITBUILD OFF}
+{$DEFINE IRISWEB}
+
+requires
+  rtl,
+  vcl,
+  inet,
+  dbrtl,
+  vclimg,
+  vcldb,
+  (*dclIntraweb_100_140,*)
+  Intraweb_100_140(*,
+  IntrawebDB_100_140,
+  iw10tmsd2010,
+  iw10tmsgridd2010*);
+
+contains
+  R013UIterBase in '..\_DaniloCasaWEB\R013UIterBase.pas',
+  R010UPAGINAWEB in '..\Repositary\R010UPAGINAWEB.pas' {R010FPaginaWeb: TIWAppForm},
+  R012UWebAnagrafico in '..\Repositary\R012UWebAnagrafico.pas' {R012FWebAnagrafico: TIWAppForm};
+
+end.

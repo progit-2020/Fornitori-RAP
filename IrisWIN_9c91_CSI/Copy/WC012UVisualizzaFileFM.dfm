@@ -1,0 +1,61 @@
+object WC012FVisualizzaFileFM: TWC012FVisualizzaFileFM
+  Left = 0
+  Top = 0
+  Width = 375
+  Height = 259
+  TabOrder = 0
+  object IWFrameRegion: TIWRegion
+    Left = 0
+    Top = 0
+    Width = 375
+    Height = 259
+    RenderInvisibleControls = False
+    TabOrder = 0
+    Align = alClient
+    BorderOptions.NumericWidth = 1
+    BorderOptions.BorderWidth = cbwThin
+    BorderOptions.Style = cbsSolid
+    BorderOptions.Color = clNone
+    Color = clWebALICEBLUE
+    ClipRegion = False
+    LayoutMgr = IWTemplateProcessorFrame
+    OnCreate = IWFrameRegionCreate
+    object btnChiudi: TmeIWButton
+      Left = 264
+      Top = 231
+      Width = 75
+      Height = 25
+      Css = 'pulsante'
+      RenderSize = False
+      StyleRenderOptions.RenderSize = False
+      StyleRenderOptions.RenderPosition = False
+      StyleRenderOptions.RenderFont = False
+      StyleRenderOptions.RenderZIndex = False
+      StyleRenderOptions.RenderAbsolute = False
+      StyleRenderOptions.RenderPadding = False
+      StyleRenderOptions.RenderBorder = False
+      Caption = 'Chiudi'
+      Color = clBtnFace
+      Font.Color = clNone
+      Font.Enabled = False
+      Font.Size = 10
+      Font.Style = []
+      FriendlyName = 'btnChiudi'
+      TabOrder = 0
+      OnClick = btnChiudiClick
+      medpDownloadButton = False
+    end
+  end
+  object jQVisFile: TIWJQueryWidget
+    Enabled = True
+    Left = 236
+    Top = 16
+  end
+  object IWTemplateProcessorFrame: TIWTemplateProcessorHTML
+    TagType = ttIntraWeb
+    Templates.Default = 'WC012FVisualizzaFileFM.html'
+    RenderStyles = False
+    Left = 72
+    Top = 8
+  end
+end

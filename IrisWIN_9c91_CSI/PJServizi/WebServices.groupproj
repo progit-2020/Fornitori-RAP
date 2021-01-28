@@ -1,0 +1,48 @@
+﻿	<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+		<PropertyGroup>
+			<ProjectGuid>{F42FD424-9F2F-481B-90E3-AC1284E98EC3}</ProjectGuid>
+		</PropertyGroup>
+		<ItemGroup>
+			<Projects Include="B021PIrisRestSvc.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="B021PTest.dproj">
+				<Dependencies/>
+			</Projects>
+		</ItemGroup>
+		<ProjectExtensions>
+			<Borland.Personality>Default.Personality.12</Borland.Personality>
+			<Borland.ProjectType/>
+			<BorlandProject>
+				<Default.Personality/>
+			</BorlandProject>
+		</ProjectExtensions>
+		<Target Name="B021PIrisRestSvc">
+			<MSBuild Projects="B021PIrisRestSvc.dproj"/>
+		</Target>
+		<Target Name="B021PIrisRestSvc:Clean">
+			<MSBuild Targets="Clean" Projects="B021PIrisRestSvc.dproj"/>
+		</Target>
+		<Target Name="B021PIrisRestSvc:Make">
+			<MSBuild Targets="Make" Projects="B021PIrisRestSvc.dproj"/>
+		</Target>
+		<Target Name="B021PTest">
+			<MSBuild Projects="B021PTest.dproj"/>
+		</Target>
+		<Target Name="B021PTest:Clean">
+			<MSBuild Targets="Clean" Projects="B021PTest.dproj"/>
+		</Target>
+		<Target Name="B021PTest:Make">
+			<MSBuild Targets="Make" Projects="B021PTest.dproj"/>
+		</Target>
+		<Target Name="Build">
+			<CallTarget Targets="B021PIrisRestSvc;B021PTest"/>
+		</Target>
+		<Target Name="Clean">
+			<CallTarget Targets="B021PIrisRestSvc:Clean;B021PTest:Clean"/>
+		</Target>
+		<Target Name="Make">
+			<CallTarget Targets="B021PIrisRestSvc:Make;B021PTest:Make"/>
+		</Target>
+		<Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+	</Project>
