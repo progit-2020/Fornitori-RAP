@@ -1,0 +1,31 @@
+{%DocType%}
+<html>
+  <head>
+  </head>
+  <body>
+    <div class="medpTabRegion" style="position:relative; height: 50em;">
+      <div class="RigaBase groupbox">
+        <fieldset>
+          <legend><span class="intestazione">{%lgnPeriodoDaElaborare%}</span></legend>
+          {%lblPeriodoDal%} {%edtDal%} {%lblPeriodoAl%} {%edtAl%}
+          </fieldset>
+        {%btnEsegui%}
+      </div>
+      <div style="position:absolute;top:7.5em; left: 1.5em;">{%lblGiustificativi%}</div>
+      <div style="position:absolute;top:7.5em; left: 30.5em;">{%imgSelezionaTuttoGiustificativi%}</div>
+      <div style="position:absolute;top:7.5em; left: 32.5em;">{%imgDeselezionaTuttoGiustificativi%}</div>
+      <div style="position:absolute;top:7.5em; left: 34.5em;">{%imgInvertiSelezioneGiustificativi%}</div>
+      
+      <div align="left" style="position:absolute; top:9.5em; left: 1.5em;border: 1px solid #6F9DB9;width: 35em;height:30em;overflow-y: auto;overflow-x: hidden; background-color: white;font-family: 'Courier New', Courier, mono;">{%cgpGiustificativi%}</div>
+
+      <div style="position:absolute;top:7.5em; left: 40em;">{%lblTipologie%}</div>
+      <div align="left" style="position:absolute;top:9.5em; left: 40em;border: 1px solid #6F9DB9;width: 25em;overflow-y: auto;overflow-x: hidden; background-color: white;">{%cgpTipologie%}</div>
+
+      <div style="position:absolute;top:22em; left: 40em;">{%lblParametriOpzionali%}</div>
+      <div align="left" style="position:absolute;top:24em; left: 40em;border: 1px solid #6F9DB9;width: 25em;overflow-y: auto;overflow-x: hidden; background-color: white;">{%cgpParametriOpzionali%}</div>
+
+      <div style="position:absolute;top:36em; left: 40em;">{%lblDatoRaggr%}</div>
+      <div align="left" style="position:absolute;top:38em; left: 40em;width: 25em;">{%cmbDatoRaggr%}</div>
+    </div>
+  </body>
+</html>

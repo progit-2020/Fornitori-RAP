@@ -1,0 +1,45 @@
+{%DocType%}
+<html>
+  <body>
+    {%T000Intestazione%}
+
+    <!-- data di lavoro / dipendenti cessati -->
+    <div id="W002Filtri" class="RigaDatiColorataNoPad">
+      {%lblDataLavoro%} {%edtDataLavoro%} {%btnApplicaData%} {%chkDipendentiCessati%}
+    </div>
+
+    <div class="RigaBaseNoPad">
+      <span>{%lblNomeRicerca%} {%edtNomeRicerca%}</span>
+      <span>{%btnSalvaRicerca%}</span>
+      <span>{%btnCancellaRicerca%}</span>
+    </div>
+
+    <!-- contatori (sx) + selezioni (dx) -->
+    <div class="spazio_verticale"></div>
+    <div id="PagNavBarAnagrafe" class="grigliaDatiNav">
+      <table>
+        <tr>
+          <td>{%imgPrimo%}</td>
+          <td>{%imgPrec%}</td>
+          <td>{%lblNumRecord%}</td>
+          <td>{%imgSucc%}</td>
+          <td>{%imgUltimo%}</td>
+          <td width="80%" align="center">{%lblAnagrafeCaption%}</td>
+          <td align="right">{%lblContaRecord%}</td>
+        </tr>
+      </table>
+    </div>
+    
+    <script type="text/javascript">
+    {%DipendenteSingolo%}
+    </script>
+
+    <!-- elenco dipendenti -->
+    <div class="grigliaDati">
+      {%grdAnagrafe%}
+    </div>
+
+    {%<frm>WC012FVisualizzaFileFM</frm>%}
+
+  </body>
+</html>

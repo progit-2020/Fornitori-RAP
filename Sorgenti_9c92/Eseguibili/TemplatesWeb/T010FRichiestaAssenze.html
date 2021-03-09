@@ -1,0 +1,102 @@
+{%DocType%}
+<html>
+  <body>
+    {%T000Intestazione%}
+    <div class="dipendente">{%lnkDipendente%} {%cmbDipendentiDisponibili%}</div>
+
+    <!-- inserimento nuova richiesta -->
+    <a id="contenuto_pagina_2" class="font_nascosto">Area per l'inserimento di nuove richieste assenza. Possibile ricarico della pagina in seguito all'inserimento di una nuova richiesta.</a>
+    <div class="RigaDatiColorata">{%lblGiustificativo%} {%cmbAccorpCausali%} {%cmbCausaliDisponibili%}</div>
+    <div class="RigaBase">{%lblFamiliari%} {%cmbFamiliari%}</div>
+    <div class="RigaDatiColorata">{%rgpTipo%} {%edtOre%} {%edtAOre%} {%lblPeriodoDalAl%} {%edtPeriodoDalAl%} {%lblDal%} {%edtDal%} {%lblAl%} {%edtAl%} {%btnCartellino%}</div>
+    <div class="RigaBase">
+    {%rgpTipoMG%}
+    </div>
+    <div class="RigaBase">
+      <div class="FloatDestra50">{%memNoteIns%}</div>
+    </div>
+    <div class="RigaDatiColorataNoPad">
+      <div class="FloatSinistra50 align_left">
+        {%lblLegenda1%}
+        <br class="clearDiv"/>
+        {%lblLegenda2%}
+        <br class="clearDiv"/>
+        {%lblLegenda3%}
+      </div>
+      <div class="FloatDestra50">{%chkNoteIns%} {%btnInserisci%} {%btnAnnulla%}</div>      
+      <br class="clearDiv"/>
+    </div>
+
+    <!-- anomalie -->
+    <a id="contenuto_pagina_3" class="font_nascosto">Definizione della data per la visualizzazione del riepilogo. Possibile ricarico della pagina in seguito alla modifica della data e alla visualizzazione del riepilogo. </a>
+    <div class="grigliaDati">
+    {%grdAnomalie%}
+    </div>
+    <div class="BordoDiv">
+      <div class="FloatSinistra">
+        <div class="Riepilogo">{%lblRiepAl%} {%edtRiepAl%} {%btnVisualizzaRiepilogo%} {%btnNascondiRiepilogo%}</div>
+        <div class="Riepilogo">{%lblCausale%}</div>
+      </div>
+      <div class="FloatDestra">
+      {%grdRiepilogo%}
+      </div>
+    </div>
+
+    <!-- autorizzazione -->
+    <a id="contenuto_pagina_4" class="font_nascosto">Definizione dei filtri per la visualizzazione delle richieste di giustificativo presenti. Possibile ricarico della pagina in seguito alla modifica dei filtri di visualizzazione.</a>
+
+    <!-- tabella dei filtri -->
+    <table id="filtriIter">
+      <tr>
+        <td id="filtroVis">
+          <div class="groupbox">
+            <fieldset>
+              <legend>{%lblFiltroVis%}</legend>
+              {%grdFiltroVis%}
+            </fieldset>
+          </div>
+        </td>
+        <td id="filtroStruttura">
+          <div class="groupbox fs100">
+            <fieldset>
+              <legend>{%lblFiltroStruttura%}</legend>
+              <div id="divFiltroVis">
+              {%cmbFiltroStruttura%}
+              </div>
+            </fieldset>
+          </div>
+        </td>
+        <td id="filtroPeriodo">
+          <div class="groupbox fs100 width30chr">
+            <fieldset>
+              <legend>{%lblPeriodo%}</legend>
+              {%rgpPeriodo%} {%lblPeriodoDal%} {%edtPeriodoDal%} {%lblPeriodoAl%} {%edtPeriodoAl%}
+            </fieldset>
+          </div>
+        </td>
+        <td id="pulsantiAzione">
+          {%btnFiltra%} {%btnModificaTutti%} {%btnAnnullaTutti%} {%btnTuttiSi%} {%btnTuttiNo%} {%btnImporta%}
+        </td>
+      </tr>
+    </table>
+
+    <!-- elenco richieste -->
+    <a id="contenuto_pagina_5" class="font_nascosto">Griglia per la visualizzazione e gestione delle richieste assenza</a>
+    <div class="clearDiv spazio_verticale"></div>
+    <div class="grigliaDatiNav">
+      {%PagNavBarRichieste%}
+    </div>
+    <div class="grigliaDati">
+      {%grdRichieste%}
+    </div>
+
+    {%<frm>WC002FDatiAnagraficiFM</frm>%}
+    {%<frm>WC012FVisualizzaFileFM</frm>%}
+    {%<frm>WC018FRiepilogoIterFM</frm>%}
+    {%<frm>WC026FAllegatiIterFM</frm>%}
+    {%<frm>W010FCalcoloCompetenzeFM</frm>%}
+    {%<frm>W010FCancPeriodoFM</frm>%}
+    {%<frm>W005FCartellinoFM</frm>%}
+  </body>
+</html>
+

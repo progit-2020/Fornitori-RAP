@@ -1,0 +1,34 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{8ef64cf4-80ef-440f-a8b5-5606990e9cda}</ProjectGuid>
+  </PropertyGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Projects Include="S735PPunteggiFasceIncentivi.dproj" />
+  </ItemGroup>
+  <ProjectExtensions>
+    <Borland.Personality>Default.Personality</Borland.Personality>
+    <Borland.ProjectType />
+    <BorlandProject>
+  <BorlandProject xmlns=""> <Default.Personality> </Default.Personality> </BorlandProject></BorlandProject>
+  </ProjectExtensions>
+  <Target Name="S735PPunteggiFasceIncentivi">
+    <MSBuild Projects="S735PPunteggiFasceIncentivi.dproj" Targets="" />
+  </Target>
+  <Target Name="S735PPunteggiFasceIncentivi:Clean">
+    <MSBuild Projects="S735PPunteggiFasceIncentivi.dproj" Targets="Clean" />
+  </Target>
+  <Target Name="S735PPunteggiFasceIncentivi:Make">
+    <MSBuild Projects="S735PPunteggiFasceIncentivi.dproj" Targets="Make" />
+  </Target>
+  <Target Name="Build">
+    <CallTarget Targets="S735PPunteggiFasceIncentivi" />
+  </Target>
+  <Target Name="Clean">
+    <CallTarget Targets="S735PPunteggiFasceIncentivi:Clean" />
+  </Target>
+  <Target Name="Make">
+    <CallTarget Targets="S735PPunteggiFasceIncentivi:Make" />
+  </Target>
+  <Import Condition="Exists('$(MSBuildBinPath)\Borland.Group.Targets')" Project="$(MSBuildBinPath)\Borland.Group.Targets" />
+</Project>

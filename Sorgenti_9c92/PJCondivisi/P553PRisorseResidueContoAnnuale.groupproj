@@ -1,0 +1,34 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{7e1aa5d0-7556-4eef-959f-d0dcde9f0e3a}</ProjectGuid>
+  </PropertyGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Projects Include="P553PRisorseResidueContoAnnuale.dproj" />
+  </ItemGroup>
+  <ProjectExtensions>
+    <Borland.Personality>Default.Personality</Borland.Personality>
+    <Borland.ProjectType />
+    <BorlandProject>
+<BorlandProject xmlns=""><Default.Personality></Default.Personality></BorlandProject></BorlandProject>
+  </ProjectExtensions>
+  <Target Name="P553PRisorseResidueContoAnnuale">
+    <MSBuild Projects="P553PRisorseResidueContoAnnuale.dproj" Targets="" />
+  </Target>
+  <Target Name="P553PRisorseResidueContoAnnuale:Clean">
+    <MSBuild Projects="P553PRisorseResidueContoAnnuale.dproj" Targets="Clean" />
+  </Target>
+  <Target Name="P553PRisorseResidueContoAnnuale:Make">
+    <MSBuild Projects="P553PRisorseResidueContoAnnuale.dproj" Targets="Make" />
+  </Target>
+  <Target Name="Build">
+    <CallTarget Targets="P553PRisorseResidueContoAnnuale" />
+  </Target>
+  <Target Name="Clean">
+    <CallTarget Targets="P553PRisorseResidueContoAnnuale:Clean" />
+  </Target>
+  <Target Name="Make">
+    <CallTarget Targets="P553PRisorseResidueContoAnnuale:Make" />
+  </Target>
+  <Import Condition="Exists('$(MSBuildBinPath)\Borland.Group.Targets')" Project="$(MSBuildBinPath)\Borland.Group.Targets" />
+</Project>

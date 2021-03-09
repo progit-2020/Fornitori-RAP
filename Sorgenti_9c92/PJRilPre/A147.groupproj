@@ -1,0 +1,72 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{00B62E68-1B06-4FA4-B508-023AB0D89BCA}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="A147PRepVincoliIndividuali.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="..\PJCloudRilPre\WA147PRepVincoliIndividuali.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="..\PJCloudRilPre\WA040PPianifRep.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="..\PJCloudRilPre\WA112PInvioMessaggi.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="A147PRepVincoliIndividuali">
+        <MSBuild Projects="A147PRepVincoliIndividuali.dproj"/>
+    </Target>
+    <Target Name="A147PRepVincoliIndividuali:Clean">
+        <MSBuild Projects="A147PRepVincoliIndividuali.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="A147PRepVincoliIndividuali:Make">
+        <MSBuild Projects="A147PRepVincoliIndividuali.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="WA147PRepVincoliIndividuali">
+        <MSBuild Projects="..\PJCloudRilPre\WA147PRepVincoliIndividuali.dproj"/>
+    </Target>
+    <Target Name="WA147PRepVincoliIndividuali:Clean">
+        <MSBuild Projects="..\PJCloudRilPre\WA147PRepVincoliIndividuali.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="WA147PRepVincoliIndividuali:Make">
+        <MSBuild Projects="..\PJCloudRilPre\WA147PRepVincoliIndividuali.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="WA040PPianifRep">
+        <MSBuild Projects="..\PJCloudRilPre\WA040PPianifRep.dproj"/>
+    </Target>
+    <Target Name="WA040PPianifRep:Clean">
+        <MSBuild Projects="..\PJCloudRilPre\WA040PPianifRep.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="WA040PPianifRep:Make">
+        <MSBuild Projects="..\PJCloudRilPre\WA040PPianifRep.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="WA112PInvioMessaggi">
+        <MSBuild Projects="..\PJCloudRilPre\WA112PInvioMessaggi.dproj"/>
+    </Target>
+    <Target Name="WA112PInvioMessaggi:Clean">
+        <MSBuild Projects="..\PJCloudRilPre\WA112PInvioMessaggi.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="WA112PInvioMessaggi:Make">
+        <MSBuild Projects="..\PJCloudRilPre\WA112PInvioMessaggi.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="A147PRepVincoliIndividuali;WA147PRepVincoliIndividuali;WA040PPianifRep;WA112PInvioMessaggi"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="A147PRepVincoliIndividuali:Clean;WA147PRepVincoliIndividuali:Clean;WA040PPianifRep:Clean;WA112PInvioMessaggi:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="A147PRepVincoliIndividuali:Make;WA147PRepVincoliIndividuali:Make;WA040PPianifRep:Make;WA112PInvioMessaggi:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>

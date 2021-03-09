@@ -1,0 +1,48 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{632F76C1-8FC1-490D-9A23-5A93C4F3A5B4}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="Ac05PImportRimborsi.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="A100PMISSIONI.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="Ac05PImportRimborsi">
+        <MSBuild Projects="Ac05PImportRimborsi.dproj"/>
+    </Target>
+    <Target Name="Ac05PImportRimborsi:Clean">
+        <MSBuild Projects="Ac05PImportRimborsi.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Ac05PImportRimborsi:Make">
+        <MSBuild Projects="Ac05PImportRimborsi.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="A100PMISSIONI">
+        <MSBuild Projects="A100PMISSIONI.dproj"/>
+    </Target>
+    <Target Name="A100PMISSIONI:Clean">
+        <MSBuild Projects="A100PMISSIONI.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="A100PMISSIONI:Make">
+        <MSBuild Projects="A100PMISSIONI.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="Ac05PImportRimborsi;A100PMISSIONI"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="Ac05PImportRimborsi:Clean;A100PMISSIONI:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="Ac05PImportRimborsi:Make;A100PMISSIONI:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>

@@ -1,0 +1,72 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{2EBA3600-5E01-4A27-A4B2-F71D18E3682E}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="rcl_meIW12Components.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="dcl_meIW12Components.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="rcl_meIW12NewComponents.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="dcl_meIW12NewComponents.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="rcl_meIW12Components">
+        <MSBuild Projects="rcl_meIW12Components.dproj"/>
+    </Target>
+    <Target Name="rcl_meIW12Components:Clean">
+        <MSBuild Projects="rcl_meIW12Components.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="rcl_meIW12Components:Make">
+        <MSBuild Projects="rcl_meIW12Components.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="dcl_meIW12Components">
+        <MSBuild Projects="dcl_meIW12Components.dproj"/>
+    </Target>
+    <Target Name="dcl_meIW12Components:Clean">
+        <MSBuild Projects="dcl_meIW12Components.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="dcl_meIW12Components:Make">
+        <MSBuild Projects="dcl_meIW12Components.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="rcl_meIW12NewComponents">
+        <MSBuild Projects="rcl_meIW12NewComponents.dproj"/>
+    </Target>
+    <Target Name="rcl_meIW12NewComponents:Clean">
+        <MSBuild Projects="rcl_meIW12NewComponents.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="rcl_meIW12NewComponents:Make">
+        <MSBuild Projects="rcl_meIW12NewComponents.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="dcl_meIW12NewComponents">
+        <MSBuild Projects="dcl_meIW12NewComponents.dproj"/>
+    </Target>
+    <Target Name="dcl_meIW12NewComponents:Clean">
+        <MSBuild Projects="dcl_meIW12NewComponents.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="dcl_meIW12NewComponents:Make">
+        <MSBuild Projects="dcl_meIW12NewComponents.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="rcl_meIW12Components;dcl_meIW12Components;rcl_meIW12NewComponents;dcl_meIW12NewComponents"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="rcl_meIW12Components:Clean;dcl_meIW12Components:Clean;rcl_meIW12NewComponents:Clean;dcl_meIW12NewComponents:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="rcl_meIW12Components:Make;dcl_meIW12Components:Make;rcl_meIW12NewComponents:Make;dcl_meIW12NewComponents:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>

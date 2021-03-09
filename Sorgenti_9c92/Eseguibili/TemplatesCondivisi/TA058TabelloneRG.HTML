@@ -1,0 +1,16 @@
+{%DocType%}
+<html>
+  <head>  	
+  </head>
+  <body>
+    <div class="medpTabRegion" style="position: relative; height: 50em;">
+	  <div>{%btnSalva%}<span style="padding-left:2em">&nbsp;</span>{%btnCancella%}<span style="padding-left:2em">&nbsp;</span>{%btnOperativa%}</div>
+      <div class="grigliaDatiNav">
+       {%PagNavBarTabellone%}
+       </div>
+         <div id="divtable" style="position:relative;width:100%;height:45.5em;overflow-y:auto;overflow-x: auto; background-color: transparent;" onscroll="onscrollDivWR010(this,'HIDDEN_WA058DIVTABLESCROLLTOP','HIDDEN_WA058DIVTABLESCROLLLEFT')">
+       {%grdTabellone%}
+       </div>
+    </div>
+  </body>
+</html>
