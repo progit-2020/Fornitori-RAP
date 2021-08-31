@@ -1,0 +1,59 @@
+{%DocType%}
+<html>
+  <head>
+     <style type="text/css">
+     .info_dipendente table td {
+       font-size: 10px;
+       line-height: 10px;
+     }
+     </style>
+  </head>
+  <body>
+    {%T000Intestazione%}
+    <div class="dipendente">{%lnkDipendentiDisponibili%} {%cmbDipendentiDisponibili%}</div>
+
+    <table class="height6">
+      <tr>
+        <td>
+          {%rgpTipologia%} 
+        </td>
+        <td>
+          <div class="groupbox fs100 width30chr height4">
+            <fieldset>
+              <legend>{%lblPeriodo%}</legend>
+              <table>
+                <tbody>
+                <tr>
+                  <td>{%lblPeriodoDal%}</td>
+                  <td>{%edtPeriodoDal%}</td>
+                  <td>{%lblPeriodoAl%}</td>
+                  <td>{%edtPeriodoAl%}</td>
+                </tr>
+                </tbody>
+              </table>
+            </fieldset>
+          </div>
+        </td>
+        <td>
+          {%rgpOrdinamento%}
+        </td>
+        <td id="pulsantiAzione">
+          <BR>
+          {%btnEsegui%}
+          <span style="float:right">{%lnkLegendaColoriGiorni%}</span>
+          <BR><BR>
+          {%chkNonContDipPian%}
+        </td>
+      </tr>
+    </table>
+
+    {%tabReperibilita%}
+    <div>{%W004DettaglioRG%} {%W004ProspettoRG%}</div>
+
+    {%<frm>WC002FDatiAnagraficiFM</frm>%}
+    {%<frm>WC012FVisualizzaFileFM</frm>%}
+    {%<frm>W002FModificaDatiFM</frm>%}
+    {%<frm>W004FModificaTabelloneFM</frm>%}
+    {%<frm>W004FLegendaColoriFM</frm>%}
+  </body>
+</html>

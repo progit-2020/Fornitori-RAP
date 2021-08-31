@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<ProjectSortOrder AutoSort="0" SortType="0">
+    <File Path="..\..\CSI_VersioneRilasciata"/>
+    <File Path="..\Componenti"/>
+    <File Path="..\Componenti\SelAnagrafe.pas"/>
+    <File Path="..\Componenti\SelAnagrafe.dfm"/>
+    <File Path="..\Componenti\InputPeriodo.pas"/>
+    <File Path="..\Componenti\InputPeriodo.dfm"/>
+    <File Path="..\Copy"/>
+    <File Path="..\Copy\A027UCostanti.pas"/>
+    <File Path="..\MWRilPre"/>
+    <File Path="..\MWRilPre\R400UCartellinoDtM.pas"/>
+    <File Path="..\MWRilPre\R400UCartellinoDtM.dfm"/>
+    <File Path="..\Repositary"/>
+    <File Path="..\Repositary\R004UGestStoricoDTM.pas"/>
+    <File Path="..\Repositary\R004UGestStoricoDTM.dfm"/>
+    <File Path="A027UCarMen.pas"/>
+    <File Path="A027UCarMen.dfm"/>
+    <File Path="A027UStampaTesto.pas"/>
+    <File Path="A027UStampaTesto.dfm"/>
+    <File Path="A027UStampaTimb.pas"/>
+    <File Path="A027UStampaTimb.dfm"/>
+    <File Path="A027UCarMenDtM.pas"/>
+    <File Path="A027UCarMenDtM.dfm"/>
+    <File Path="A027UStraoAutorizzato.pas"/>
+    <File Path="A027UStraoAutorizzato.dfm"/>
+  </ProjectSortOrder>
+	<Transactions>
+    <Transaction>2015/05/11 08.00.00.000.376,C:\SVN\CSI\CSI_Sviluppo\PJRilPre\A027UCarMenDtM.pas=C:\SVN\CSI\CSI_Sviluppo\PJRilPre\A07UCarMenDtM.pas</Transaction>
+    <Transaction>2015/05/11 08.00.00.000.015,C:\SVN\CSI\CSI_Sviluppo\PJRilPre\A027UStraoAutorizzato.pas=C:\SVN\CSI\CSI_Sviluppo\PJRilPre\Unit1.pas</Transaction>
+    <Transaction>2015/05/11 08.00.00.000.376,C:\SVN\CSI\CSI_Sviluppo\PJRilPre\A027UCarMenDtM.dfm=C:\SVN\CSI\CSI_Sviluppo\PJRilPre\A07UCarMenDtM.dfm</Transaction>
+    <Transaction>2015/05/11 08.00.00.000.529,C:\SVN\CSI\CSI_Sviluppo\PJRilPre\A07UCarMenDtM.dfm=C:\SVN\CSI\CSI_Sviluppo\PJRilPre\Unit1.dfm</Transaction>
+    <Transaction>2015/05/11 08.00.00.000.529,C:\SVN\CSI\CSI_Sviluppo\PJRilPre\A07UCarMenDtM.pas=C:\SVN\CSI\CSI_Sviluppo\PJRilPre\Unit1.pas</Transaction>
+    <Transaction>2015/05/11 08.00.00.000.015,C:\SVN\CSI\CSI_Sviluppo\PJRilPre\A027UStraoAutorizzato.dfm=C:\SVN\CSI\CSI_Sviluppo\PJRilPre\Unit1.dfm</Transaction>
+  </Transactions>
+</BorlandProject>

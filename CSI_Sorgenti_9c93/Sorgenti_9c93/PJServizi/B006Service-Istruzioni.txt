@@ -1,0 +1,8 @@
+Al prompt:
+B006PSCARICOSERVICE /INSTALL
+
+Sul pannello di controllo/Services:
+specificare i minuti in Startup parameters
+premere Start
+
+B006PSCARICOSERVICE /UNINSTALL

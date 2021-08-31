@@ -1,0 +1,78 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+  <body>
+    <!--  inizio intestazione  -->
+    <div id="T000intestazione">
+
+     <!-- intestazione e informazioni utente -->
+      <div id="int_sez1">
+        <div id="versione">{%Versione%}</div>
+        <div id="paginaCorrente" title="pagina corrente">{%PaginaCorrente%}</div>
+        <div id="login">{%Login%}</div>
+        <div id="dataLavoro" title="Data di lavoro">{%DataLavoro%}</div>
+        <div id="imgLogo"><img src="img/logo_irisweb.png" alt="logo IrisWEB"></div>
+      </div>
+      <div id="loginTooltip">
+        <table id="tabellaLogin">
+          <thead>
+            <tr><th colspan="2" class="align_center font_grassetto">Dati di login</th></tr>
+          </thead>
+          <tbody>
+            {%LoginTooltip%}
+          </tbody>
+        </table>
+      </div>
+
+      <script type="text/javascript">
+        var SPagCorrente=document.getElementById("paginaCorrente").innerHTML;
+        var PaginaCorrente=SPagCorrente.substr(1,4);
+      </script>
+
+      <!-- menu principale + link -->
+      <div id="int_sez2">
+        <div id="sez2_com1">{%lnkIndietro%}</div>
+        <div id="sez2_com2">{%lnkChiudiSchede%}</div>
+        <div id="sez2_menu">{%WC008FMenuIrisWebFM%}</div>
+        <div id="sez2_help">{%lnkHelp%}</div>
+        <div id="sez2_esci">{%lnkEsci%}</div>
+      </div>
+    </div>
+
+    <!-- messaggi di errore o segnalazioni -->
+    <div id="int_sez4">{%lblCommentoCorrente%}</div>
+
+    <!-- contenitore per dialog modale -->
+    <div id="msgDialog">
+    {%medpMsgContainer%}
+    </div>
+
+    <!-- segnalazioni di errore -->
+    <div id="avviso" class="invisibile"></div>
+
+    <!-- div per il tooltip -->
+    <div class="tooltip"></div>
+
+    <!-- menu contestuale -->
+    {%lnkContextMenu%}
+    {%popupMenu%}
+
+    <!--  fine intestazione -->
+
+    <!--  inizio contenuto -->
+    <div id="T000contenuto">
+      <div class="RigaDatiColorata">{%lblDataStampa%} {%lblDal%} {%medtDataStampaDa%} {%lblAl%} {%medtDataStampaA%} {%chkSoloVariazioni%} </div>
+      <div class="RigaBase">{%lblOrdinamento%} {%rgpOrdinamento%}</div>
+      <div class="RigaDatiColorata">{%btnCopiaExcel%} {%btnEsegui%}</div>
+
+      <div class="grigliaDati" style="margin-top: 5px;">
+      {%grdStampa%}
+      </div>
+    </div>
+
+    <!--  fine contenuto -->
+    <div id="separa_footer"></div>
+    {%JavascriptBottom%}
+    {%FileEsterniJs%}
+    <script type="text/javascript">window.onerror = gestioneErrori;</script>
+  </body>
+</html>

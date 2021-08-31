@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<PersonalityInfo>
+		<Option>
+			<Option Name="Personality">Default.Personality</Option>
+			<Option Name="ProjectType"></Option>
+			<Option Name="Version">1.0</Option>
+			<Option Name="GUID">{8B4BAFD8-43A5-4589-AE8F-66C8043FDDFC}</Option>
+		</Option>
+	</PersonalityInfo>
+	<Default.Personality>  <Projects>
+      <Projects Name="A002PAnagrafe.exe">PJRilPre\A002PAnagrafe.bdsproj</Projects>
+      <Projects Name="M000PMissioni.exe">PJMissioniTrasferte\M000PMissioni.bdsproj</Projects>
+      <Projects Name="P000PStipendi.exe">PJStipendi\P000PStipendi.bdsproj</Projects>
+      <Projects Name="S000PStatoGiuridico.exe">PJStatoGiuridico\S000PStatoGiuridico.bdsproj</Projects>
+      <Projects Name="W000PIrisWEB.exe">PJIrisWEB\W000PIrisWEB.bdsproj</Projects>
+      <Projects Name="W000PIrisWEB_IIS.dll">PJIrisWEB\W000PIrisWEB_IIS.bdsproj</Projects>
+      <Projects Name="W000PIrisWEB_SRV.exe">PJIrisWEB\W000PIrisWEB_SRV.bdsproj</Projects>
+      <Projects Name="A077PCOMServer.exe">PJRilPre\A077PCOMServer.bdsproj</Projects>
+      <Projects Name="B002PAggiornamento.exe">PJServizi\B002PAggiornamento.bdsproj</Projects>
+      <Projects Name="B005PAggIris.exe">PJServizi\B005PAggIris.bdsproj</Projects>
+      <Projects Name="B006PScaricoAuto.exe">PJServizi\B006PScaricoAuto.bdsproj</Projects>
+      <Projects Name="B006PScaricoService.exe">PJServizi\B006PScaricoService.bdsproj</Projects>
+      <Projects Name="B007PManipolazioneDati.exe">PJServizi\B007PManipolazioneDati.bdsproj</Projects>
+      <Projects Name="B008PGeneraPassword.exe">PJServizi\B008PGeneraPassword.bdsproj</Projects>
+      <Projects Name="B009PPuntoInformativo.exe">PJServizi\B009PPuntoInformativo.bdsproj</Projects>
+      <Projects Name="B010PMessaggiOrologi.exe">PJServizi\B010PMessaggiOrologi.bdsproj</Projects>
+      <Projects Name="B010PMessaggiOrologiSrv.exe">PJServizi\B010PMessaggiOrologiSrv.bdsproj</Projects>
+      <Projects Name="B011PAllineamentoServer.exe">PJServizi\B011PAllineamentoServer.bdsproj</Projects>
+      <Projects Name="B012PAllineamentoClient.exe">PJServizi\B012PAllineamentoClient.bdsproj</Projects>
+      <Projects Name="B013PIntegrazioneEMK.exe">PJServizi\B013PIntegrazioneEMK.bdsproj</Projects>
+      <Projects Name="B014PIntegrazioneAnagrafica.exe">PJServizi\B014PIntegrazioneAnagrafica.bdsproj</Projects>
+      <Projects Name="B014PIntegrazioneAnagraficaSrv.exe">PJServizi\B014PIntegrazioneAnagraficaSrv.bdsproj</Projects>
+      <Projects Name="B015PScaricoGiustificativi.exe">PJServizi\B015PScaricoGiustificativi.bdsproj</Projects>
+      <Projects Name="B015PScaricoGiustificativiSrv.exe">PJServizi\B015PScaricoGiustificativiSrv.bdsproj</Projects>
+      <Projects Name="B016PSetup.exe">PJServizi\B016PSetup.bdsproj</Projects>
+      <Projects Name="B027PCartellinoSrv.exe">PJServizi\B027PCartellinoSrv.bdsproj</Projects>
+      <Projects Name="I010PIntegraP00Monitor.exe">IntegrazioneAnagrafico\I010PIntegraP00Monitor.bdsproj</Projects>
+      <Projects Name="D006PTimbrature.exe">Clienti\Ivrea\D006PTimbrature.bdsproj</Projects>
+      <Projects Name="D007PHengstler.exe">Clienti\Ivrea\D007PHengstler.bdsproj</Projects>
+      <Projects Name="PCalcolatrice.exe">PJCalcolatrice\PCalcolatrice.bdsproj</Projects>
+      <Projects Name="Q000PMenuPrincipale.exe">PJIso9001\Q000PMenuPrincipale.bdsproj</Projects>
+      <Projects Name="A002PAnagrafeW95.exe">PJRilPre\A002PAnagrafeW95.bdsproj</Projects>
+      <Projects Name="PCalcolatriceW95.exe">PJCalcolatrice\PCalcolatriceW95.bdsproj</Projects>
+      <Projects Name="Targets">A002PAnagrafe.exe M000PMissioni.exe P000PStipendi.exe S000PStatoGiuridico.exe W000PIrisWEB.exe W000PIrisWEB_IIS.dll W000PIrisWEB_SRV.exe A077PCOMServer.exe B002PAggiornamento.exe B005PAggIris.exe B006PScaricoAuto.exe B006PScaricoService.exe B007PManipolazioneDati.exe B008PGeneraPassword.exe B009PPuntoInformativo.exe B010PMessaggiOrologi.exe B010PMessaggiOrologiSrv.exe B011PAllineamentoServer.exe B012PAllineamentoClient.exe B013PIntegrazioneEMK.exe B014PIntegrazioneAnagrafica.exe B014PIntegrazioneAnagraficaSrv.exe B015PScaricoGiustificativi.exe B015PScaricoGiustificativiSrv.exe B016PSetup.exe B027PCartellinoSrv.exe I010PIntegraP00Monitor.exe D006PTimbrature.exe D007PHengstler.exe PCalcolatrice.exe Q000PMenuPrincipale.exe A002PAnagrafeW95.exe PCalcolatriceW95.exe</Projects>
+    </Projects>
+    <Dependencies/>
+  </Default.Personality>
+</BorlandProject>
