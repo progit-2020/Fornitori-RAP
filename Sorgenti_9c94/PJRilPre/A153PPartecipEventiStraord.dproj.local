@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2013/07/28 21:00:00.000.dfm,C:\SVN\Sviluppo\PJIrisWIN\Unit2.dfm=C:\SVN\Sviluppo\PJIrisWIN\A153UPartecipEventiStraordDtM.dfm</Transaction>
+    <Transaction>2013/07/28 21:00:00.000.pas,C:\SVN\Sviluppo\PJIrisWIN\Unit1.pas=C:\SVN\Sviluppo\PJIrisWIN\A153UPartecipEventiStraord.pas</Transaction>
+    <Transaction>2013/07/28 21:00:00.000.dproj,C:\Documents and Settings\ALBERTO.MONDOEDP\Documenti\RAD Studio\Projects\Project2.dproj=C:\SVN\Sviluppo\PJIrisWIN\A153PPartecipEventiStraord.dproj</Transaction>
+    <Transaction>2013/07/28 21:00:00.000.dfm,C:\SVN\Sviluppo\PJIrisWIN\Unit1.dfm=C:\SVN\Sviluppo\PJIrisWIN\A153UPartecipEventiStraord.dfm</Transaction>
+    <Transaction>2013/07/28 21:00:00.000.pas,C:\SVN\Sviluppo\PJIrisWIN\Unit2.pas=C:\SVN\Sviluppo\PJIrisWIN\A153UPartecipEventiStraordDtM.pas</Transaction>
+  </Transactions>
+</BorlandProject>

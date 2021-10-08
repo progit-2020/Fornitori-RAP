@@ -1,0 +1,41 @@
+{%DocType%}
+<html>
+  <head>
+  </head>
+  <body>
+    <style type="text/css">
+      #wc026confermaOrigDiv{
+        display: none;
+      }
+      #CHKCONFERMAALLEGATIORIGINALIWC026FALLEGATIITERFM_CHKBCAPTION {
+        display: inline-block;
+        vertical-align: top !important;
+      }
+      .WC026note {
+        min-width: 18em;
+        *width: 18em; /* bugfix IE */
+      }
+    </style>
+
+    <div class="grigliaDatiNav">
+    {%PagNavBarAllegati%}
+    </div>
+    <div class="grigliaDati" style="height:auto; overflow:auto;">
+     {%grdAllegati%}
+    </div>
+
+    <div id="wc026confermaOrigDiv" style="margin-top: 1em; padding: 0.5em; background-color: lightyellow; border: 1px solid #ccc;">
+      {%chkConfermaAllegatiOriginali%}
+    </div>
+
+    <div style="margin-top: 1em;">
+      {%lblInfo%}
+    </div>
+
+    <div style="width: 100%;  margin-top: 1em;" align="right">
+      <hr class="gradiente"/>
+      <div style="margin-right: 1em;"> {%btnChiudi%} </div>
+    </div>
+
+  </body>
+</html>

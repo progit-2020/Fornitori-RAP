@@ -1,0 +1,2391 @@
+ /**
+* autoNumeric.js
+* @author: Bob Knothe
+* @author: Sokolov Yura aka funny_falcon
+* @version: 1.7.4 - B
+*
+* Created by Robert J. Knothe on 2010-10-25. Please report any bug at http://www.decorplanit.com/plugin/
+* Created by Sokolov Yura on 2010-11-07. http://github.com/funny_falcon
+*
+* Copyright (c) 2011 Robert J. Knothe  http://www.decorplanit.com/plugin/
+* Copyright (c) 2011 Sokolov Yura aka funny_falcon
+*
+* The MIT License (http://www.opensource.org/licenses/mit-license.php)
+*
+* Permission is hereby granted, free of charge, to any person
+* obtaining a copy of this software and associated documentation
+* files (the "Software"), to deal in the Software without
+* restriction, including without limitation the rights to use,
+* copy, modify, merge, publish, distribute, sublicense, and/or sell
+* copies of the Software, and to permit persons to whom the
+* Software is furnished to do so, subject to the following
+* conditions:
+*
+* The above copyright notice and this permission notice shall be
+* included in all copies or substantial portions of the Software.
+*
+* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+* EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+* OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+* NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+* HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+* WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+* FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+* OTHER DEALINGS IN THE SOFTWARE.
+*/
+(function ($) {
+	/**
+	* Cross browser routin for getting selected range/cursor position
+	*/
+	function getElementSelection(that) {
+		var position = {};
+		if (that.selectionStart === undefined) {
+			that.focus();
+			var select = document.selection.createRange();
+			position.length = select.text.length;
+			select.moveStart('character', -that.value.length);
+			position.end = select.text.length;
+			position.start = position.end - position.length;
+		} else {
+			position.start = that.selectionStart;
+			position.end = that.selectionEnd;
+			position.length = position.end - position.start;
+		}
+		return position;
+	}
+	/**
+	* Cross browser routin for setting selected range/cursor position
+	*/
+	function setElementSelection(that, start, end) {
+		if (that.selectionStart === undefined) {
+			that.focus();
+			var r = that.createTextRange();
+			r.collapse(true);
+			r.moveEnd('character', end);
+			r.moveStart('character', start);
+			r.select();
+		} else {
+			that.selectionStart = start;
+			that.selectionEnd = end;
+		}
+	}
+	/**
+	* run callbacks in parameters if any
+	* any parameter could be a callback:
+	* - a function, which invoked with jQuery element, parameters and this parameter name and returns parameter value
+	* - a name of function, attached to $.autoNumeric, which called as previous
+	* - a css selector recognized by jQuery - value of input is taken as a parameter value
+	*/
+	function runCallbacks($this, io) {
+		/**
+		* loops through the io object (option array) to find the following
+		* k = option name example k=aNum
+		* val = option value example val=0123456789
+		*/
+		$.each(io, function (k, val) {
+			if (typeof (val) === 'function') {
+				io[k] = val($this, io, k);
+			} else if (typeof (val) === 'string') {
+				var kind = val.substr(0, 4);
+				if (kind === 'fun:') {
+					var fun = $.autoNumeric[val.substr(4)];
+					if (typeof (fun) === 'function') {
+						/**
+						* calls the attached function from meta="{aSign:'fun:functionName'}"
+						* example: $autoNumeric.functionName($this, io, optionName);
+						*/
+						io[k] = $.autoNumeric[val.substr(4)]($this, io, k);
+					} else {
+						io[k] = null;
+					}
+				} else if (kind === 'css:') {
+					/**
+					* retrieves the value by css selector meta="{mDec:'css:#decimal'}"
+					* example: would assign the value to io[k] = $('#decimal').val();
+					*/
+					io[k] = $(val.substr(4)).val();
+				}
+			}
+		});
+	}
+	function convertKeyToNumber(io, key) {
+		if (typeof (io[key]) === 'string') {
+			io[key] *= 1;
+		}
+	}
+	/**
+	* Preparing user defined options for further usage
+	* merge them with defaults appropriatly
+	*/
+	function autoCode($this, options) {
+		var io = $.extend({}, $.fn.autoNumeric.defaults, options);
+		if ($.metadata) { /** consider declared metadata on input */
+			io = $.extend(io, $this.metadata());
+		}
+		runCallbacks($this, io);
+		var vmax = io.vMax.toString().split('.');
+		var vmin = (!io.vMin && io.vMin !== 0) ? [] : io.vMin.toString().split('.');
+		convertKeyToNumber(io, 'vMax');
+		convertKeyToNumber(io, 'vMin');
+		convertKeyToNumber(io, 'mDec');
+		io.aNeg = io.vMin < 0 ? '-' : ''; /** set mDec, if not defained by user */
+		if (typeof (io.mDec) !== 'number') {
+			io.mDec = Math.max((vmax[1] ? vmax[1] : '').length, (vmin[1] ? vmin[1] : '').length);
+		} /** set alternative decimal separator key */
+		if (io.altDec === null && io.mDec > 0) {
+			if (io.aDec === '.' && io.aSep !== ',') {
+				io.altDec = ',';
+			} else if (io.aDec === ',' && io.aSep !== '.') {
+				io.altDec = '.';
+			}
+		} /** cache regexps for autoStrip */
+		var aNegReg = io.aNeg ? '([-\\' + io.aNeg + ']?)' : '(-?)';
+		io._aNegReg = aNegReg;
+		io._skipFirst = new RegExp(aNegReg + '[^-' + (io.aNeg ? '\\' + io.aNeg : '') + '\\' + io.aDec + '\\d]' + '.*?(\\d|\\' + io.aDec + '\\d)');
+		io._skipLast = new RegExp('(\\d\\' + io.aDec + '?)[^\\' + io.aDec + '\\d]\\D*$');
+		var allowed = (io.aNeg ? io.aNeg : '-') + io.aNum + '\\' + io.aDec;
+		if (io.altDec && io.altDec !== io.aSep) {
+			allowed += io.altDec;
+		}
+		io._allowed = new RegExp('[^' + allowed + ']', 'gi');
+		io._numReg = new RegExp(aNegReg + '(?:\\' + io.aDec + '?(\\d+\\' + io.aDec + '\\d+)|(\\d*(?:\\' + io.aDec + '\\d*)?))');
+		return io;
+	}
+	/**
+	* strip all unwanted characters and leave only a number
+	*/
+	function autoStrip(s, io, strip_zero) {
+		if (io.aSign) { /** remove currency sign */
+			while (s.indexOf(io.aSign) > -1) {
+				s = s.replace(io.aSign, '');
+			}
+		}
+		s = s.replace(io._skipFirst, '$1$2'); /** first replace anything before digits */
+		s = s.replace(io._skipLast, '$1'); /** then replace anything after digits */
+		s = s.replace(io._allowed, ''); /** then remove any uninterested characters */
+		if (io.altDec) {
+			s = s.replace(io.altDec, io.aDec);
+		} /** get only number string */
+		var m = s.match(io._numReg);
+		s = m ? [m[1], m[2], m[3]].join('') : ''; /** strip zero if need */
+		if (strip_zero) {
+			var strip_reg = '^' + io._aNegReg + '0*(\\d' + (strip_zero === 'leading' ? ')' : '|$)');
+			strip_reg = new RegExp(strip_reg);
+			s = s.replace(strip_reg, '$1$2');
+		}
+		return s;
+	}
+	/**
+	* truncate decimal part of a number
+	*/
+	function truncateDecimal(s, aDec, mDec) {
+		if (aDec && mDec) {
+			var parts = s.split(aDec);
+			/** truncate decimal part to satisfying length
+			* cause we would round it anyway */
+			if (parts[1] && parts[1].length > mDec) {
+				if (mDec > 0) {
+					parts[1] = parts[1].substring(0, mDec);
+					s = parts.join(aDec);
+				} else {
+					s = parts[0];
+				}
+			}
+		}
+		return s;
+	}
+	/**
+	* prepare number string to be converted to real number
+	*/
+	function fixNumber(s, aDec, aNeg) {
+		if (aDec && aDec !== '.') {
+			s = s.replace(aDec, '.');
+		}
+		if (aNeg && aNeg !== '-') {
+			s = s.replace(aNeg, '-');
+		}
+		if (!s.match(/\d/)) {
+			s += '0';
+		}
+		return s;
+	}
+	/**
+	* prepare real number to be converted to our format
+	*/
+	function presentNumber(s, aDec, aNeg) {
+		if (aNeg && aNeg !== '-') {
+			s = s.replace('-', aNeg);
+		}
+		if (aDec && aDec !== '.') {
+			s = s.replace('.', aDec);
+		}
+		return s;
+	}
+	/**
+	* checking that number satisfy format conditions
+	* and lays between io.vMin and io.vMax
+	*/
+	function autoCheck(s, io) {
+		s = autoStrip(s, io);
+		s = truncateDecimal(s, io.aDec, io.mDec);
+		s = fixNumber(s, io.aDec, io.aNeg);
+		var value = +s;
+		return value >= io.vMin && value <= io.vMax;
+	}
+	/**
+	* private function to check for empty value
+	*/
+	function checkEmpty(iv, io, signOnEmpty) {
+		if (iv === '' || iv === io.aNeg) {
+			if (io.wEmpty === 'zero') {
+				return iv + '0';
+			} else if (io.wEmpty === 'sign' || signOnEmpty) {
+				return iv + io.aSign;
+			} else {
+				return iv;
+			}
+		}
+		return null;
+	}
+	/**
+	* private function that formats our number
+	*/
+	function autoGroup(iv, io) {
+		iv = autoStrip(iv, io);
+		var empty = checkEmpty(iv, io, true);
+		if (empty !== null) {
+			return empty;
+		}
+		var digitalGroup = '';
+		if (io.dGroup === 2) {
+			digitalGroup = /(\d)((\d)(\d{2}?)+)$/;
+		} else if (io.dGroup === 4) {
+			digitalGroup = /(\d)((\d{4}?)+)$/;
+		} else {
+			digitalGroup = /(\d)((\d{3}?)+)$/;
+		} /** splits the string at the decimal string */
+		var ivSplit = iv.split(io.aDec);
+		if (io.altDec && ivSplit.length === 1) {
+			ivSplit = iv.split(io.altDec);
+		} /** assigns the whole number to the a varibale (s) */
+		var s = ivSplit[0];
+		if (io.aSep) {
+			while (digitalGroup.test(s)) { /**  re-inserts the thousand sepparator via a regualer expression */
+				s = s.replace(digitalGroup, '$1' + io.aSep + '$2');
+			}
+		}
+		if (io.mDec !== 0 && ivSplit.length > 1) {
+			if (ivSplit[1].length > io.mDec) {
+				ivSplit[1] = ivSplit[1].substring(0, io.mDec);
+			} /** joins the whole number with the deciaml value */
+			iv = s + io.aDec + ivSplit[1];
+		} else { /** if whole numers only */
+			iv = s;
+		}
+		if (io.aSign) {
+			var has_aNeg = iv.indexOf(io.aNeg) !== -1;
+			iv = iv.replace(io.aNeg, '');
+			iv = io.pSign === 'p' ? io.aSign + iv : iv + io.aSign;
+			if (has_aNeg) {
+				iv = io.aNeg + iv;
+			}
+		}
+		return iv;
+	}
+	/**
+	* round number after setting by pasting or $().autoNumericSet()
+	* private function for round the number
+	* please note this handled as text - Javascript math function can return inaccurate values
+	* also this offers multiple rounding metods that are not easily accomplished in javascript
+	*/
+	function autoRound(iv, mDec, mRound, aPad, vMax, iPad) { /** value to string */
+		iv = (iv === '') ? '0' : iv.toString();
+		var ivRounded = '';
+		var i = 0;
+		var nSign = '';
+		var rDec = (typeof (aPad) === 'boolean' || aPad === null) ? (aPad ? mDec : 0) : +aPad;
+		var truncateZeros = function (ivRounded) { /** truncate not needed zeros */
+			var regex = rDec === 0 ? (/(\.[1-9]*)0*$/) : rDec === 1 ? (/(\.\d[1-9]*)0*$/) : new RegExp('(\\.\\d{' + rDec + '}[1-9]*)0*$');
+			ivRounded = ivRounded.replace(regex, '$1'); /** If there are no decimal places, we don't need a decimal point at the end */
+			if (rDec === 0) {
+				ivRounded = ivRounded.replace(/\.$/, '');
+			}
+			return ivRounded;
+		};
+		if (iv.charAt(0) === '-') { /** Checks if the iv (input Value)is a negative value */
+			nSign = '-'; /** removes the negative sign will be added back later if required */
+			iv = iv.replace('-', '');
+		}
+		
+		
+		 /** prepend a zero if first character is not a digit (then it is likely to be a dot)*/
+		if (!iv.match(/^\d/)) {
+			iv = '0' + iv;
+		} /** determines if the value is zero - if zero no negative sign */
+		if (nSign === '-' && +iv === 0) {
+			nSign = '';
+		} /** trims leading zero's if needed */
+		if ((+iv) > 0) {
+			iv = iv.replace(/^0*(\d)/, '$1');
+		} /** decimal postion as an integer */
+		var dPos = iv.lastIndexOf('.'); /** virtual decimal position */
+		var vdPos = dPos === -1 ? iv.length - 1 : dPos; /** checks decimal places to determine if rounding is required */
+		var cDec = (iv.length - 1) - vdPos; /** check if no rounding is required */
+		if (iPad) {
+			/**Caratto. Fa pad anche su numeri interi fino a raggiungere la lunghezza indicata in vMax */
+			/** numero di cifre intere presenti nella stringa */
+			var cInt = dPos === -1 ? iv.length : dPos;
+			/** numero di cifre intere da raggiungere. parsifico vMax */
+			var iTmp = vMax.toString().lastIndexOf('.'); 			
+			var cIntMax = iTmp === -1 ?vMax.toString().length : iTmp;
+			for (i = cInt ; i <cIntMax; i += 1) {
+				iv = '0' + iv;
+			}
+		}
+		if (cDec <= mDec) {
+			ivRounded = iv; /** check if we need to pad with zeros */
+			if (cDec < rDec) {
+				if (dPos === -1) {
+					ivRounded += '.';
+				}
+				while (cDec < rDec) {
+					var zeros = '000000'.substring(0, rDec - cDec);
+					ivRounded += zeros;
+					cDec += zeros.length;
+				}
+			} else if (cDec > rDec) {
+				ivRounded = truncateZeros(ivRounded);
+			} else if (cDec === 0 && rDec === 0) {
+				ivRounded = ivRounded.replace(/\.$/, '');
+			}
+			return nSign + ivRounded;
+		} /** rounded length of the string after rounding  */
+		var rLength = dPos + mDec; /** test round */
+		var tRound = +iv.charAt(rLength + 1);
+		var ivArray = iv.substring(0, rLength + 1).split('');
+		var odd = (iv.charAt(rLength) === '.') ? (iv.charAt(rLength - 1) % 2) : (iv.charAt(rLength) % 2);
+		if ((tRound > 4 && mRound === 'S') || (tRound > 4 && mRound === 'A' && nSign === '') || (tRound > 5 && mRound === 'A' && nSign === '-') || (tRound > 5 && mRound === 's') || (tRound > 5 && mRound === 'a' && nSign === '') || (tRound > 4 && mRound === 'a' && nSign === '-') || (tRound > 5 && mRound === 'B') || (tRound === 5 && mRound === 'B' && odd === 1) || (tRound > 0 && mRound === 'C' && nSign === '') || (tRound > 0 && mRound === 'F' && nSign === '-') || (tRound > 0 && mRound === 'U')) {
+			/** Round up the last digit if required, and continue until no more 9's are found */
+			for (i = (ivArray.length - 1); i >= 0; i -= 1) {
+				if (ivArray[i] !== '.') {
+					ivArray[i] = +ivArray[i] + 1;
+					if (ivArray[i] < 10) {
+						break;
+					} else if (i > 0) {
+						ivArray[i] = '0';
+					}
+				}
+			}
+		} /** Reconstruct the string, converting any 10's to 0's */
+		ivArray = ivArray.slice(0, rLength + 1);
+		ivRounded = truncateZeros(ivArray.join('')); /** return rounded value */
+		return nSign + ivRounded;
+	}
+	/**
+	* Holder object for field properties
+	*/
+	function autoNumericHolder(that, options) {
+		this.options = options;
+		this.that = that;
+		this.$that = $(that);
+		this.formatted = false;
+		this.io = autoCode(this.$that, this.options);
+		this.value = that.value;
+	}
+	autoNumericHolder.prototype = {
+		init: function (e) {
+			this.value = this.that.value;
+			this.io = autoCode(this.$that, this.options);
+			this.cmdKey = e.metaKey;
+			this.shiftKey = e.shiftKey;
+			this.selection = getElementSelection(this.that); /** keypress event overwrites meaningfull value of e.keyCode */
+			if (e.type === 'keydown' || e.type === 'keyup') {
+				this.kdCode = e.keyCode;
+			}
+			this.which = e.which;
+			this.processed = false;
+			this.formatted = false;
+		},
+		setSelection: function (start, end, setReal) {
+			start = Math.max(start, 0);
+			end = Math.min(end, this.that.value.length);
+			this.selection = {
+				start: start,
+				end: end,
+				length: end - start
+			};
+			if (setReal === undefined || setReal) {
+				setElementSelection(this.that, start, end);
+			}
+		},
+		setPosition: function (pos, setReal) {
+			this.setSelection(pos, pos, setReal);
+		},
+		getBeforeAfter: function () {
+			var value = this.value;
+			var left = value.substring(0, this.selection.start);
+			var right = value.substring(this.selection.end, value.length);
+			return [left, right];
+		},
+		getBeforeAfterStriped: function () {
+			var parts = this.getBeforeAfter();
+			parts[0] = autoStrip(parts[0], this.io);
+			parts[1] = autoStrip(parts[1], this.io);
+			return parts;
+		},
+		/**
+		* strip parts from excess characters and leading zeroes
+		*/
+		normalizeParts: function (left, right) {
+			var io = this.io;
+			right = autoStrip(right, io); /** if right is not empty and first character is not aDec, */
+			/** we could strip all zeros, otherwise only leading */
+			var strip = right.match(/^\d/) ? true : 'leading';
+			left = autoStrip(left, io, strip); /** strip leading zeros from right part if left part has no digits */
+			if ((left === '' || left === io.aNeg)) {
+				if (right > '') {
+					right = right.replace(/^0*(\d)/, '$1');
+				}
+			}
+			var new_value = left + right; /** insert zero if has leading dot */
+			if (io.aDec) {
+				var m = new_value.match(new RegExp('^' + io._aNegReg + '\\' + io.aDec));
+				if (m) {
+					left = left.replace(m[1], m[1] + '0');
+					new_value = left + right;
+				}
+			} /** insert zero if number is empty and io.wEmpty == 'zero' */
+			if (io.wEmpty === 'zero' && (new_value === io.aNeg || new_value === '')) {
+				left += '0';
+			}
+			return [left, right];
+		},
+		/**
+		* set part of number to value keeping position of cursor
+		*/
+		setValueParts: function (left, right) {
+			var io = this.io;
+			var parts = this.normalizeParts(left, right);
+			var new_value = parts.join('');
+			var position = parts[0].length;
+			if (autoCheck(new_value, io)) {
+				new_value = truncateDecimal(new_value, io.aDec, io.mDec);
+				if (position > new_value.length) {
+					position = new_value.length;
+				}
+				this.value = new_value;
+				this.setPosition(position, false);
+				return true;
+			}
+			return false;
+		},
+		/**
+		* helper function for expandSelectionOnSign
+		* returns sign position of a formatted value
+		*/
+		signPosition: function () {
+			var io = this.io, aSign = io.aSign, that = this.that;
+			if (aSign) {
+				var aSignLen = aSign.length;
+				if (io.pSign === 'p') {
+					var hasNeg = io.aNeg && that.value && that.value.charAt(0) === io.aNeg;
+					return hasNeg ? [1, aSignLen + 1] : [0, aSignLen];
+				} else {
+					var valueLen = that.value.length;
+					return [valueLen - aSignLen, valueLen];
+				}
+			} else {
+				return [1000, -1];
+			}
+		},
+		/**
+		* expands selection to cover whole sign
+		* prevents partial deletion/copying/overwritting of a sign
+		*/
+		expandSelectionOnSign: function (setReal) {
+			var sign_position = this.signPosition();
+			var selection = this.selection;
+			if (selection.start < sign_position[1] && selection.end > sign_position[0]) { /** if selection catches something except sign and catches only space from sign */
+				if ((selection.start < sign_position[0] || selection.end > sign_position[1]) && this.value.substring(Math.max(selection.start, sign_position[0]), Math.min(selection.end, sign_position[1])).match(/^\s*$/)) { /** then select without empty space */
+					if (selection.start < sign_position[0]) {
+						this.setSelection(selection.start, sign_position[0], setReal);
+					} else {
+						this.setSelection(sign_position[1], selection.end, setReal);
+					}
+				} else { /** else select with whole sign */
+					this.setSelection(Math.min(selection.start, sign_position[0]), Math.max(selection.end, sign_position[1]), setReal);
+				}
+			}
+		},
+		/**
+		* try to strip pasted value to digits
+		*/
+		checkPaste: function () {
+			if (this.valuePartsBeforePaste !== undefined) {
+				var parts = this.getBeforeAfter();
+				var oldParts = this.valuePartsBeforePaste;
+				delete this.valuePartsBeforePaste; /* try to strip pasted value first */
+				parts[0] = parts[0].substr(0, oldParts[0].length) + autoStrip(parts[0].substr(oldParts[0].length), this.io);
+				if (!this.setValueParts(parts[0], parts[1])) {
+					this.value = oldParts.join('');
+					this.setPosition(oldParts[0].length, false);
+				}
+			}
+		},
+		/**
+		* process pasting, cursor moving and skipping of not interesting keys
+		* if returns true, futher processing is not performed
+		*/
+		skipAllways: function (e) {
+			var kdCode = this.kdCode, which = this.which, cmdKey = this.cmdKey; /** catch the ctrl up on ctrl-v */
+			if (kdCode === 17 && e.type === 'keyup' && this.valuePartsBeforePaste !== undefined) {
+				this.checkPaste();
+				return false;
+			}
+			/** codes are taken from http://www.cambiaresearch.com/c4/702b8cd1-e5b0-42e6-83ac-25f0306e3e25/Javascript-Char-Codes-Key-Codes.aspx
+			* skip Fx keys, windows keys, other special keys */
+			if ((kdCode >= 112 && kdCode <= 123) || (kdCode >= 91 && kdCode <= 93) || (kdCode >= 9 && kdCode <= 31) || (kdCode < 8 && (which === 0 || which === kdCode)) || kdCode === 144 || kdCode === 145 || kdCode === 45) {
+				return true;
+			} /** if select all (a=65)*/
+			if (cmdKey && kdCode === 65) {
+				return true;
+			} /** if copy (c=67) paste (v=86) or cut (x=88) */
+			if (cmdKey && (kdCode === 67 || kdCode === 86 || kdCode === 88)) { /** replace or cut whole sign */
+				if (e.type === 'keydown') {
+					this.expandSelectionOnSign();
+				} /** try to prevent wrong paste */
+				if (kdCode === 86) {
+					if (e.type === 'keydown' || e.type === 'keypress') {
+						if (this.valuePartsBeforePaste === undefined) {
+							this.valuePartsBeforePaste = this.getBeforeAfter();
+						}
+					} else {
+						this.checkPaste();
+					}
+				}
+				return e.type === 'keydown' || e.type === 'keypress' || kdCode === 67;
+			}
+			if (cmdKey) {
+				return true;
+			}
+			if (kdCode === 37 || kdCode === 39) { /** jump over thousand separator */
+				var aSep = this.io.aSep, start = this.selection.start, value = this.that.value;
+				if (e.type === 'keydown' && aSep && !this.shiftKey) {
+					if (kdCode === 37 && value.charAt(start - 2) === aSep) {
+						this.setPosition(start - 1);
+					} else if (kdCode === 39 && value.charAt(start) === aSep) {
+						this.setPosition(start + 1);
+					}
+				}
+				return true;
+			}
+			if (kdCode >= 34 && kdCode <= 40) {
+				return true;
+			}
+			return false;
+		},
+		/**
+		* process deletion of characters
+		* returns true if processing performed
+		*/
+		processAllways: function () {
+			var parts; /** process backspace or delete */
+			if (this.kdCode === 8 || this.kdCode === 46) {
+				if (!this.selection.length) {
+					parts = this.getBeforeAfterStriped();
+					if (this.kdCode === 8) {
+						parts[0] = parts[0].substring(0, parts[0].length - 1);
+					} else {
+						parts[1] = parts[1].substring(1, parts[1].length);
+					}
+					this.setValueParts(parts[0], parts[1]);
+				} else {
+					this.expandSelectionOnSign(false);
+					parts = this.getBeforeAfterStriped();
+					this.setValueParts(parts[0], parts[1]);
+				}
+				return true;
+			}
+			return false;
+		},
+		/**
+		* process insertion of characters
+		* returns true if processing performed
+		*/
+		processKeypress: function () {
+			var io = this.io;
+			var cCode = String.fromCharCode(this.which);
+			var parts = this.getBeforeAfterStriped();
+			var left = parts[0], right = parts[1]; /** start rules when the decimal charactor key is pressed */
+			/** always use numeric pad dot to insert decimal separator */
+			if (cCode === io.aDec || (io.altDec && cCode === io.altDec) || ((cCode === '.' || cCode === ',') && this.kdCode === 110)) { /** do not allow decimal character if no decimal part allowed */
+				if (!io.mDec || !io.aDec) {
+					return true;
+				} /** do not allow decimal character before aNeg character */
+				if (io.aNeg && right.indexOf(io.aNeg) > -1) {
+					return true;
+				} /** do not allow decimal character if other decimal character present */
+				if (left.indexOf(io.aDec) > -1) {
+					return true;
+				}
+				if (right.indexOf(io.aDec) > 0) {
+					return true;
+				}
+				if (right.indexOf(io.aDec) === 0) {
+					right = right.substr(1);
+				}
+				this.setValueParts(left + io.aDec, right);
+				return true;
+			} /** start rule on negative sign */
+			if (cCode === '-' || cCode === '+') { /** prevent minus if not allowed */
+				if (!io.aNeg) {
+					return true;
+				} /** carret is always after minus */
+				if (left === '' && right.indexOf(io.aNeg) > -1) {
+					left = io.aNeg;
+					right = right.substring(1, right.length);
+				} /** change sign of number, remove part if should */
+				if (left.charAt(0) === io.aNeg) {
+					left = left.substring(1, left.length);
+				} else {
+					left = (cCode === '-') ? io.aNeg + left : left;
+				}
+				this.setValueParts(left, right);
+				return true;
+			} /** digits */
+			if (cCode >= '0' && cCode <= '9') { /** if try to insert digit before minus */
+				if (io.aNeg && left === '' && right.indexOf(io.aNeg) > -1) {
+					left = io.aNeg;
+					right = right.substring(1, right.length);
+				}
+				this.setValueParts(left + cCode, right);
+				return true;
+			} /** prevent any other character */
+			return true;
+		},
+		/**
+		* formatting of just processed value with keeping of cursor position
+		*/
+		formatQuick: function () {
+			var io = this.io;
+			var parts = this.getBeforeAfterStriped();
+			var value = autoGroup(this.value, this.io);
+			var position = value.length;
+			if (value) {
+				/** prepare regexp which searches for cursor position from unformatted left part */
+				var left_ar = parts[0].split('');
+				var i;
+				for (i = 0; i < left_ar.length; i += 1) { /** thanks Peter Kovari */
+					if (!left_ar[i].match('\\d')) {
+						left_ar[i] = '\\' + left_ar[i];
+					}
+				}
+				var leftReg = new RegExp('^.*?' + left_ar.join('.*?'));
+				/** search cursor position in formatted value */
+				var newLeft = value.match(leftReg);
+				if (newLeft) {
+					position = newLeft[0].length;
+					/** if we are just before sign which is in prefix position */
+					if (((position === 0 && value.charAt(0) !== io.aNeg) || (position === 1 && value.charAt(0) === io.aNeg)) && io.aSign && io.pSign === 'p') {
+						/** place carret after prefix sign */
+						position = this.io.aSign.length + (value.charAt(0) === '-' ? 1 : 0);
+					}
+				} else if (io.aSign && io.pSign === 's') {
+					/** if we could not find a place for cursor and have a sign as a suffix */
+					/** place carret before suffix currency sign */
+					position -= io.aSign.length;
+				}
+			}
+			this.that.value = value;
+			this.setPosition(position);
+			this.formatted = true;
+		}
+	};
+	function getData($that) {
+		var data = $that.data('autoNumeric');
+		if (!data) {
+			data = {};
+			$that.data('autoNumeric', data);
+		}
+		return data;
+	}
+	function getHolder($that, options) {
+		var data = getData($that);
+		var holder = data.holder;
+		if (holder === undefined && options) {
+			holder = new autoNumericHolder($that.get(0), options);
+			data.holder = holder;
+		}
+		return holder;
+	}
+	function getOptions($that) {
+		var data = $that.data('autoNumeric');
+		if (data && data.holder) {
+			return data.holder.options;
+		}
+		return {};
+	}
+	function onInit(options) {
+		options = options || {};
+		var iv = $(this), holder = getHolder(iv, options);
+		if (holder.io.aForm && (this.value || holder.io.wEmpty !== 'empty')) {
+			iv.autoNumericSet(iv.autoNumericGet(options), options);
+		}
+	}
+	function onKeyDown(e) {
+		var iv = $(e.target), holder = getHolder(iv);
+		holder.init(e);
+		if (holder.skipAllways(e)) {
+			holder.processed = true;
+			return true;
+		}
+		if (holder.processAllways()) {
+			holder.processed = true;
+			holder.formatQuick();
+			e.preventDefault();
+			return false;
+		} else {
+			holder.formatted = false;
+		}
+		return true;
+	}
+	function onKeyPress(e) {
+		var iv = $(e.target), holder = getHolder(iv);
+		var processed = holder.processed;
+		holder.init(e);
+		if (holder.skipAllways(e)) {
+			return true;
+		}
+		if (processed) {
+			e.preventDefault();
+			return false;
+		}
+		if (holder.processAllways() || holder.processKeypress()) {
+			holder.formatQuick();
+			e.preventDefault();
+			return false;
+		} else {
+			holder.formatted = false;
+		}
+	}
+	function onKeyUp(e) {
+		var iv = $(e.target), holder = getHolder(iv);
+		holder.init(e);
+		var skip = holder.skipAllways(e);
+		holder.kdCode = 0;
+		delete holder.valuePartsBeforePaste;
+		if (skip) {
+			return true;
+		}
+		if (this.value === '') {
+			return true;
+		}
+		if (!holder.formatted) {
+			holder.formatQuick();
+		}
+	}
+	function onFocusIn(e) {
+		var iv = $(e.target), holder = getHolder(iv);
+		holder.inVal = iv.val();
+		var onempty = checkEmpty(holder.inVal, holder.io, true);
+		if (onempty !== null) {
+			iv.val(onempty);
+		}
+	}
+	/** start change - thanks to Javier P. corrected the inline onChange event  added focusout version 1.55*/
+	function onFocusOut(e) {
+		var iv = $(e.target), holder = getHolder(iv);
+		var io = holder.io, value = iv.val(), origValue = value;
+		if (value !== '') {
+			value = autoStrip(value, io);
+			if (checkEmpty(value, io) === null && autoCheck(value, io)) {
+				value = fixNumber(value, io.aDec, io.aNeg);
+				value = autoRound(value, io.mDec, io.mRound, io.aPad, io.vMax, io.iPad);
+				value = presentNumber(value, io.aDec, io.aNeg);
+			} else {
+				value = '';
+			}
+		}
+		var groupedValue = checkEmpty(value, io, false);
+		if (groupedValue === null) {
+			groupedValue = autoGroup(value, io);
+		}
+		if (groupedValue !== origValue) {
+			iv.val(groupedValue);
+		}
+		if (groupedValue !== holder.inVal) {
+			iv.change();
+			delete holder.inVal;
+		}
+	}
+	$.fn.autoNumeric = function (options) {
+		return this.each(function () {
+			onInit.call(this, options);
+		}).unbind('.autoNumeric').bind({
+			'keydown.autoNumeric': onKeyDown,
+			'keypress.autoNumeric': onKeyPress,
+			'keyup.autoNumeric': onKeyUp,
+			'focusin.autoNumeric': onFocusIn,
+			'focusout.autoNumeric': onFocusOut
+		});
+	};
+	/** thanks to Anthony & Evan C */
+    function autoGet(obj) {
+		if (typeof (obj) === 'string') {
+			obj = obj.replace(/\[/g, "\\[").replace(/\]/g, "\\]");
+			obj = '#' + obj.replace(/(:|\.)/g, '\\$1');
+		}
+		return $(obj);
+	}
+	$.autoNumeric = {};
+	/**
+	* public function that stripes the format and converts decimal seperator to a period
+	* as of 1.7.2 `options` argument is deprecated, options are taken from initializer
+	*/
+	$.autoNumeric.Strip = function (ii) {
+		var $that = autoGet(ii);
+		var options = getOptions($that);
+		if (arguments[1] && typeof (arguments[1]) === 'object') {
+			options = $.extend({}, options, arguments[1]);
+		}
+		var io = autoCode($that, options);
+		var iv = autoGet(ii).val();
+		iv = autoStrip(iv, io);
+		iv = fixNumber(iv, io.aDec, io.aNeg);
+		if (+iv === 0) {
+			iv = '0';
+		}
+		return iv;
+	};
+	/**
+	* public function that recieves a numeric string and formats to the target input field
+	* as of 1.7.2 `options` argument is deprecated, options are taken from initializer
+	*/
+	$.autoNumeric.Format = function (ii, iv) {
+		var $that = autoGet(ii);
+		var options = getOptions($that);
+		if (arguments[2] && typeof (arguments[2]) === 'object') {
+			options = $.extend({}, options, arguments[2]);
+		}
+		iv.toString();
+		var io = autoCode($that, options);
+		iv = autoRound(iv, io.mDec, io.mRound, io.aPad, io.vMax, io.iPad);
+		iv = presentNumber(iv, io.aDec, io.aNeg);
+		if (!autoCheck(iv, io)) {
+			iv = autoRound('', io.mDec, io.mRound, io.aPad, io.vMax, io.iPad);
+		}
+		return autoGroup(iv, io);
+	};
+	/**
+	* get a number (as a number) from a field.
+	* as of 1.7.2 argument is deprecated, options are taken from initializer
+	* $('input#my').autoNumericGet()
+	*/
+	$.fn.autoNumericGet = function () {
+		if (arguments[0]) {
+			return $.autoNumeric.Strip(this, arguments[0]);
+		}
+		return $.autoNumeric.Strip(this);
+	};
+	/**
+	* set a number to a field, formatting it appropriatly
+	* as of 1.7.2 second argument is deprecated, options are taken from initializer
+	* $('input#my').autoNumericSet(2.423)
+	*/
+	$.fn.autoNumericSet = function (iv) {
+		if (arguments[1]) {
+			return this.val($.autoNumeric.Format(this, iv, arguments[1]));
+		}
+		return this.val($.fn.autoNumeric.Format(this, iv));
+	};
+	/**
+	* plugin defaults
+	*/
+	$.autoNumeric.defaults = {
+		/**  allowed  numeric values
+		* please do not modify
+		*/
+		aNum: '0123456789',
+		/** allowed thousand separator characters
+		* comma = ','
+		* period "full stop" = '.'
+		* apostrophe is escaped = '\''
+		* space = ' '
+		* none = ''
+		* NOTE: do not use numeric characters
+		*/
+		aSep: ',',
+		/** digital grouping for the thousand separator used in Format
+		* dGroup: '2', results in 99,99,99,999 common in India
+		* dGroup: '3', results in 999,999,999 default
+		* dGroup: '4', results in 9999,9999,9999 used in some Asian countries
+		*/
+		dGroup: '3',
+		/** allowed decimal separator characters
+		* period "full stop" = '.'
+		* comma = ','
+		*/
+		aDec: '.',
+		/** allow to declare alternative decimal separator which is automatically replaced by aDec
+		* developed for countries the use a comma ',' as the decimal character
+		* and have keyboards\numeric pads that have a period 'full stop' as the decimal characters (Spain is an example)
+		*/
+		altDec: null,
+		/** allowed currency symbol
+		* Must be in quotes aSign: '$',
+		*/
+		aSign: '',
+		/** placement of currency sign
+		* for prefix  pSign: 'p',
+		* for suffix pSign: 's',
+		*/
+		pSign: 'p',
+		/** maximum possible value
+		* value must be enclosed in quotes and use the period for the decimal point
+		* value must be larger than vMin
+		*/
+		vMax: '999999999.99',
+		/** minimum possible value
+		* value must be enclosed in quotes and use the period for the decimal point
+		* value must be smaller than vMax
+		*/
+		vMin: '0.00',
+		/** max number of decimal places = used to overide deciaml places set by the vMin & vMax values
+		* value must be enclosed in quotes example mDec: '3',
+		* This can also set the value via a call back function mDec: 'css:#
+		*/
+		mDec: null,
+		/** method used for rounding
+		* mRound: 'S', Round-Half-Up Symmetric (default)
+		* mRound: 'A', Round-Half-Up Asymmetric
+		* mRound: 's', Round-Half-Down Symmetric (lower case s)
+		* mRound: 'a', Round-Half-Down Asymmetric (lower case a)
+		* mRound: 'B', Round-Half-Even "Bankers Rounding"
+		* mRound: 'U', Round Up "Round-Away-From-Zero"
+		* mRound: 'D', Round Down "Round-Toward-Zero" - same as trancate
+		* mRound: 'C', Round to Ceiling "Toward Positive Infinity"
+		* mRound: 'F', Round to Floor "Toward Negative Infinity"
+		*/
+		mRound: 'S',
+		/** controls decimal padding
+		* aPad: true - always Pad decimals with zeros
+		* aPad: false - does not pad with zeros.
+		* aPad: `some number` - pad decimals with zero to number different from mDec
+		* thanks to Jonas Johansson for the suggestion
+		*/
+		aPad: true,
+		/** controls integer padding
+		* pPad: true - always Pad integer to vMax lenght
+		* aPad: false - does not pad with zeros.
+		*/
+		iPad: false,
+		/** Displayed on empty string
+		* wEmpty: 'empty', - input can be blank
+		* wEmpty: 'zero', - displays zero
+		* wEmpty: 'sign', - displays the currency sign
+		*/
+		wEmpty: 'empty',
+		/** atomatically format value "###########.##" in form
+		* Please note this is a little buggy due to how each browser handles refresh
+		* use with caution
+		*/
+		aForm: false
+	}; /** deprecated way to access defaults and helper functions */
+	$.fn.autoNumeric.defaults = $.autoNumeric.defaults;
+	$.fn.autoNumeric.Strip = $.autoNumeric.Strip;
+	$.fn.autoNumeric.Format = $.autoNumeric.Format;
+})(jQuery); $.fn.uppercase = function() {
+  $(this).keypress(function(e) {
+    if (e.target.createTextRange) {
+      var r = document.selection.createRange().duplicate();
+      r.moveEnd('character', e.target.value.length);
+      if (r.text == '') mstart = e.target.value.length;
+      else mstart = e.target.value.lastIndexOf(r.text);
+      r.moveStart('character', -e.target.value.length);
+      mend = r.text.length;
+    } else {
+      mstart = e.target.selectionStart;
+      mend = e.target.selectionEnd;
+    }
+    // a-z -> A-Z
+    if(e.which > 96 && e.which < 123) {
+      e.preventDefault();
+      e.stopPropagation();
+      z = $(e.target).val();
+      front = z.substring(0, mstart);
+      back = z.substring(mend);
+      $(e.target).val(front+String.fromCharCode(e.which - 32) + back);
+
+      if(e.target.createTextRange) { 
+          var range = e.target.createTextRange(); 
+          range.move("character", mend+1); 
+          range.select(); 
+      } else if(e.target.selectionStart) { 
+          e.target.focus(); 
+          e.target.setSelectionRange(mend+1, mend+1); 
+      }  
+    }
+  });
+}
+
+$.fn.lowercase = function() {
+  $(this).keypress(function(e) {
+    if (e.target.createTextRange) {
+      var r = document.selection.createRange().duplicate();
+      r.moveEnd('character', e.target.value.length);
+      if (r.text == '') mstart = e.target.value.length;
+      else mstart = e.target.value.lastIndexOf(r.text);
+      r.moveStart('character', -e.target.value.length);
+      mend = r.text.length;
+    } else {
+      mstart = e.target.selectionStart;
+      mend = e.target.selectionEnd;
+    }
+    // A-Z -> a-z
+    if(e.which > 64 && e.which < 91) {
+      e.preventDefault();
+      e.stopPropagation();
+      z = $(e.target).val();
+      front = z.substring(0, mstart);
+      back = z.substring(mend);
+      $(e.target).val(front+String.fromCharCode(e.which + 32) + back);
+
+      if(e.target.createTextRange) { 
+          var range = e.target.createTextRange(); 
+          range.move("character", mend+1); 
+          range.select(); 
+      } else if(e.target.selectionStart) { 
+          e.target.focus(); 
+          e.target.setSelectionRange(mend+1, mend+1); 
+      }  
+    }
+  });
+} // jQuery Context Menu Plugin
+//
+// Version 1.01
+//
+// Cory S.N. LaViska
+// A Beautiful Site (http://abeautifulsite.net/)
+//
+// More info: http://abeautifulsite.net/2008/09/jquery-context-menu-plugin/
+//
+// Terms of Use
+//
+// This plugin is dual-licensed under the GNU General Public License
+//   and the MIT License and is copyright A Beautiful Site, LLC.
+//
+if(jQuery)( function() {
+	$.extend($.fn, {
+		
+		contextMenu: function(o, callback) {
+			// Defaults
+			if( o.menu == undefined ) return false;
+			if( o.inSpeed == undefined ) o.inSpeed = 150;
+			if( o.outSpeed == undefined ) o.outSpeed = 75;
+			// 0 needs to be -1 for expected results (no fade)
+			if( o.inSpeed == 0 ) o.inSpeed = -1;
+			if( o.outSpeed == 0 ) o.outSpeed = -1;
+			// Loop each context menu
+			$(this).each( function() {
+				var el = $(this);
+				var offset = $(el).offset();
+				// Add contextMenu class
+				$('#' + o.menu).addClass('contextMenu');
+				// Simulate a true right click
+				$(this).mousedown( function(e) {
+					var evt = e;
+					evt.stopPropagation();
+					$(this).mouseup( function(e) {
+						e.stopPropagation();
+						var srcElement = $(this);
+						$(this).unbind('mouseup');
+						if( evt.button == 2 ) {
+							// Hide context menus that may be showing
+							$(".contextMenu").hide();
+							// Get this context menu
+							var menu = $('#' + o.menu);
+							
+							if( $(el).hasClass('disabled') ) return false;
+							
+							// Detect mouse position
+							var d = {}, x, y;
+							if( self.innerHeight ) {
+								d.pageYOffset = self.pageYOffset;
+								d.pageXOffset = self.pageXOffset;
+								d.innerHeight = self.innerHeight;
+								d.innerWidth = self.innerWidth;
+							} else if( document.documentElement &&
+								document.documentElement.clientHeight ) {
+								d.pageYOffset = document.documentElement.scrollTop;
+								d.pageXOffset = document.documentElement.scrollLeft;
+								d.innerHeight = document.documentElement.clientHeight;
+								d.innerWidth = document.documentElement.clientWidth;
+							} else if( document.body ) {
+								d.pageYOffset = document.body.scrollTop;
+								d.pageXOffset = document.body.scrollLeft;
+								d.innerHeight = document.body.clientHeight;
+								d.innerWidth = document.body.clientWidth;
+							}
+							(e.pageX) ? x = e.pageX : x = e.clientX + d.scrollLeft;
+							(e.pageY) ? y = e.pageY : y = e.clientY + d.scrollTop;
+							
+							// Show the menu
+							$(document).unbind('click');
+							$(menu).css({ top: y, left: x }).fadeIn(o.inSpeed);
+							// Hover events
+							$(menu).find('A').mouseover( function() {
+								$(menu).find('LI.hover').removeClass('hover');
+								$(this).parent().addClass('hover');
+							}).mouseout( function() {
+								$(menu).find('LI.hover').removeClass('hover');
+							});
+							
+							// Keyboard
+							$(document).keypress( function(e) {
+								switch( e.keyCode ) {
+									case 38: // up
+										if( $(menu).find('LI.hover').size() == 0 ) {
+											$(menu).find('LI:last').addClass('hover');
+										} else {
+											$(menu).find('LI.hover').removeClass('hover').prevAll('LI:not(.disabled)').eq(0).addClass('hover');
+											if( $(menu).find('LI.hover').size() == 0 ) $(menu).find('LI:last').addClass('hover');
+										}
+									break;
+									case 40: // down
+										if( $(menu).find('LI.hover').size() == 0 ) {
+											$(menu).find('LI:first').addClass('hover');
+										} else {
+											$(menu).find('LI.hover').removeClass('hover').nextAll('LI:not(.disabled)').eq(0).addClass('hover');
+											if( $(menu).find('LI.hover').size() == 0 ) $(menu).find('LI:first').addClass('hover');
+										}
+									break;
+									case 13: // enter
+										$(menu).find('LI.hover A').trigger('click');
+									break;
+									case 27: // esc
+										$(document).trigger('click');
+									break
+								}
+							});
+							
+							// When items are selected
+							$('#' + o.menu).find('A').unbind('click');
+							$('#' + o.menu).find('LI:not(.disabled) A').click( function() {
+								$(document).unbind('click').unbind('keypress');
+								$(".contextMenu").hide();
+								// Callback
+								if( callback ) callback( $(this).attr('href').substr(1), $(srcElement), {x: x - offset.left, y: y - offset.top, docX: x, docY: y} );
+								return false;
+							});
+							
+							// Hide bindings
+							setTimeout( function() { // Delay for Mozilla
+								$(document).click( function() {
+									$(document).unbind('click').unbind('keypress');
+									$(menu).fadeOut(o.outSpeed);
+									return false;
+								});
+							}, 0);
+						}
+					});
+				});
+				
+				// Disable text selection
+				if( $.browser.mozilla ) {
+					$('#' + o.menu).each( function() { $(this).css({ 'MozUserSelect' : 'none' }); });
+				} else if( $.browser.msie ) {
+					$('#' + o.menu).each( function() { $(this).bind('selectstart.disableTextSelect', function() { return false; }); });
+				} else {
+					$('#' + o.menu).each(function() { $(this).bind('mousedown.disableTextSelect', function() { return false; }); });
+				}
+				// Disable browser context menu (requires both selectors to work in IE/Safari + FF/Chrome)
+				$(el).add($('UL.contextMenu')).bind('contextmenu', function() { return false; });
+				
+			});
+			return $(this);
+		},
+		
+		// Disable context menu items on the fly
+		disableContextMenuItems: function(o) {
+			if( o == undefined ) {
+				// Disable all
+				$(this).find('LI').addClass('disabled');
+				return( $(this) );
+			}
+			$(this).each( function() {
+				if( o != undefined ) {
+					var d = o.split(',');
+					for( var i = 0; i < d.length; i++ ) {
+						$(this).find('A[href="' + d[i] + '"]').parent().addClass('disabled');
+						
+					}
+				}
+			});
+			return( $(this) );
+		},
+		
+		// Enable context menu items on the fly
+		enableContextMenuItems: function(o) {
+			if( o == undefined ) {
+				// Enable all
+				$(this).find('LI.disabled').removeClass('disabled');
+				return( $(this) );
+			}
+			$(this).each( function() {
+				if( o != undefined ) {
+					var d = o.split(',');
+					for( var i = 0; i < d.length; i++ ) {
+						$(this).find('A[href="' + d[i] + '"]').parent().removeClass('disabled');
+						
+					}
+				}
+			});
+			return( $(this) );
+		},
+		
+		// Disable context menu(s)
+		disableContextMenu: function() {
+			$(this).each( function() {
+				$(this).addClass('disabled');
+			});
+			return( $(this) );
+		},
+		
+		// Enable context menu(s)
+		enableContextMenu: function() {
+			$(this).each( function() {
+				$(this).removeClass('disabled');
+			});
+			return( $(this) );
+		},
+		
+		// Destroy context menu(s)
+		destroyContextMenu: function() {
+			// Destroy specified context menus
+			$(this).each( function() {
+				// Disable action
+				$(this).unbind('mousedown').unbind('mouseup');
+			});
+			return( $(this) );
+		}
+		
+	});
+})(jQuery); /*jslint browser: true */ /*global jQuery: true */
+
+/**
+ * jQuery Cookie plugin
+ *
+ * Copyright (c) 2010 Klaus Hartl (stilbuero.de)
+ * Dual licensed under the MIT and GPL licenses:
+ * http://www.opensource.org/licenses/mit-license.php
+ * http://www.gnu.org/licenses/gpl.html
+ *
+ */
+
+// TODO JsDoc
+
+/**
+ * Create a cookie with the given key and value and other optional parameters.
+ *
+ * @example $.cookie('the_cookie', 'the_value');
+ * @desc Set the value of a cookie.
+ * @example $.cookie('the_cookie', 'the_value', { expires: 7, path: '/', domain: 'jquery.com', secure: true });
+ * @desc Create a cookie with all available options.
+ * @example $.cookie('the_cookie', 'the_value');
+ * @desc Create a session cookie.
+ * @example $.cookie('the_cookie', null);
+ * @desc Delete a cookie by passing null as value. Keep in mind that you have to use the same path and domain
+ *       used when the cookie was set.
+ *
+ * @param String key The key of the cookie.
+ * @param String value The value of the cookie.
+ * @param Object options An object literal containing key/value pairs to provide optional cookie attributes.
+ * @option Number|Date expires Either an integer specifying the expiration date from now on in days or a Date object.
+ *                             If a negative value is specified (e.g. a date in the past), the cookie will be deleted.
+ *                             If set to null or omitted, the cookie will be a session cookie and will not be retained
+ *                             when the the browser exits.
+ * @option String path The value of the path atribute of the cookie (default: path of page that created the cookie).
+ * @option String domain The value of the domain attribute of the cookie (default: domain of page that created the cookie).
+ * @option Boolean secure If true, the secure attribute of the cookie will be set and the cookie transmission will
+ *                        require a secure protocol (like HTTPS).
+ * @type undefined
+ *
+ * @name $.cookie
+ * @cat Plugins/Cookie
+ * @author Klaus Hartl/klaus.hartl@stilbuero.de
+ */
+
+/**
+ * Get the value of a cookie with the given key.
+ *
+ * @example $.cookie('the_cookie');
+ * @desc Get the value of a cookie.
+ *
+ * @param String key The key of the cookie.
+ * @return The value of the cookie.
+ * @type String
+ *
+ * @name $.cookie
+ * @cat Plugins/Cookie
+ * @author Klaus Hartl/klaus.hartl@stilbuero.de
+ */
+jQuery.cookie = function (key, value, options) {
+    
+    // key and at least value given, set cookie...
+    if (arguments.length > 1 && String(value) !== "[object Object]") {
+        options = jQuery.extend({}, options);
+
+        if (value === null || value === undefined) {
+            options.expires = -1;
+        }
+
+        if (typeof options.expires === 'number') {
+            var days = options.expires, t = options.expires = new Date();
+            t.setDate(t.getDate() + days);
+        }
+        
+        value = String(value);
+        
+        return (document.cookie = [
+            encodeURIComponent(key), '=',
+            options.raw ? value : encodeURIComponent(value),
+            options.expires ? '; expires=' + options.expires.toUTCString() : '', // use expires attribute, max-age is not supported by IE
+            options.path ? '; path=' + options.path : '',
+            options.domain ? '; domain=' + options.domain : '',
+            options.secure ? '; secure' : ''
+        ].join(''));
+    }
+
+    // key and possibly options given, get cookie...
+    options = value || {};
+    var result, decode = options.raw ? function (s) { return s; } : decodeURIComponent;
+    return (result = new RegExp('(?:^|; )' + encodeURIComponent(key) + '=([^;]*)').exec(document.cookie)) ? decode(result[1]) : null;
+};
+ /*
+ * Gritter for jQuery
+ * http://www.boedesign.com/
+ *
+ * Copyright (c) 2012 Jordan Boesch
+ * Dual licensed under the MIT and GPL licenses.
+ *
+ * Date: February 24, 2012
+ * Version: 1.7.4
+ */
+
+(function($){
+ 	
+	/**
+	* Set it up as an object under the jQuery namespace
+	*/
+	$.gritter = {};
+	
+	/**
+	* Set up global options that the user can over-ride
+	*/
+	$.gritter.options = {
+		position: '',
+		class_name: '', // could be set to 'gritter-light' to use white notifications
+		fade_in_speed: 'medium', // how fast notifications fade in
+		fade_out_speed: 1000, // how fast the notices fade out
+		time: 6000 // hang on the screen for...
+	}
+	
+	/**
+	* Add a gritter notification to the screen
+	* @see Gritter#add();
+	*/
+	$.gritter.add = function(params){
+
+		try {
+			return Gritter.add(params || {});
+		} catch(e) {
+		
+			var err = 'Gritter Error: ' + e;
+			(typeof(console) != 'undefined' && console.error) ? 
+				console.error(err, params) : 
+				alert(err);
+				
+		}
+		
+	}
+	
+	/**
+	* Remove a gritter notification from the screen
+	* @see Gritter#removeSpecific();
+	*/
+	$.gritter.remove = function(id, params){
+		Gritter.removeSpecific(id, params || {});
+	}
+	
+	/**
+	* Remove all notifications
+	* @see Gritter#stop();
+	*/
+	$.gritter.removeAll = function(params){
+		Gritter.stop(params || {});
+	}
+	
+	/**
+	* Big fat Gritter object
+	* @constructor (not really since its object literal)
+	*/
+	var Gritter = {
+		
+		// Public - options to over-ride with $.gritter.options in "add"
+		position: '',
+		fade_in_speed: '',
+		fade_out_speed: '',
+		time: '',
+		
+		// Private - no touchy the private parts
+		_custom_timer: 0,
+		_item_count: 0,
+		_is_setup: 0,
+		_tpl_close: '<div class="gritter-close"></div>',
+		_tpl_title: '<span class="gritter-title">[[title]]</span>',
+		_tpl_item: '<div id="gritter-item-[[number]]" class="gritter-item-wrapper [[item_class]]" style="display:none"><div class="gritter-top"></div><div class="gritter-item">[[close]][[image]]<div class="[[class_name]]">[[title]]<p>[[text]]</p></div><div style="clear:both"></div></div><div class="gritter-bottom"></div></div>',
+		_tpl_wrap: '<div id="gritter-notice-wrapper"></div>',
+		
+		/**
+		* Add a gritter notification to the screen
+		* @param {Object} params The object that contains all the options for drawing the notification
+		* @return {Integer} The specific numeric id to that gritter notification
+		*/
+		add: function(params){
+			// Handle straight text
+			if(typeof(params) == 'string'){
+				params = {text:params};
+			}
+
+			// We might have some issues if we don't have a title or text!
+			if(params.text === null){
+				throw 'You must supply "text" parameter.'; 
+			}
+			
+			// Check the options and set them once
+			if(!this._is_setup){
+				this._runSetup();
+			}
+			
+			// Basics
+			var title = params.title, 
+				text = params.text,
+				image = params.image || '',
+				sticky = params.sticky || false,
+				item_class = params.class_name || $.gritter.options.class_name,
+				position = $.gritter.options.position,
+				time_alive = params.time || '';
+
+			this._verifyWrapper();
+			
+			this._item_count++;
+			var number = this._item_count, 
+				tmp = this._tpl_item;
+			
+			// Assign callbacks
+			$(['before_open', 'after_open', 'before_close', 'after_close']).each(function(i, val){
+				Gritter['_' + val + '_' + number] = ($.isFunction(params[val])) ? params[val] : function(){}
+			});
+
+			// Reset
+			this._custom_timer = 0;
+			
+			// A custom fade time set
+			if(time_alive){
+				this._custom_timer = time_alive;
+			}
+			
+			var image_str = (image != '') ? '<img src="' + image + '" class="gritter-image" />' : '',
+				class_name = (image != '') ? 'gritter-with-image' : 'gritter-without-image';
+			
+			// String replacements on the template
+			if(title){
+				title = this._str_replace('[[title]]',title,this._tpl_title);
+			}else{
+				title = '';
+			}
+			
+			tmp = this._str_replace(
+				['[[title]]', '[[text]]', '[[close]]', '[[image]]', '[[number]]', '[[class_name]]', '[[item_class]]'],
+				[title, text, this._tpl_close, image_str, this._item_count, class_name, item_class], tmp
+			);
+
+			// If it's false, don't show another gritter message
+			if(this['_before_open_' + number]() === false){
+				return false;
+			}
+
+			$('#gritter-notice-wrapper').addClass(position).append(tmp);
+			
+			var item = $('#gritter-item-' + this._item_count);
+			
+			item.fadeIn(this.fade_in_speed, function(){
+				Gritter['_after_open_' + number]($(this));
+			});
+			
+			if(!sticky){
+				this._setFadeTimer(item, number);
+			}
+			
+			// Bind the hover/unhover states
+			$(item).bind('mouseenter mouseleave', function(event){
+				if(event.type == 'mouseenter'){
+					if(!sticky){ 
+						Gritter._restoreItemIfFading($(this), number);
+					}
+				}
+				else {
+					if(!sticky){
+						Gritter._setFadeTimer($(this), number);
+					}
+				}
+				Gritter._hoverState($(this), event.type);
+			});
+			
+			// Clicking (X) makes the perdy thing close
+			$(item).find('.gritter-close').click(function(){
+				Gritter.removeSpecific(number, {}, null, true);
+			});
+			
+			return number;
+		
+		},
+		
+		/**
+		* If we don't have any more gritter notifications, get rid of the wrapper using this check
+		* @private
+		* @param {Integer} unique_id The ID of the element that was just deleted, use it for a callback
+		* @param {Object} e The jQuery element that we're going to perform the remove() action on
+		* @param {Boolean} manual_close Did we close the gritter dialog with the (X) button
+		*/
+		_countRemoveWrapper: function(unique_id, e, manual_close){
+			
+			// Remove it then run the callback function
+			e.remove();
+			this['_after_close_' + unique_id](e, manual_close);
+			
+			// Check if the wrapper is empty, if it is.. remove the wrapper
+			if($('.gritter-item-wrapper').length == 0){
+				$('#gritter-notice-wrapper').remove();
+			}
+		
+		},
+		
+		/**
+		* Fade out an element after it's been on the screen for x amount of time
+		* @private
+		* @param {Object} e The jQuery element to get rid of
+		* @param {Integer} unique_id The id of the element to remove
+		* @param {Object} params An optional list of params to set fade speeds etc.
+		* @param {Boolean} unbind_events Unbind the mouseenter/mouseleave events if they click (X)
+		*/
+		_fade: function(e, unique_id, params, unbind_events){
+
+			var params = params || {},
+				fade = (typeof(params.fade) != 'undefined') ? params.fade : true,
+				fade_out_speed = params.speed || this.fade_out_speed,
+				manual_close = unbind_events;
+
+			this['_before_close_' + unique_id](e, manual_close);
+			
+			// If this is true, then we are coming from clicking the (X)
+			if(unbind_events){
+				e.unbind('mouseenter mouseleave');
+			}
+			
+			// Fade it out or remove it
+			if(fade){
+			
+				e.animate({
+					opacity: 0
+				}, fade_out_speed, function(){
+					e.animate({ height: 0 }, 300, function(){
+						Gritter._countRemoveWrapper(unique_id, e, manual_close);
+					})
+				})
+				
+			}
+			else {
+				
+				this._countRemoveWrapper(unique_id, e);
+				
+			}
+						
+		},
+		
+		/**
+		* Perform actions based on the type of bind (mouseenter, mouseleave) 
+		* @private
+		* @param {Object} e The jQuery element
+		* @param {String} type The type of action we're performing: mouseenter or mouseleave
+		*/
+		_hoverState: function(e, type){
+			
+			// Change the border styles and add the (X) close button when you hover
+			if(type == 'mouseenter'){
+				
+				e.addClass('hover');
+				
+				// Show close button
+				e.find('.gritter-close').show();
+						
+			}
+			// Remove the border styles and hide (X) close button when you mouse out
+			else {
+				
+				e.removeClass('hover');
+				
+				// Hide close button
+				e.find('.gritter-close').hide();
+				
+			}
+			
+		},
+		
+		/**
+		* Remove a specific notification based on an ID
+		* @param {Integer} unique_id The ID used to delete a specific notification
+		* @param {Object} params A set of options passed in to determine how to get rid of it
+		* @param {Object} e The jQuery element that we're "fading" then removing
+		* @param {Boolean} unbind_events If we clicked on the (X) we set this to true to unbind mouseenter/mouseleave
+		*/
+		removeSpecific: function(unique_id, params, e, unbind_events){
+			
+			if(!e){
+				var e = $('#gritter-item-' + unique_id);
+			}
+
+			// We set the fourth param to let the _fade function know to 
+			// unbind the "mouseleave" event.  Once you click (X) there's no going back!
+			this._fade(e, unique_id, params || {}, unbind_events);
+			
+		},
+		
+		/**
+		* If the item is fading out and we hover over it, restore it!
+		* @private
+		* @param {Object} e The HTML element to remove
+		* @param {Integer} unique_id The ID of the element
+		*/
+		_restoreItemIfFading: function(e, unique_id){
+			
+			clearTimeout(this['_int_id_' + unique_id]);
+			e.stop().css({ opacity: '', height: '' });
+			
+		},
+		
+		/**
+		* Setup the global options - only once
+		* @private
+		*/
+		_runSetup: function(){
+		
+			for(opt in $.gritter.options){
+				this[opt] = $.gritter.options[opt];
+			}
+			this._is_setup = 1;
+			
+		},
+		
+		/**
+		* Set the notification to fade out after a certain amount of time
+		* @private
+		* @param {Object} item The HTML element we're dealing with
+		* @param {Integer} unique_id The ID of the element
+		*/
+		_setFadeTimer: function(e, unique_id){
+			
+			var timer_str = (this._custom_timer) ? this._custom_timer : this.time;
+			this['_int_id_' + unique_id] = setTimeout(function(){ 
+				Gritter._fade(e, unique_id);
+			}, timer_str);
+		
+		},
+		
+		/**
+		* Bring everything to a halt
+		* @param {Object} params A list of callback functions to pass when all notifications are removed
+		*/  
+		stop: function(params){
+			
+			// callbacks (if passed)
+			var before_close = ($.isFunction(params.before_close)) ? params.before_close : function(){};
+			var after_close = ($.isFunction(params.after_close)) ? params.after_close : function(){};
+			
+			var wrap = $('#gritter-notice-wrapper');
+			before_close(wrap);
+			wrap.fadeOut(function(){
+				$(this).remove();
+				after_close();
+			});
+		
+		},
+		
+		/**
+		* An extremely handy PHP function ported to JS, works well for templating
+		* @private
+		* @param {String/Array} search A list of things to search for
+		* @param {String/Array} replace A list of things to replace the searches with
+		* @return {String} sa The output
+		*/  
+		_str_replace: function(search, replace, subject, count){
+		
+			var i = 0, j = 0, temp = '', repl = '', sl = 0, fl = 0,
+				f = [].concat(search),
+				r = [].concat(replace),
+				s = subject,
+				ra = r instanceof Array, sa = s instanceof Array;
+			s = [].concat(s);
+			
+			if(count){
+				this.window[count] = 0;
+			}
+		
+			for(i = 0, sl = s.length; i < sl; i++){
+				
+				if(s[i] === ''){
+					continue;
+				}
+				
+				for (j = 0, fl = f.length; j < fl; j++){
+					
+					temp = s[i] + '';
+					repl = ra ? (r[j] !== undefined ? r[j] : '') : r[0];
+					s[i] = (temp).split(f[j]).join(repl);
+					
+					if(count && s[i] !== temp){
+						this.window[count] += (temp.length-s[i].length) / f[j].length;
+					}
+					
+				}
+			}
+			
+			return sa ? s : s[0];
+			
+		},
+		
+		/**
+		* A check to make sure we have something to wrap our notices with
+		* @private
+		*/  
+		_verifyWrapper: function(){
+		  
+			if($('#gritter-notice-wrapper').length == 0){
+				$('body').append(this._tpl_wrap);
+			}
+		
+		}
+		
+	}
+	
+})(jQuery);
+ /*
+* Metadata - jQuery plugin for parsing metadata from elements
+*
+* Copyright (c) 2006 John Resig, Yehuda Katz, Jörn Zaefferer, Paul McLanahan
+*
+* Dual licensed under the MIT and GPL licenses:
+* http://www.opensource.org/licenses/mit-license.php
+* http://www.gnu.org/licenses/gpl.html
+*
+*/
+
+/**
+* Sets the type of metadata to use. Metadata is encoded in JSON, and each property
+* in the JSON will become a property of the element itself.
+*
+* There are three supported types of metadata storage:
+*
+* attr: Inside an attribute. The name parameter indicates *which* attribute.
+*
+* class: Inside the class attribute, wrapped in curly braces: { }
+*
+* elem: Inside a child element (e.g. a script tag). The
+* name parameter indicates *which* element.
+*
+* The metadata for an element is loaded the first time the element is accessed via jQuery.
+*
+* As a result, you can define the metadata type, use $(expr) to load the metadata into the elements
+* matched by expr, then redefine the metadata type and run another $(expr) for other elements.
+*
+* @name $.metadata.setType
+*
+* @example <p id="one" class="some_class {item_id: 1, item_label: 'Label'}">This is a p</p>
+* @before $.metadata.setType("class")
+* @after $("#one").metadata().item_id == 1; $("#one").metadata().item_label == "Label"
+* @desc Reads metadata from the class attribute
+*
+* @example <p id="one" class="some_class" data="{item_id: 1, item_label: 'Label'}">This is a p</p>
+* @before $.metadata.setType("attr", "data")
+* @after $("#one").metadata().item_id == 1; $("#one").metadata().item_label == "Label"
+* @desc Reads metadata from a "data" attribute
+*
+* @example <p id="one" class="some_class"><script>{item_id: 1, item_label: 'Label'}</script>This is a p</p>
+* @before $.metadata.setType("elem", "script")
+* @after $("#one").metadata().item_id == 1; $("#one").metadata().item_label == "Label"
+* @desc Reads metadata from a nested script element
+*
+* @param String type The encoding type
+* @param String name The name of the attribute to be used to get metadata (optional)
+* @cat Plugins/Metadata
+* @descr Sets the type of encoding to be used when loading metadata for the first time
+* @type undefined
+* @see metadata()
+*/
+
+(function($) {
+
+$.extend({
+metadata : {
+defaults : {
+type: 'class',
+name: 'metadata',
+cre: /({.*})/,
+single: 'metadata'
+},
+setType: function( type, name ){
+this.defaults.type = type;
+this.defaults.name = name;
+},
+get: function( elem, opts ){
+var settings = $.extend({},this.defaults,opts);
+// check for empty string in single property
+if ( !settings.single.length ) settings.single = 'metadata';
+
+var data = $.data(elem, settings.single);
+// returned cached data if it already exists
+if ( data ) return data;
+
+data = "{}";
+
+if ( settings.type == "class" ) {
+var m = settings.cre.exec( elem.className );
+if ( m )
+data = m[1];
+} else if ( settings.type == "elem" ) {
+if( !elem.getElementsByTagName )
+return undefined;
+var e = elem.getElementsByTagName(settings.name);
+if ( e.length )
+data = $.trim(e[0].innerHTML);
+} else if ( elem.getAttribute != undefined ) {
+var attr = elem.getAttribute( settings.name );
+if ( attr )
+data = attr;
+}
+
+if ( data.indexOf( '{' ) <0 )
+data = "{" + data + "}";
+
+data = eval("(" + data + ")");
+
+$.data( elem, settings.single, data );
+return data;
+}
+}
+});
+
+/**
+* Returns the metadata object for the first member of the jQuery object.
+*
+* @name metadata
+* @descr Returns element's metadata object
+* @param Object opts An object contianing settings to override the defaults
+* @type jQuery
+* @cat Plugins/Metadata
+*/
+$.fn.metadata = function( opts ){
+return $.metadata.get( this[0], opts );
+};
+
+})(jQuery); /*!
+ * jQuery Tools v1.2.7 - The missing UI library for the Web
+ * 
+ * tooltip/tooltip.js
+ * tooltip/tooltip.dynamic.js
+ * tooltip/tooltip.slide.js
+ * 
+ * NO COPYRIGHTS OR LICENSES. DO WHAT YOU LIKE.
+ * 
+ * http://flowplayer.org/tools/
+ * 
+ */
+(function(a){a.tools=a.tools||{version:"v1.2.7"},a.tools.tooltip={conf:{effect:"toggle",fadeOutSpeed:"fast",predelay:0,delay:30,opacity:1,tip:0,fadeIE:!1,position:["top","center"],offset:[0,0],relative:!1,cancelDefault:!0,events:{def:"mouseenter,mouseleave",input:"focus,blur",widget:"focus mouseenter,blur mouseleave",tooltip:"mouseenter,mouseleave"},layout:"<div/>",tipClass:"tooltip"},addEffect:function(a,c,d){b[a]=[c,d]}};var b={toggle:[function(a){var b=this.getConf(),c=this.getTip(),d=b.opacity;d<1&&c.css({opacity:d}),c.show(),a.call()},function(a){this.getTip().hide(),a.call()}],fade:[function(b){var c=this.getConf();!a.browser.msie||c.fadeIE?this.getTip().fadeTo(c.fadeInSpeed,c.opacity,b):(this.getTip().show(),b())},function(b){var c=this.getConf();!a.browser.msie||c.fadeIE?this.getTip().fadeOut(c.fadeOutSpeed,b):(this.getTip().hide(),b())}]};function c(b,c,d){var e=d.relative?b.position().top:b.offset().top,f=d.relative?b.position().left:b.offset().left,g=d.position[0];e-=c.outerHeight()-d.offset[0],f+=b.outerWidth()+d.offset[1],/iPad/i.test(navigator.userAgent)&&(e-=a(window).scrollTop());var h=c.outerHeight()+b.outerHeight();g=="center"&&(e+=h/2),g=="bottom"&&(e+=h),g=d.position[1];var i=c.outerWidth()+b.outerWidth();g=="center"&&(f-=i/2),g=="left"&&(f-=i);return{top:e,left:f}}function d(d,e){var f=this,g=d.add(f),h,i=0,j=0,k=d.attr("title"),l=d.attr("data-tooltip"),m=b[e.effect],n,o=d.is(":input"),p=o&&d.is(":checkbox, :radio, select, :button, :submit"),q=d.attr("type"),r=e.events[q]||e.events[o?p?"widget":"input":"def"];if(!m)throw"Nonexistent effect \""+e.effect+"\"";r=r.split(/,\s*/);if(r.length!=2)throw"Tooltip: bad events configuration for "+q;d.on(r[0],function(a){clearTimeout(i),e.predelay?j=setTimeout(function(){f.show(a)},e.predelay):f.show(a)}).on(r[1],function(a){clearTimeout(j),e.delay?i=setTimeout(function(){f.hide(a)},e.delay):f.hide(a)}),k&&e.cancelDefault&&(d.removeAttr("title"),d.data("title",k)),a.extend(f,{show:function(b){if(!h){l?h=a(l):e.tip?h=a(e.tip).eq(0):k?h=a(e.layout).addClass(e.tipClass).appendTo(document.body).hide().append(k):(h=d.next(),h.length||(h=d.parent().next()));if(!h.length)throw"Cannot find tooltip for "+d}if(f.isShown())return f;h.stop(!0,!0);var o=c(d,h,e);e.tip&&h.html(d.data("title")),b=a.Event(),b.type="onBeforeShow",g.trigger(b,[o]);if(b.isDefaultPrevented())return f;o=c(d,h,e),h.css({position:"absolute",top:o.top,left:o.left}),n=!0,m[0].call(f,function(){b.type="onShow",n="full",g.trigger(b)});var p=e.events.tooltip.split(/,\s*/);h.data("__set")||(h.off(p[0]).on(p[0],function(){clearTimeout(i),clearTimeout(j)}),p[1]&&!d.is("input:not(:checkbox, :radio), textarea")&&h.off(p[1]).on(p[1],function(a){a.relatedTarget!=d[0]&&d.trigger(r[1].split(" ")[0])}),e.tip||h.data("__set",!0));return f},hide:function(c){if(!h||!f.isShown())return f;c=a.Event(),c.type="onBeforeHide",g.trigger(c);if(!c.isDefaultPrevented()){n=!1,b[e.effect][1].call(f,function(){c.type="onHide",g.trigger(c)});return f}},isShown:function(a){return a?n=="full":n},getConf:function(){return e},getTip:function(){return h},getTrigger:function(){return d}}),a.each("onHide,onBeforeShow,onShow,onBeforeHide".split(","),function(b,c){a.isFunction(e[c])&&a(f).on(c,e[c]),f[c]=function(b){b&&a(f).on(c,b);return f}})}a.fn.tooltip=function(b){var c=this.data("tooltip");if(c)return c;b=a.extend(!0,{},a.tools.tooltip.conf,b),typeof b.position=="string"&&(b.position=b.position.split(/,?\s/)),this.each(function(){c=new d(a(this),b),a(this).data("tooltip",c)});return b.api?c:this}})(jQuery);
+(function(a){var b=a.tools.tooltip;b.dynamic={conf:{classNames:"top right bottom left"}};function c(b){var c=a(window),d=c.width()+c.scrollLeft(),e=c.height()+c.scrollTop();return[b.offset().top<=c.scrollTop(),d<=b.offset().left+b.width(),e<=b.offset().top+b.height(),c.scrollLeft()>=b.offset().left]}function d(a){var b=a.length;while(b--)if(a[b])return!1;return!0}a.fn.dynamic=function(e){typeof e=="number"&&(e={speed:e}),e=a.extend({},b.dynamic.conf,e);var f=a.extend(!0,{},e),g=e.classNames.split(/\s/),h;this.each(function(){var b=a(this).tooltip().onBeforeShow(function(b,e){var i=this.getTip(),j=this.getConf();h||(h=[j.position[0],j.position[1],j.offset[0],j.offset[1],a.extend({},j)]),a.extend(j,h[4]),j.position=[h[0],h[1]],j.offset=[h[2],h[3]],i.css({visibility:"hidden",position:"absolute",top:e.top,left:e.left}).show();var k=a.extend(!0,{},f),l=c(i);if(!d(l)){l[2]&&(a.extend(j,k.top),j.position[0]="top",i.addClass(g[0])),l[3]&&(a.extend(j,k.right),j.position[1]="right",i.addClass(g[1])),l[0]&&(a.extend(j,k.bottom),j.position[0]="bottom",i.addClass(g[2])),l[1]&&(a.extend(j,k.left),j.position[1]="left",i.addClass(g[3]));if(l[0]||l[2])j.offset[0]*=-1;if(l[1]||l[3])j.offset[1]*=-1}i.css({visibility:"visible"}).hide()});b.onBeforeShow(function(){var a=this.getConf(),b=this.getTip();setTimeout(function(){a.position=[h[0],h[1]],a.offset=[h[2],h[3]]},0)}),b.onHide(function(){var a=this.getTip();a.removeClass(e.classNames)}),ret=b});return e.api?ret:this}})(jQuery);
+(function(a){var b=a.tools.tooltip;a.extend(b.conf,{direction:"up",bounce:!1,slideOffset:10,slideInSpeed:200,slideOutSpeed:200,slideFade:!a.browser.msie});var c={up:["-","top"],down:["+","top"],left:["-","left"],right:["+","left"]};b.addEffect("slide",function(a){var b=this.getConf(),d=this.getTip(),e=b.slideFade?{opacity:b.opacity}:{},f=c[b.direction]||c.up;e[f[1]]=f[0]+"="+b.slideOffset,b.slideFade&&d.css({opacity:0}),d.show().animate(e,b.slideInSpeed,a)},function(b){var d=this.getConf(),e=d.slideOffset,f=d.slideFade?{opacity:0}:{},g=c[d.direction]||c.up,h=""+g[0];d.bounce&&(h=h=="+"?"-":"+"),f[g[1]]=h+"="+e,this.getTip().animate(f,d.slideOutSpeed,function(){a(this).hide(),b.call()})})})(jQuery);
+  (function( $ ) {
+$.widget( "ui.combobox", {
+_create: function() {
+var input,
+that = this,
+wasOpen = false,
+select = this.element.hide(),
+selected = select.children( ":selected" ),
+value = selected.val() ? selected.text() : "",
+wrapper = this.wrapper = $( "<span>" )
+.addClass( "ui-combobox" )
+.insertAfter( select );
+function removeIfInvalid( element ) {
+var value = $( element ).val(),
+matcher = new RegExp( "^" + $.ui.autocomplete.escapeRegex( value ) + "$", "i" ),
+valid = false;
+select.children( "option" ).each(function() {
+if ( $( this ).text().match( matcher ) ) {
+this.selected = valid = true;
+return false;
+}
+});
+if ( !valid ) {
+// remove invalid value, as it didn't match anything
+$( element )
+.val( "" )
+.attr( "title", value + " didn't match any item" )
+.tooltip( "open" );
+select.val( "" );
+setTimeout(function() {
+input.tooltip( "close" ).attr( "title", "" );
+}, 2500 );
+input.data( "ui-autocomplete" ).term = "";
+}
+}
+input = $( "<input>" )
+.appendTo( wrapper )
+.val( value )
+.attr( "title", "" )
+.addClass( "ui-state-default ui-combobox-input" )
+.autocomplete({
+delay: 0,
+minLength: 0,
+source: function( request, response ) {
+var matcher = new RegExp( $.ui.autocomplete.escapeRegex(request.term), "i" );
+response( select.children( "option" ).map(function() {
+var text = $( this ).text();
+if ( this.value && ( !request.term || matcher.test(text) ) )
+return {
+label: text.replace(
+new RegExp(
+"(?![^&;]+;)(?!<[^<>]*)(" +
+$.ui.autocomplete.escapeRegex(request.term) +
+")(?![^<>]*>)(?![^&;]+;)", "gi"
+), "<strong>$1</strong>" ),
+value: text,
+option: this
+};
+}) );
+},
+select: function( event, ui ) {
+ui.item.option.selected = true;
+that._trigger( "selected", event, {
+item: ui.item.option
+});
+},
+change: function( event, ui ) {
+if ( !ui.item ) {
+removeIfInvalid( this );
+}
+}
+})
+.addClass( "ui-widget ui-widget-content ui-corner-left" );
+input.data( "ui-autocomplete" )._renderItem = function( ul, item ) {
+return $( "<li>" )
+.append( "<a>" + item.label + "</a>" )
+.appendTo( ul );
+};
+$( "<a>" )
+.attr( "tabIndex", -1 )
+.attr( "title", "Show All Items" )
+.tooltip()
+.appendTo( wrapper )
+.button({
+icons: {
+primary: "ui-icon-triangle-1-s"
+},
+text: false
+})
+.removeClass( "ui-corner-all" )
+.addClass( "ui-corner-right ui-combobox-toggle" )
+.mousedown(function() {
+wasOpen = input.autocomplete( "widget" ).is( ":visible" );
+})
+.click(function() {
+input.focus();
+// close if already visible
+if ( wasOpen ) {
+return;
+}
+// pass empty string as value to search for, displaying all results
+input.autocomplete( "search", "" );
+});
+input.tooltip({
+tooltipClass: "ui-state-highlight"
+});
+},
+_destroy: function() {
+this.wrapper.remove();
+this.element.show();
+}
+});
+})( jQuery ); /*************************************************************************
+*
+* jQuery Validator
+* Author: Igor Gladkov (igor.gladkov@gmail.com)
+* Homepage: http://igorgladkov.com/jquery/validator.html
+*
+* jQuery Validator is Copyright (C) 2009-2010
+* Igor Gladkov. All Rights Reserved.
+*
+* This program is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, either version 3 of the License, or
+* (at your option) any later version.
+* 
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+* 
+* You should have received a copy of the GNU General Public License
+* along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*
+**************************************************************************/
+
+(function($)
+{
+  var PLUGIN_NAME = 'validator';
+  
+  var Data = {
+    defaults: {
+      className: 'invalidFormat', //'validator_error',
+      trigger: 'change blur',
+      format: null,
+      invalidEmpty: false,
+      minLength: null,
+      maxLength: null,
+      minValue: null,
+      maxValue: null,
+      contains: null,
+      notContains: null,
+      equals: null,
+      notEquals: null,
+      checked: null,
+      before: null, // define function that will be called before validation (output will be used for validation); this = field; agrs(field, value);
+      after: null,  // define function that will be called after default validation (output will be used for error notification (true - valid, false - invalid)); this = field; agrs(field, value, error);
+      error: null,  // define function that will be called after error occurs (return: true/false - default error code run); this = field; agrs(field, value, error);
+      correct: null // define function that will be called after correct state occurs (return: true/false - default correct code run); this = field; agrs(field, value, error);
+    },
+    formats: {
+      email: new RegExp('^[a-z0-9!#$%&\'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&\'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$', 'i'),
+      ip: /^(\d{1,3}\.){3}\d{1,3}$/,
+      date: /^\d{2}[- \/.]\d{2}[- \/.]\d{4}$/,
+      date_my: /^\d{2}[- \/.]\d{4}$/,
+      datetime: /^\d{2}[- \/.]\d{2}[- \/.]\d{4}\s*?\d{2}[- :.]\d{2}$/,
+      time: /^\d{2}[- :.]\d{2}$/,
+      phone: /^\d{10,15}$/,
+      zipUS: /^(\d{5})(-\d{4})?$/,
+      zipCanada: /^[a-z][0-9][a-z]\s*?[0-9][a-z][0-9]$/i,
+      creditCard: /^\d{13,16}$/,
+      numeric: /^\d+$/,
+      decimal: /^[0-9\.,]+$/,
+      alphanumeric: /^([a-z]|\d|\s|-|\.|_|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+$/i,
+      iban: /^[a-zA-Z]{2}[0-9]{2}[a-zA-Z0-9]{4}[0-9]{7}([a-zA-Z0-9]?){0,16}$/
+    },
+    errors: {
+      empty: 'non può essere vuoto',
+      checked: 'deve essere selezionato',
+      email: 'formato email non corretto',
+      ip: 'formato IP non corretto. Esempio: 111.111.111.111',
+      date: 'formato data non corretto. Esempio: gg/mm/aaaa',
+      date_my: 'formato mese non corretto. Esempio: mm/aaaa',
+      datetime: 'formato data-ora non corretto. Esempio: gg/mm/aaaa hh:mm',
+      time: 'formato ora non corretto. Esempio: hh.mm',
+      phone: 'Phone number has wrong format. Example: 1234567890',
+      zipUS: 'US zip code has wrong format. Example: 10001',
+      zipCanada: 'Canada zip code has wrong format. Example: A6A 6A6',
+      creditCard: 'numero carta di credito non valido (solo cifre)',
+      numeric: 'il dato numerico può contenere solo cifre',
+      decimal: 'formato del dato numerico non corretto',
+      alphanumeric: 'sono ammessi solo caratteri alfanumerici',
+      iban: 'codice IBAN non valido'
+    }
+  };
+  
+  var PlugIn = {
+    initialized: false,
+    
+    init: function()
+    {
+      PlugIn.initialized = true;
+    },
+    
+    attach: function(o)
+    {
+      var $el = $(this);
+      
+      o = $.extend({}, Data.defaults, o);
+      
+      // save options
+      $el.data(PLUGIN_NAME, o);
+      
+      // set trigger events
+      $.each(o.trigger.split(' '), function(i, eventType) {
+        eventType += '.' + PLUGIN_NAME;
+        
+        $el.unbind(eventType).bind(eventType, function(e) {
+          PlugIn.runValidation(this);
+        });
+      });
+    },
+    
+    validate: function()
+    {
+      var error = false;
+      
+      $(this).each(function(i, el) {
+        if(!PlugIn.runValidation(el)) {
+          error = true;
+        }
+      });
+      
+      return !error;
+    },
+    
+    runValidation: function(field)
+    {
+      $field = $(field);
+      
+      var er = {
+        status: false,
+        type: '',
+        message: ''
+      };
+      
+      var o = $field.data(PLUGIN_NAME);
+      
+      // check if validator activated for element
+      if(!o) return true;
+      
+      // get field value to validate
+      var v = $field.val();
+      
+      // call before function (assign return to value)
+      if(o.before) {
+        v = o.before.apply($field[0], [$field[0], $field.val()]);
+      }
+      
+      // make sure value is a string
+      v += '';
+      
+      // validate
+      if($field.is(':checkbox') || $field.is(':radio')) {
+        if(o.checked != null && o.checked != $field.is(':checked')) {
+          er.status = true;
+          er.type = 'checked';
+          er.message = Data.errors.checked;
+        }
+      }
+      else {
+        if(v.length == 0) {
+          if(o.invalidEmpty == true) {
+            er.status = true;
+            er.type = 'invalidEmpty';
+            er.message = Data.errors.empty;
+          }
+        }
+        else {
+          if(o.format != null && v.length > 0 && v.search(Data.formats[o.format]) == -1) {
+            er.status = true;
+            er.type = 'format';
+            er.message = Data.errors[o.format];
+          }
+          else if(o.minLength != null && v.length < o.minLength) {
+            er.status = true;
+            er.type = 'minLength';
+            er.message = 'lunghezza minima: ' + o.minLength + ' caratteri';
+          }
+          else if(o.maxLength != null && v.length > o.maxLength) {
+            er.status = true;
+            er.type = 'maxLength';
+            er.message = 'lunghezza massima: ' + o.maxLength + ' caratteri';
+          }
+          else if(o.minValue != null && !isNaN(v) && (v * 1 < o.minValue)) {
+            er.status = true;
+            er.type = 'minValue';
+            er.message = 'non puo essere minore di ' + o.minValue;
+          }
+          else if(o.maxValue != null && !isNaN(v) && (v * 1 > o.maxValue)) {
+            er.status = true;
+            er.type = 'maxValue';
+            er.message = 'non puo essere maggiore di ' + o.maxValue;
+          }
+          else if(o.contains != null && v.search(o.contains) == -1) {
+            er.status = true;
+            er.type = 'contains';
+            er.message = 'deve contenere "' + o.contains + '"';
+          }
+          else if(o.notContains != null && v.search(o.notContains) != -1) {
+            er.status = true;
+            er.type = 'notContains';
+            er.message = 'non puo contenere "' + o.notContains + '"';
+          }
+          else if(o.equals != null && v != o.equals) {
+            er.status = true;
+            er.type = 'equals';
+            er.message = 'deve essere uguale a "' + o.equals + '"';
+          }
+          else if(o.notEquals != null && v == o.notEquals) {
+            er.status = true;
+            er.type = 'notEquals';
+            er.message = 'deve essere diverso da "' + o.notEquals + '"';
+          }
+          
+          // parse dei formati di data e ora
+          if (o.format != null) {
+            if (o.format == "date") {
+              if (Date.parse(v,"dd/mm/yyyy") == null) {
+                er.status = true;
+                er.type = 'date';
+                er.message = 'data non valida';
+              }
+            }
+            if (o.format == "date_my") {
+              if (Date.parse(v,"mm/yyyy") == null) {
+                er.status = true;
+                er.type = 'date';
+                er.message = 'mese non valido';
+              }
+            }
+            else if (o.format == "time") {
+              if (Date.parseExact(v,"HH.mm") == null) {
+                er.status = true;
+                er.type = 'time';
+                er.message = 'ora non valida';
+              }
+            }
+          }
+          // new.fine
+        }
+      }
+      
+      // run after function
+      if(o.after) {
+        o.after.apply($field[0], [$field[0], $field.val(), er]);
+      }
+      
+      if(er.status === true) {
+        $field.data('validatorError', true);
+        
+        if(o.error == null || o.error.apply($field[0], [$field[0], $field.val(), er]) !== false) {
+          $field.addClass(o.className);
+        }
+      }
+      else if(er.status === false) {
+        $field.removeData('validatorError');
+        
+        if(o.correct == null || o.correct.apply($field[0], [$field[0], $field.val(), er]) !== false) {
+          $field.removeClass(o.className);
+        }
+      }
+      return !er.status;
+    }
+  };
+  
+  $.fn.validator = function()
+  {
+    if(!PlugIn.initialized) {
+      PlugIn.init();
+    }
+   
+    var output;
+    
+    if(typeof arguments[0] == 'string') {
+      if($.isFunction(PlugIn[arguments[0]])) {
+        output = PlugIn[arguments[0]].apply(this, Array.prototype.slice.call(arguments, 1));
+      }
+    }
+    else {
+      output = PlugIn.attach.apply(this, [arguments[0]]);
+    }
+    return (output != undefined ? output : this);
+  };
+  $.validator = Data;
+})(jQuery); /*
+ * Copyright (c) 2007 Josh Bush (digitalbush.com)
+ * 
+ * Permission is hereby granted, free of charge, to any person
+ * obtaining a copy of this software and associated documentation
+ * files (the "Software"), to deal in the Software without
+ * restriction, including without limitation the rights to use,
+ * copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the
+ * Software is furnished to do so, subject to the following
+ * conditions:
+
+ * The above copyright notice and this permission notice shall be
+ * included in all copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+ * HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+ * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+ * OTHER DEALINGS IN THE SOFTWARE. 
+ */
+ 
+/*
+ * Version: Beta 1
+ * Release: 2007-06-01
+ */ 
+(function($) {
+	var map=new Array();
+	$.Watermark = {
+		ShowAll:function(){
+			for (var i=0;i<map.length;i++){
+				if(map[i].obj.val()==""){
+					map[i].obj.val(map[i].text);					
+					map[i].obj.css("color",map[i].WatermarkColor);
+				}else{
+				    map[i].obj.css("color",map[i].DefaultColor);
+				}
+			}
+		},
+		HideAll:function(){
+			for (var i=0;i<map.length;i++){
+				if(map[i].obj.val()==map[i].text)
+					map[i].obj.val("");					
+			}
+		}
+	}
+	
+	$.fn.Watermark = function(text,color) {
+		if(!color)
+			color="#aaa";
+		return this.each(
+			function(){		
+				var input=$(this);
+				var defaultColor=input.css("color");
+				map[map.length]={text:text,obj:input,DefaultColor:defaultColor,WatermarkColor:color};
+				function clearMessage(){
+					if(input.val()==text)
+						input.val("");
+					input.css("color",defaultColor);
+				}
+
+				function insertMessage(){
+					if(input.val().length==0 || input.val()==text){
+						input.val(text);
+						input.css("color",color);	
+					}else
+						input.css("color",defaultColor);				
+				}
+
+				input.focus(clearMessage);
+				input.blur(insertMessage);								
+				input.change(insertMessage);
+				
+				insertMessage();
+			}
+		);
+	};
+})(jQuery);

@@ -1,0 +1,27 @@
+{%DocType%}
+<html>
+  <body>
+    {%T000Intestazione%}
+    <div class="dipendente">{%lnkDipendente%} {%cmbDipendentiDisponibili%}</div>
+      
+    <div class="RigaDatiColorata"> {%lblData%} {%edtData%}&nbsp;&nbsp;{%lblNumAccessi%} {%edtNumAccessi%}&nbsp;&nbsp;{%lblPasto%} {%rgpPranzoCena%}</div>
+    <div class="RigaBase">{%lblCausale%} {%cmbCausale%}</div>
+    
+    <div class="Riepilogo"> 
+    </div>
+    <div class="RigaDatiColorata">
+      <span>{%lblPeriodoDal%} {%edtDal%}</span>
+      <span>{%lblPeriodoAl%} {%edtAl%}</span>
+      <span>{%btnEsegui%} {%btnConferma%}</span>
+    </div>
+    <div class="grigliaDati">
+      {%grdAccessiMensa%}
+    </div> 
+
+    {%<frm>WC002FDatiAnagraficiFM</frm>%}
+    {%<frm>WC012FVisualizzaFileFM</frm>%}
+
+  </body>
+</html>
+
+

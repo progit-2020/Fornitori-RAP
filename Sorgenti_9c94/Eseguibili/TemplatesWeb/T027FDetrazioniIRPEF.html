@@ -1,0 +1,30 @@
+{%DocType%}
+<html>
+  <head>
+  </head>
+  <body>
+  {%T000Intestazione%}
+  <div class="dipendente">{%lnkDipendente%} {%cmbDipendentiDisponibili%}</div>
+
+  <div class="RigaDatiColorata align_center">{%lblTitoloDichiarazione%}</div>
+  <div class="RigaBase">{%lblUltimoAggiornamento%}</div>
+  <div class="RigaDatiColorata">{%lnkIstrDetr%}</div>
+  <div class="RigaBase">{%lblStatoCivile%}{%cbxStatoCivile%}</div>
+  <!--<div class="RigaDatiColorata">{%lblDetrazioniDipendente%}{%rgpDetrazioniDipendente%}</div>-->
+  <div class="RigaBase align_center">{%lblDetrazioniDipendente%}{%lblDetrazioniDipendenteSiNo%}</div>
+
+  <div class="grigliaDatiNav">
+  {%PagNavBarDetrazioni%}
+  </div>
+  <div class="grigliaDati">
+  {%grdDetrazioni%}
+  </div>
+
+  <div>{%lblNote%}</div>
+  <div class="RigaDatiColorata">{%btnConferma%}{%btnAnnulla%}{%btnRipristina%}</div>
+
+  {%<frm>WC002FDatiAnagraficiFM</frm>%}
+  {%<frm>WC012FVisualizzaFileFM</frm>%}
+  </body>
+</html>
+

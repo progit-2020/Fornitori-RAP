@@ -1,0 +1,48 @@
+{%DocType%}
+<html>
+  <head>
+  </head>
+  <body>
+
+    <div id="divscrollable" class="medpTabRegion" style="position:relative; height:35em;" onscroll="onscrollDivWR010(this,'HIDDEN_W032DIVSCROLLABLESCROLLTOP','HIDDEN_W032DIVSCROLLABLESCROLLLEFT')">
+
+      <div class="clearDiv spazio_verticale">&nbsp;</div>
+
+      <div id="w032ContainerDati1">
+        <div class="groupbox fs100">
+          {%grdDati%}
+        </div>
+      </div>
+
+      <div id="w032ContainerDati2" style="width: 40em;">
+        <div class="grid gridTrasparente">
+          <table id="w032MezziContainer">
+            <tbody>
+              <tr>
+                <td class="riga_categoria">{%lblMezzi%}</td>
+              </tr>
+              <tr>
+                <td class="riga_bianca bordo_sx_categoria bordo_dx_categoria lineHeight0_5em">{%grdMezzi%}</td>
+              </tr>
+              <tr>
+                <td class="riga_bianca bordo_top_categoria">&nbsp;</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="spazio_verticale"></div>
+        <div style="clear: left;">{%cgpMotivEstero%}</div>
+  
+        <div class="spazio_verticale"></div>
+        <div style="clear: left;">{%cgpIpotesiEstero%}</div>
+
+        <div class="clearDiv"></div>
+        <div class="width98pc" style="margin-top: 0.5em; padding-left: 10px;">{%lblDatiObbligatori%}</div>
+        <div class="width98pc" style="margin-top: 0.5em; padding-left: 10px;">{%lblNoteMezzoProprio%}</div>
+      </div>
+      <div class="clearDiv spazio_verticale">&nbsp;</div>
+    </div>
+
+  </body>
+</html>
