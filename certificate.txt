@@ -1,3 +1,4 @@
 certifico versione 9c93 sorgenti RAP 20092021
 certifico versione 9c94 sorgenti RAP caricati il 27092021 archiviati il 08102021
 certifico x aggiornamento token 25112021
+certifico x aggiornamento token 13122021
