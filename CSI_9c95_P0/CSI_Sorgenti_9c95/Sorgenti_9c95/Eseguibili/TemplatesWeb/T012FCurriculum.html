@@ -1,0 +1,31 @@
+{%DocType%}
+<html>
+  <body>
+    {%T000Intestazione%}
+
+    <div class="dipendente">{%lnkDipendente%} {%cmbDipendentiDisponibili%}</div>
+
+    <div class="RigaBase">{%lblTipoEsp%} {%cmbTipoEsp%}</div>
+    <div class="RigaDatiColorata">{%lblDettaglioEsp%} {%cmbDettaglioEsp%}</div>
+    <div class="RigaBase">{%lblLuogo%} {%edtLuogo%} {%cmbLuoghi%}</div>
+    <div class="RigaDatiColorata">
+      <span>{%lblPeriodoDal%} {%edtDal%}</span>
+      <span>{%lblPeriodoAl%} {%edtAl%}</span>
+      <span>{%btnStampa%} {%btnInserisci%} {%btnConferma%}</span>
+    </div>
+    <div class="grigliaDati">
+      {%memDescrizione%}
+    </div>
+
+    <div class="grigliaDatiNav">
+      {%PagNavBarCurriculum%}
+    </div>
+    <div class="grigliaDati">
+    {%grdCurriculum%}
+    </div>
+
+    {%<frm>WC002FDatiAnagraficiFM</frm>%}
+    {%<frm>WC012FVisualizzaFileFM</frm>%}
+  </body>
+</html>
+

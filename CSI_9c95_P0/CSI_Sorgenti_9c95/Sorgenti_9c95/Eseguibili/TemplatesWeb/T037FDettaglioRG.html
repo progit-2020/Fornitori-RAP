@@ -1,0 +1,34 @@
+{%DocType%}
+<html>
+  <head>
+  </head>
+  <body>
+    <div class="medpElaborazioneFM" style="height: 30em;">
+
+      <table>
+        <tbody>
+          <tr>
+            <td>{%lblNumDipInServizio%}</td>
+            <td>{%edtNumDipInServizio%}</td>
+            <td>&nbsp;</td>
+            <td>{%lblNumDipScioperanti%}</td>
+            <td>{%edtNumDipScioperanti%}</td>
+            <td>&nbsp;</td>
+            <td>{%lblNumDipAssenti%}</td>
+            <td>{%edtNumDipAssenti%}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <br/>
+
+      <div class="grigliaDatiNav">
+      {%PagNavBarDipendenti%}
+      </div>
+      <div class="grigliaDati">
+      {%grdDipendenti%}
+      </div>
+
+    </div>
+  </body>
+</html>

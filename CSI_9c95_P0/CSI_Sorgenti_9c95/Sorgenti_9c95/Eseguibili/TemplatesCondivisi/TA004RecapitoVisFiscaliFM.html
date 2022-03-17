@@ -1,0 +1,122 @@
+{%DocType%}
+<html>
+  <head>
+  </head>
+  <body>
+    <div id="wa004_container">
+
+      <!-- radiogroup causali (presenza / assenza) -->
+      <div class="groupbox fs100" style="width: 45em;">
+        <fieldset>
+          <legend>{%lblDomicilio%}</legend>
+          <table width="100%">
+            <colgroup>
+              <col span="1" style="width: 20%;">
+              <col span="1" style="width: 80%;">
+            </colgroup>
+            <tbody>
+              <tr>
+                <td>{%lnkComune%}</td>
+                <td>{%edtComune%} {%btnSelComune%} {%imgGomma%}</td>
+              </tr>
+              <tr>
+                <td>{%lblCap%}</td>
+                <td>{%edtCap%}</td>
+              </tr>
+              <tr>
+                <td>{%lblIndirizzo%}</td>
+                <td>{%edtIndirizzo%}</td>
+              </tr>
+              <tr>
+                <td>{%lblTelefono%}</td>
+                <td>{%edtTelefono%}</td>
+              </tr>
+              <tr>
+                <td style="vertical-align: top;">{%lblNote%}</td>
+                <td>{%memNote%}</td>
+              </tr>
+            </tbody>
+          </table>
+        </fieldset>
+      </div>
+
+      <!-- medicina legale -->
+      <div class="groupbox fs100" style="width: 45em; margin-top: 1em;">
+        <fieldset>
+          <legend>{%lblGrpMedLegale%}</legend>
+          <table width="100%">
+            <colgroup>
+              <col span="1" style="width: 20%;">
+              <col span="1" style="width: 30%;">
+              <col span="1" style="width: 50%;">
+            </colgroup>
+            <tbody>
+              <tr>
+                <td>{%lblMedLegale%}</td>
+                <td>{%cmbMedLegale%}</td>
+                <td>{%lblDescMedLegale%}</td>
+              </tr>
+            </tbody>
+          </table>
+        </fieldset>
+      </div>
+	  
+	  <div id="grpInsManualeINPS" class="groupbox fs100" style="width: 45em; margin-top: 1em;">
+		<fieldset>
+			<legend>{%lblInsManualeINPS%}</legend>
+			<table width="100%">
+            <colgroup>
+              <col span="1" style="width: 20%;">
+              <col span="1" style="width: 80%;">              
+            </colgroup>
+            <tbody>
+              <tr>
+                <td>{%lblIDCertificato%}</td>
+                <td>{%edtIDCertificato%}</td>
+              </tr>
+            </tbody>
+          </table>						
+		</fieldset>
+	  </div>
+
+      <div class="groupbox fs100" style="width: 45em; margin-top: 1em;">
+        <fieldset>
+          <legend>{%lblEsenzione%}</legend>
+          <table width="100%">
+            <colgroup>
+              <col span="1" style="width: 20%;">
+              <col span="1" style="width: 80%;">
+            </colgroup>
+            <tbody>
+              <tr>
+                <td>{%lblTipoEsenzione%}</td>
+                <td>{%cmbTipoEsenzione%}</td>
+              </tr>
+              <tr>
+                <td>{%lblDataEsenzione%}</td>
+                <td>{%edtDataEsenzione%}</td>
+              </tr>
+              <tr>
+                <td>{%lblOperatoreEsenzione%}</td>
+                <td>{%edtOperatoreEsenzione%}</td>
+              </tr>
+            </tbody>
+          </table>
+        </fieldset>
+      </div>
+
+      <div class="clearDiv"></div>
+
+      <!-- descrizione utilizzo maschera -->
+      <div style="width: 45em; margin-top: 1.5em;">
+        {%lblDescrizione%}
+      </div>
+
+      <!-- pulsanti di azione -->
+      <div align="right" style="width: 45em; margin-top: 1.5em;">
+        <div style="margin-right: 1em;">{%btnOK%} {%btnAnnulla%}</div>
+      </div>
+
+    </div>
+  </body>
+</html>

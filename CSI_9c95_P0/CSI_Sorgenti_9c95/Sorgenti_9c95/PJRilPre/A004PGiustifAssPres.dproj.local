@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<ProjectSortOrder AutoSort="0" SortType="0">
+    <File Path="..\..\CSI_Sviluppo"/>
+    <File Path="..\Componenti"/>
+    <File Path="..\Componenti\SelAnagrafe.pas"/>
+    <File Path="..\Componenti\SelAnagrafe.dfm"/>
+    <File Path="..\Copy"/>
+    <File Path="..\Copy\A000UMessaggi.pas"/>
+    <File Path="..\Copy\C180FunzioniGenerali.pas"/>
+    <File Path="..\MWRilPre"/>
+    <File Path="..\MWRilPre\A004UGiustifAssPresMW.pas"/>
+    <File Path="..\MWRilPre\A004UGiustifAssPresMW.dfm"/>
+    <File Path="..\MWRilPre\R600.pas"/>
+    <File Path="..\MWRilPre\R600.dfm"/>
+    <File Path="..\MWRilPre\R600UVisAssenze.pas"/>
+    <File Path="..\MWRilPre\R600UVisAssenze.dfm"/>
+    <File Path="..\MWRilPre\R600UVisAssenzeCumulate.pas"/>
+    <File Path="..\MWRilPre\R600UVisAssenzeCumulate.dfm"/>
+    <File Path="..\Repositary"/>
+    <File Path="..\Repositary\R001UGESTTAB.pas"/>
+    <File Path="..\Repositary\R001UGESTTAB.dfm"/>
+    <File Path="..\Repositary\R005UDataModuleMW.pas"/>
+    <File Path="..\Repositary\R005UDataModuleMW.dfm"/>
+    <File Path="..\Repositary\TABELLE99.pas"/>
+    <File Path="..\Repositary\TABELLE99.dfm"/>
+    <File Path="A004UGiustifAssPres.pas"/>
+    <File Path="A004UGiustifAssPres.dfm"/>
+    <File Path="A004UCaricaAssRich.pas"/>
+    <File Path="A004UCaricaAssRich.dfm"/>
+    <File Path="A004URecapitoVisFiscali.pas"/>
+    <File Path="A004URecapitoVisFiscali.dfm"/>
+  </ProjectSortOrder>
+</BorlandProject>

@@ -1,0 +1,6 @@
+TInserisciDLL = record
+    NomeTabella:TFilename;
+    Titolo:string;
+    Display:array [0..8] of PChar;
+    Size:array [0..8] of integer;
+  end;
