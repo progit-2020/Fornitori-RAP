@@ -1,0 +1,762 @@
+object W024FRichiestaStraordinariDM: TW024FRichiestaStraordinariDM
+  OldCreateOrder = False
+  OnCreate = DataModuleCreate
+  Height = 135
+  Width = 500
+  object selT070: TOracleDataSet
+    SQL.Strings = (
+      'SELECT T.ORECOMP_LIQUIDATE, T.BANCAORE_LIQ_VAR, T.ROWID'
+      'FROM T070_SCHEDARIEPIL T'
+      'WHERE PROGRESSIVO = :PROGRESSIVO'
+      'AND DATA = :DATA')
+    ReadBuffer = 10
+    Optimize = False
+    Variables.Data = {
+      0400000002000000180000003A00500052004F00470052004500530053004900
+      56004F000300000000000000000000000A0000003A0044004100540041000C00
+      00000000000000000000}
+    QBEDefinition.QBEFieldDefs = {
+      050000000D00000016000000500052004F004700520045005300530049005600
+      4F000100000000000E000000430041005500530041004C004500010000000000
+      06000000440041004C000100000000000400000041004C000100000000001200
+      00005400490050004F00470049005500530054000100000000001C0000004100
+      550054004F00520049005A005A0041005A0049004F004E004500010000000000
+      1800000052004500530050004F004E0053004100420049004C00450001000000
+      00000E00000044004100540041004E0041005300010000000000120000004E00
+      55004D00450052004F004F005200450001000000000004000000520049000100
+      0000000010000000500055004C00530041004E00540045000100000000001200
+      00004D00410054005200490043004F004C004100010000000000140000004E00
+      4F004D0049004E0041005400490056004F00010000000000}
+    Left = 118
+    Top = 16
+  end
+  object selT820: TOracleDataSet
+    SQL.Strings = (
+      'SELECT T.*, T.ROWID'
+      'FROM T820_LIMITIIND T'
+      'WHERE PROGRESSIVO = :PROGRESSIVO'
+      'AND anno = TO_NUMBER(TO_CHAR(:DATA,'#39'YYYY'#39'))'
+      'AND mese = TO_NUMBER(TO_CHAR(:DATA,'#39'MM'#39'))'
+      'AND causale = :CAUSALE')
+    ReadBuffer = 10
+    Optimize = False
+    Variables.Data = {
+      0400000003000000180000003A00500052004F00470052004500530053004900
+      56004F000300000000000000000000000A0000003A0044004100540041000C00
+      00000000000000000000100000003A00430041005500530041004C0045000500
+      00000000000000000000}
+    QBEDefinition.QBEFieldDefs = {
+      050000000D00000016000000500052004F004700520045005300530049005600
+      4F000100000000000E000000430041005500530041004C004500010000000000
+      06000000440041004C000100000000000400000041004C000100000000001200
+      00005400490050004F00470049005500530054000100000000001C0000004100
+      550054004F00520049005A005A0041005A0049004F004E004500010000000000
+      1800000052004500530050004F004E0053004100420049004C00450001000000
+      00000E00000044004100540041004E0041005300010000000000120000004E00
+      55004D00450052004F004F005200450001000000000004000000520049000100
+      0000000010000000500055004C00530041004E00540045000100000000001200
+      00004D00410054005200490043004F004C004100010000000000140000004E00
+      4F004D0049004E0041005400490056004F00010000000000}
+    Left = 166
+    Top = 16
+    object selT820PROGRESSIVO: TIntegerField
+      FieldName = 'PROGRESSIVO'
+    end
+    object selT820ANNO: TIntegerField
+      FieldName = 'ANNO'
+    end
+    object selT820MESE: TIntegerField
+      FieldName = 'MESE'
+    end
+    object selT820DAL: TIntegerField
+      FieldName = 'DAL'
+    end
+    object selT820AL: TIntegerField
+      FieldName = 'AL'
+    end
+    object selT820CAUSALE: TStringField
+      FieldName = 'CAUSALE'
+      Size = 5
+    end
+    object selT820LIQUIDABILE: TStringField
+      FieldName = 'LIQUIDABILE'
+      Size = 1
+    end
+    object selT820ORE_TEORICHE: TStringField
+      FieldName = 'ORE_TEORICHE'
+      Size = 7
+    end
+    object selT820ORE: TStringField
+      FieldName = 'ORE'
+      Size = 7
+    end
+  end
+  object selT065: TOracleDataSet
+    ReadBuffer = 10
+    Optimize = False
+    Variables.Data = {
+      04000000080000000E0000003A00460049004C00540052004F00010000000000
+      0000000000001A0000003A005100560049005300540041004F00520041004300
+      4C0045000100000000000000000000000C0000003A0053005400410054004F00
+      010000000000000000000000160000003A0044004100540041004C0041005600
+      4F0052004F000C00000000000000000000001E0000003A00460049004C005400
+      52004F005F0050004500520049004F0044004F00010000000000000000000000
+      100000003A0041005A00490045004E0044004100050000000000000000000000
+      180000003A00560041004C004900440041005A0049004F004E00450005000000
+      0000000000000000240000003A00430041004D0050004F005F00560041004C00
+      4900440041005A0049004F004E004500010000000000000000000000}
+    QBEDefinition.QBEFieldDefs = {
+      050000000D00000016000000500052004F004700520045005300530049005600
+      4F000100000000000E000000430041005500530041004C004500010000000000
+      06000000440041004C000100000000000400000041004C000100000000001200
+      00005400490050004F00470049005500530054000100000000001C0000004100
+      550054004F00520049005A005A0041005A0049004F004E004500010000000000
+      1800000052004500530050004F004E0053004100420049004C00450001000000
+      00000E00000044004100540041004E0041005300010000000000120000004E00
+      55004D00450052004F004F005200450001000000000004000000520049000100
+      0000000010000000500055004C00530041004E00540045000100000000001200
+      00004D00410054005200490043004F004C004100010000000000140000004E00
+      4F004D0049004E0041005400490056004F00010000000000}
+    OnCalcFields = selT065CalcFields
+    Left = 22
+    Top = 16
+    object selT065ID: TFloatField
+      FieldName = 'ID'
+    end
+    object selT065ID_REVOCA: TFloatField
+      FieldName = 'ID_REVOCA'
+    end
+    object selT065ID_REVOCATO: TFloatField
+      FieldName = 'ID_REVOCATO'
+    end
+    object selT065PROGRESSIVO: TIntegerField
+      FieldName = 'PROGRESSIVO'
+    end
+    object selT065NOMINATIVO: TStringField
+      FieldName = 'NOMINATIVO'
+      Size = 65
+    end
+    object selT065MATRICOLA: TStringField
+      FieldName = 'MATRICOLA'
+      Size = 8
+    end
+    object selT065SESSO: TStringField
+      FieldName = 'SESSO'
+      Size = 1
+    end
+    object selT065COD_ITER: TStringField
+      FieldName = 'COD_ITER'
+    end
+    object selT065TIPO_RICHIESTA: TStringField
+      FieldName = 'TIPO_RICHIESTA'
+      Size = 1
+    end
+    object selT065AUTORIZZ_AUTOMATICA: TStringField
+      FieldName = 'AUTORIZZ_AUTOMATICA'
+      Size = 1
+    end
+    object selT065REVOCABILE: TStringField
+      FieldName = 'REVOCABILE'
+      Size = 10
+    end
+    object selT065DATA_RICHIESTA: TDateTimeField
+      FieldName = 'DATA_RICHIESTA'
+    end
+    object selT065LIVELLO_AUTORIZZAZIONE: TFloatField
+      FieldName = 'LIVELLO_AUTORIZZAZIONE'
+    end
+    object selT065DATA_AUTORIZZAZIONE: TDateTimeField
+      FieldName = 'DATA_AUTORIZZAZIONE'
+    end
+    object selT065AUTORIZZAZIONE: TStringField
+      FieldName = 'AUTORIZZAZIONE'
+      Size = 1
+    end
+    object selT065NOMINATIVO_RESP: TStringField
+      FieldName = 'NOMINATIVO_RESP'
+      Size = 65
+    end
+    object selT065AUTORIZZ_AUTOM_PREV: TStringField
+      FieldName = 'AUTORIZZ_AUTOM_PREV'
+      Size = 1
+    end
+    object selT065AUTORIZZ_PREV: TStringField
+      FieldName = 'AUTORIZZ_PREV'
+      Size = 1
+    end
+    object selT065RESPONSABILE_PREV: TStringField
+      FieldName = 'RESPONSABILE_PREV'
+      Size = 30
+    end
+    object selT065AUTORIZZ_UTILE: TStringField
+      FieldName = 'AUTORIZZ_UTILE'
+      Size = 1
+    end
+    object selT065AUTORIZZ_REVOCA: TStringField
+      FieldName = 'AUTORIZZ_REVOCA'
+      Size = 1
+    end
+    object selT065D_TIPO_RICHIESTA: TStringField
+      FieldKind = fkCalculated
+      FieldName = 'D_TIPO_RICHIESTA'
+      Size = 100
+      Calculated = True
+    end
+    object selT065D_RESPONSABILE: TStringField
+      FieldKind = fkCalculated
+      FieldName = 'D_RESPONSABILE'
+      Size = 84
+      Calculated = True
+    end
+    object selT065D_AUTORIZZAZIONE: TStringField
+      FieldKind = fkCalculated
+      FieldName = 'D_AUTORIZZAZIONE'
+      Size = 2
+      Calculated = True
+    end
+    object selT065DATA: TDateTimeField
+      FieldName = 'DATA'
+      DisplayFormat = 'dd/mm/yyyy'
+    end
+    object selT065TIPO: TStringField
+      FieldName = 'TIPO'
+      Size = 1
+    end
+    object selT065Desc_Tipo: TStringField
+      FieldKind = fkCalculated
+      FieldName = 'Desc_Tipo'
+      Size = 100
+      Calculated = True
+    end
+    object selT065ID_CONGUAGLIO: TIntegerField
+      FieldName = 'ID_CONGUAGLIO'
+    end
+    object selT065ORE_ECCED_CALC: TStringField
+      FieldName = 'ORE_ECCED_CALC'
+      Size = 6
+    end
+    object selT065ORE_ECCEDENTI: TStringField
+      FieldName = 'ORE_ECCEDENTI'
+      Size = 6
+    end
+    object selT065ORE_DACOMPENSARE: TStringField
+      FieldName = 'ORE_DACOMPENSARE'
+      Size = 6
+    end
+    object selT065ORE_DALIQUIDARE: TStringField
+      FieldName = 'ORE_DALIQUIDARE'
+      Size = 6
+    end
+    object selT065CAUSALE: TStringField
+      FieldName = 'CAUSALE'
+      Size = 5
+    end
+    object selT065ORE_CAUSALIZZATE: TStringField
+      FieldName = 'ORE_CAUSALIZZATE'
+      Size = 6
+    end
+    object selT065MESSAGGI: TStringField
+      FieldKind = fkCalculated
+      FieldName = 'D_AVVERTIMENTI'
+      Size = 100
+      Calculated = True
+    end
+    object selT065CF_DATA: TStringField
+      FieldKind = fkCalculated
+      FieldName = 'CF_DATA'
+      Size = 7
+      Calculated = True
+    end
+    object selT065CF_ORE_ECCED_VALID: TStringField
+      FieldKind = fkCalculated
+      FieldName = 'CF_ORE_ECCED_VALID'
+      Size = 6
+      Calculated = True
+    end
+    object selT065CF_ORE_COMP_VALID: TStringField
+      FieldKind = fkCalculated
+      FieldName = 'CF_ORE_COMP_VALID'
+      Size = 6
+      Calculated = True
+    end
+    object selT065CF_ORE_LIQ_VALID: TStringField
+      FieldKind = fkCalculated
+      FieldName = 'CF_ORE_LIQ_VALID'
+      Size = 6
+      Calculated = True
+    end
+    object selT065CF_ORE_ECCEDENTI: TStringField
+      FieldKind = fkCalculated
+      FieldName = 'CF_ORE_ECCEDENTI'
+      Size = 6
+      Calculated = True
+    end
+    object selT065CF_ORE_DACOMPENSARE: TStringField
+      FieldKind = fkCalculated
+      FieldName = 'CF_ORE_DACOMPENSARE'
+      Size = 6
+      Calculated = True
+    end
+    object selT065CF_ORE_DALIQUIDARE: TStringField
+      FieldKind = fkCalculated
+      FieldName = 'CF_ORE_DALIQUIDARE'
+      Size = 6
+      Calculated = True
+    end
+    object selT065CF_ORE_ECCED_AUTORIZ: TStringField
+      FieldKind = fkCalculated
+      FieldName = 'CF_ORE_ECCED_AUTORIZ'
+      Size = 6
+      Calculated = True
+    end
+    object selT065CF_ORE_COMP_AUTORIZ: TStringField
+      FieldKind = fkCalculated
+      FieldName = 'CF_ORE_COMP_AUTORIZ'
+      Size = 6
+      Calculated = True
+    end
+    object selT065CF_ORE_LIQ_AUTORIZ: TStringField
+      FieldKind = fkCalculated
+      FieldName = 'CF_ORE_LIQ_AUTORIZ'
+      Size = 6
+      Calculated = True
+    end
+    object selT065CF_CAUSALE_AUTORIZ: TStringField
+      FieldKind = fkCalculated
+      FieldName = 'CF_CAUSALE_AUTORIZ'
+      Size = 5
+      Calculated = True
+    end
+    object selT065CF_ORE_CAUS_AUTORIZ: TStringField
+      FieldKind = fkCalculated
+      FieldName = 'CF_ORE_CAUS_AUTORIZ'
+      Size = 6
+      Calculated = True
+    end
+    object selT065CF_ORE_COMPENSABILI_ANNO: TStringField
+      FieldKind = fkCalculated
+      FieldName = 'CF_ORE_COMPENSABILI_ANNO'
+      Size = 7
+      Calculated = True
+    end
+    object selT065CF_ORE_COMPENSATE_ANNO: TStringField
+      FieldKind = fkCalculated
+      FieldName = 'CF_ORE_COMPENSATE_ANNO'
+      Size = 7
+      Calculated = True
+    end
+    object selT065CF_RES_ORE_COMP_ANNO: TStringField
+      FieldKind = fkCalculated
+      FieldName = 'CF_RES_ORE_COMP_ANNO'
+      Size = 7
+      Calculated = True
+    end
+    object selT065CF_ORE_LIQUIDABILI_ANNO: TStringField
+      FieldKind = fkCalculated
+      FieldName = 'CF_ORE_LIQUIDABILI_ANNO'
+      Size = 7
+      Calculated = True
+    end
+    object selT065CF_ORE_LIQUIDATE_ANNO: TStringField
+      FieldKind = fkCalculated
+      FieldName = 'CF_ORE_LIQUIDATE_ANNO'
+      Size = 7
+      Calculated = True
+    end
+    object selT065CF_RES_ORE_LIQ_ANNO: TStringField
+      FieldKind = fkCalculated
+      FieldName = 'CF_RES_ORE_LIQ_ANNO'
+      Size = 7
+      Calculated = True
+    end
+    object selT065CF_RIEP_ORE_COMP: TStringField
+      FieldKind = fkCalculated
+      FieldName = 'CF_RIEP_ORE_COMP'
+      Size = 23
+      Calculated = True
+    end
+    object selT065CF_RIEP_ORE_LIQ: TStringField
+      FieldKind = fkCalculated
+      FieldName = 'CF_RIEP_ORE_LIQ'
+      Size = 23
+      Calculated = True
+    end
+    object selT065MIN_ORE_DALIQUIDARE: TStringField
+      FieldName = 'MIN_ORE_DALIQUIDARE'
+      Size = 6
+    end
+    object selT065MIN_ORE_DACOMPENSARE: TStringField
+      FieldName = 'MIN_ORE_DACOMPENSARE'
+      Size = 6
+    end
+  end
+  object selT025: TOracleDataSet
+    SQL.Strings = (
+      'select distinct(ITER_AUTORIZZATIVO_STR) TIPO, count(*)'
+      'from T025_CONTMENSILI'
+      'where nvl(ITER_AUTORIZZATIVO_STR,'#39'0'#39') <> '#39'0'#39
+      'group by ITER_AUTORIZZATIVO_STR'
+      'order by 2 desc')
+    ReadBuffer = 10
+    Optimize = False
+    QBEDefinition.QBEFieldDefs = {
+      050000000D00000016000000500052004F004700520045005300530049005600
+      4F000100000000000E000000430041005500530041004C004500010000000000
+      06000000440041004C000100000000000400000041004C000100000000001200
+      00005400490050004F00470049005500530054000100000000001C0000004100
+      550054004F00520049005A005A0041005A0049004F004E004500010000000000
+      1800000052004500530050004F004E0053004100420049004C00450001000000
+      00000E00000044004100540041004E0041005300010000000000120000004E00
+      55004D00450052004F004F005200450001000000000004000000520049000100
+      0000000010000000500055004C00530041004E00540045000100000000001200
+      00004D00410054005200490043004F004C004100010000000000140000004E00
+      4F004D0049004E0041005400490056004F00010000000000}
+    Left = 70
+    Top = 16
+  end
+  object selT825: TOracleDataSet
+    SQL.Strings = (
+      'select '
+      
+        '  nvl(sum(oreminuti(decode(liquidabile,null,decode(residuabile,n' +
+        'ull,residuabile_teorico,residuabile),residuabile))),0) residuabi' +
+        'le,'
+      
+        '  nvl(sum(oreminuti(decode(liquidabile,null,decode(residuabile,n' +
+        'ull,liquidabile_teorico,liquidabile),liquidabile))),0) liquidabi' +
+        'le,'
+      
+        '  nvl(max(decode(liquidabile,null,decode(residuabile,null,'#39'N'#39','#39'S' +
+        #39'),'#39'S'#39')),'#39'N'#39') definitivi'
+      'from t825_liquidindannuo'
+      'where progressivo :filtro_dip'
+      'and anno = :anno')
+    ReadBuffer = 10
+    Optimize = False
+    Variables.Data = {
+      0400000002000000160000003A00460049004C00540052004F005F0044004900
+      50000100000000000000000000000A0000003A0041004E004E004F0003000000
+      0000000000000000}
+    QBEDefinition.QBEFieldDefs = {
+      050000000D00000016000000500052004F004700520045005300530049005600
+      4F000100000000000E000000430041005500530041004C004500010000000000
+      06000000440041004C000100000000000400000041004C000100000000001200
+      00005400490050004F00470049005500530054000100000000001C0000004100
+      550054004F00520049005A005A0041005A0049004F004E004500010000000000
+      1800000052004500530050004F004E0053004100420049004C00450001000000
+      00000E00000044004100540041004E0041005300010000000000120000004E00
+      55004D00450052004F004F005200450001000000000004000000520049000100
+      0000000010000000500055004C00530041004E00540045000100000000001200
+      00004D00410054005200490043004F004C004100010000000000140000004E00
+      4F004D0049004E0041005400490056004F00010000000000}
+    Left = 214
+    Top = 16
+  end
+  object selLimitiMensili: TOracleDataSet
+    SQL.Strings = (
+      
+        'select nvl(sum(ore_residuate),0) ore_residuate, nvl(sum(ore_liqu' +
+        'idate),0) ore_liquidate from ('
+      
+        '  select sum(decode(causale,'#39'* B'#39',oreminuti(ore),0)) ore_residua' +
+        'te,'
+      
+        '         sum(decode(causale,'#39'* L'#39',oreminuti(ore),0)) ore_liquida' +
+        'te'
+      '  from t820_limitiind T820'
+      '  where progressivo :filtro_dip'
+      '  and anno = :anno'
+      '  and mese between to_char(:inizio,'#39'mm'#39') and to_char(:fine,'#39'mm'#39')'
+      '  and (   (causale = '#39'* B'#39' and liquidabile = '#39'N'#39')'
+      '       or (causale = '#39'* L'#39' and liquidabile = '#39'S'#39'))'
+      
+        '  and not exists (select '#39'x'#39' from T825_LIQUIDINDANNUO where PROG' +
+        'RESSIVO = T820.PROGRESSIVO and ANNO = T820.ANNO and decode(liqui' +
+        'dabile,null,decode(residuabile,null,'#39'N'#39','#39'S'#39'),'#39'S'#39') = '#39'S'#39')     '
+      '  union '
+      '  SELECT SUM(OREMINUTI(T071.BANCA_ORE)) ORE_RESIDUATE, '
+      '         SUM(OREMINUTI(T071.LIQUIDNELMESE)) ORE_LIQUIDATE'
+      
+        '  FROM T071_SCHEDAFASCE T071, T430_STORICO T430, T025_CONTMENSIL' +
+        'I T025'
+      '  WHERE T071.PROGRESSIVO :filtro_dip'
+      '  AND   T071.PROGRESSIVO = T430.PROGRESSIVO'
+      
+        '  AND   last_day(T071.DATA) between T430.DATADECORRENZA and T430' +
+        '.DATAFINE'
+      '  AND   T430.PERSELASTICO = T025.CODICE'
+      '  AND   T025.LIMITE_MM_ECCRES_TIPO <> '#39'EG'#39
+      '  AND T071.DATA BETWEEN :inizio AND :fine'
+      
+        '  and exists (select '#39'x'#39' from T825_LIQUIDINDANNUO where PROGRESS' +
+        'IVO = T071.PROGRESSIVO and ANNO = to_char(T071.DATA,'#39'yyyy'#39') and ' +
+        'decode(liquidabile,null,decode(residuabile,null,'#39'N'#39','#39'S'#39'),'#39'S'#39') = ' +
+        #39'S'#39')'
+      '  union'
+      '  select sum(0) ore_residuate,'
+      '         sum(oreminuti(ore)) ore_liquidate'
+      '  from t820_limitiind T820, t275_caupresenze t275'
+      '  where t820.progressivo :filtro_dip'
+      '  and t820.anno = :anno'
+      
+        '  and t820.mese between to_char(:inizio,'#39'mm'#39') and to_char(:fine,' +
+        #39'mm'#39')'
+      '  and t820.causale <> '#39'* L'#39' and t820.liquidabile = '#39'S'#39
+      '  and t275.codice = t820.causale'
+      '  and t275.orenormali <> '#39'A'#39
+      
+        '  and not exists (select '#39'x'#39' from T825_LIQUIDINDANNUO where PROG' +
+        'RESSIVO = T820.PROGRESSIVO and ANNO = T820.ANNO and decode(liqui' +
+        'dabile,null,decode(residuabile,null,'#39'N'#39','#39'S'#39'),'#39'S'#39') = '#39'S'#39')     '
+      '  union '
+      '  select sum(0) ore_residuate,'
+      '         sum(oreminuti(T074.LIQUIDATO)) ore_liquidate'
+      
+        '  from t820_limitiind T820, t275_caupresenze t275, T074_CAUSPRES' +
+        'FASCE T074'
+      '  where t820.progressivo :filtro_dip'
+      '  and t820.anno = :anno'
+      
+        '  and t820.mese between to_char(:inizio,'#39'mm'#39') and to_char(:fine,' +
+        #39'mm'#39')'
+      '  and t820.causale <> '#39'* L'#39' and t820.liquidabile = '#39'S'#39
+      '  and t275.codice = t820.causale'
+      '  and t275.orenormali <> '#39'A'#39
+      '  AND T074.PROGRESSIVO = T820.PROGRESSIVO'
+      '  AND T074.CAUSALE = t820.causale'
+      '  AND to_char(T074.DATA,'#39'mm'#39') = t820.mese'
+      '  AND to_char(T074.DATA,'#39'yyyy'#39') = t820.anno'
+      
+        '  and exists (select '#39'x'#39' from T825_LIQUIDINDANNUO where PROGRESS' +
+        'IVO = T820.PROGRESSIVO and ANNO = T820.ANNO and decode(liquidabi' +
+        'le,null,decode(residuabile,null,'#39'N'#39','#39'S'#39'),'#39'S'#39') = '#39'S'#39')     '
+      ') ')
+    ReadBuffer = 10
+    Optimize = False
+    Variables.Data = {
+      0400000004000000160000003A00460049004C00540052004F005F0044004900
+      50000100000000000000000000000A0000003A0041004E004E004F0003000000
+      00000000000000000E0000003A0049004E0049005A0049004F000C0000000000
+      0000000000000A0000003A00460049004E0045000C0000000000000000000000}
+    QBEDefinition.QBEFieldDefs = {
+      050000000D00000016000000500052004F004700520045005300530049005600
+      4F000100000000000E000000430041005500530041004C004500010000000000
+      06000000440041004C000100000000000400000041004C000100000000001200
+      00005400490050004F00470049005500530054000100000000001C0000004100
+      550054004F00520049005A005A0041005A0049004F004E004500010000000000
+      1800000052004500530050004F004E0053004100420049004C00450001000000
+      00000E00000044004100540041004E0041005300010000000000120000004E00
+      55004D00450052004F004F005200450001000000000004000000520049000100
+      0000000010000000500055004C00530041004E00540045000100000000001200
+      00004D00410054005200490043004F004C004100010000000000140000004E00
+      4F004D0049004E0041005400490056004F00010000000000}
+    Left = 270
+    Top = 16
+  end
+  object selArrotondamento: TOracleDataSet
+    SQL.Strings = (
+      'select nvl(arr_soglia_comp_liq,'#39'00.01'#39') min_arr'
+      'from T025_CONTMENSILI'
+      'where codice = (select perselastico'
+      '                from T430_STORICO'
+      '                where progressivo = :progressivo'
+      '                and :data between datadecorrenza and datafine)')
+    ReadBuffer = 10
+    Optimize = False
+    Variables.Data = {
+      0400000002000000180000003A00500052004F00470052004500530053004900
+      56004F000300000000000000000000000A0000003A0044004100540041000C00
+      00000000000000000000}
+    QBEDefinition.QBEFieldDefs = {
+      050000000D00000016000000500052004F004700520045005300530049005600
+      4F000100000000000E000000430041005500530041004C004500010000000000
+      06000000440041004C000100000000000400000041004C000100000000001200
+      00005400490050004F00470049005500530054000100000000001C0000004100
+      550054004F00520049005A005A0041005A0049004F004E004500010000000000
+      1800000052004500530050004F004E0053004100420049004C00450001000000
+      00000E00000044004100540041004E0041005300010000000000120000004E00
+      55004D00450052004F004F005200450001000000000004000000520049000100
+      0000000010000000500055004C00530041004E00540045000100000000001200
+      00004D00410054005200490043004F004C004100010000000000140000004E00
+      4F004D0049004E0041005400490056004F00010000000000}
+    Left = 406
+    Top = 16
+  end
+  object selaT820: TOracleDataSet
+    SQL.Strings = (
+      'select causale, liquidabile, ore'
+      'from t820_limitiind'
+      'where progressivo = :progressivo'
+      'and anno = :anno'
+      'and mese = :mese')
+    ReadBuffer = 10
+    Optimize = False
+    Variables.Data = {
+      0400000003000000180000003A00500052004F00470052004500530053004900
+      56004F000300000000000000000000000A0000003A0041004E004E004F000300
+      000000000000000000000A0000003A004D004500530045000300000000000000
+      00000000}
+    QBEDefinition.QBEFieldDefs = {
+      050000000D00000016000000500052004F004700520045005300530049005600
+      4F000100000000000E000000430041005500530041004C004500010000000000
+      06000000440041004C000100000000000400000041004C000100000000001200
+      00005400490050004F00470049005500530054000100000000001C0000004100
+      550054004F00520049005A005A0041005A0049004F004E004500010000000000
+      1800000052004500530050004F004E0053004100420049004C00450001000000
+      00000E00000044004100540041004E0041005300010000000000120000004E00
+      55004D00450052004F004F005200450001000000000004000000520049000100
+      0000000010000000500055004C00530041004E00540045000100000000001200
+      00004D00410054005200490043004F004C004100010000000000140000004E00
+      4F004D0049004E0041005400490056004F00010000000000}
+    Left = 334
+    Top = 16
+  end
+  object selaT065: TOracleDataSet
+    SQL.Strings = (
+      
+        'SELECT T850.STATO, T850.ID, T850.TIPO_RICHIESTA, T065.ID_CONGUAG' +
+        'LIO, T065.ORE_ECCED_CALC,'
+      
+        '       T065.ORE_ECCEDENTI, T065.ORE_DACOMPENSARE, T065.ORE_DALIQ' +
+        'UIDARE, T065.CAUSALE, T065.ORE_CAUSALIZZATE'
+      'FROM T065_RICHIESTESTRAORDINARI T065, T850_ITER_RICHIESTE T850'
+      'WHERE T065.PROGRESSIVO = :PROGRESSIVO'
+      'AND T065.DATA = :DATA'
+      'AND T850.ITER = '#39'T065'#39
+      'AND T850.ID = T065.ID'
+      'ORDER BY T065.ID_CONGUAGLIO')
+    ReadBuffer = 10
+    Optimize = False
+    Variables.Data = {
+      0400000002000000180000003A00500052004F00470052004500530053004900
+      56004F000300000000000000000000000A0000003A0044004100540041000C00
+      00000000000000000000}
+    QBEDefinition.QBEFieldDefs = {
+      050000000D00000016000000500052004F004700520045005300530049005600
+      4F000100000000000E000000430041005500530041004C004500010000000000
+      06000000440041004C000100000000000400000041004C000100000000001200
+      00005400490050004F00470049005500530054000100000000001C0000004100
+      550054004F00520049005A005A0041005A0049004F004E004500010000000000
+      1800000052004500530050004F004E0053004100420049004C00450001000000
+      00000E00000044004100540041004E0041005300010000000000120000004E00
+      55004D00450052004F004F005200450001000000000004000000520049000100
+      0000000010000000500055004C00530041004E00540045000100000000001200
+      00004D00410054005200490043004F004C004100010000000000140000004E00
+      4F004D0049004E0041005400490056004F00010000000000}
+    OnCalcFields = selT065CalcFields
+    Left = 22
+    Top = 72
+  end
+  object selT852: TOracleDataSet
+    SQL.Strings = (
+      'SELECT DATO, VALORE'
+      'FROM T852_ITER_DATI_AUTORIZZATORI '
+      'WHERE ID = :ID'
+      
+        'AND LIVELLO = (SELECT MAX(LIVELLO) FROM T852_ITER_DATI_AUTORIZZA' +
+        'TORI WHERE ID = :ID)')
+    ReadBuffer = 10
+    Optimize = False
+    Variables.Data = {0400000001000000060000003A0049004400030000000000000000000000}
+    QBEDefinition.QBEFieldDefs = {
+      050000000D00000016000000500052004F004700520045005300530049005600
+      4F000100000000000E000000430041005500530041004C004500010000000000
+      06000000440041004C000100000000000400000041004C000100000000001200
+      00005400490050004F00470049005500530054000100000000001C0000004100
+      550054004F00520049005A005A0041005A0049004F004E004500010000000000
+      1800000052004500530050004F004E0053004100420049004C00450001000000
+      00000E00000044004100540041004E0041005300010000000000120000004E00
+      55004D00450052004F004F005200450001000000000004000000520049000100
+      0000000010000000500055004C00530041004E00540045000100000000001200
+      00004D00410054005200490043004F004C004100010000000000140000004E00
+      4F004D0049004E0041005400490056004F00010000000000}
+    OnCalcFields = selT065CalcFields
+    Left = 70
+    Top = 72
+  end
+  object T065P_GESTIONESTRAORDINARIO: TOracleQuery
+    SQL.Strings = (
+      'begin'
+      '  T065P_GESTIONESTRAORDINARIO(:PROGRESSIVO,:DATA);'
+      'end;')
+    Optimize = False
+    Variables.Data = {
+      0400000002000000180000003A00500052004F00470052004500530053004900
+      56004F000300000000000000000000000A0000003A0044004100540041000C00
+      00000000000000000000}
+    Left = 200
+    Top = 72
+  end
+  object updT065: TOracleQuery
+    SQL.Strings = (
+      'update VT065_RICHIESTESTRAORDINARI '
+      'set MESE_RIFERIMENTO = :MESE_RIFERIMENTO '
+      'where PROGRESSIVO = :PROGRESSIVO '
+      'and ID_CONGUAGLIO = -1 '
+      'and ID < 0 '
+      'and TIPO_RICHIESTA = '#39'R'#39' '
+      'and STATO is null'
+      'and nvl(MESE_RIFERIMENTO,:MESE_RIFERIMENTO) <= :MESE_RIFERIMENTO')
+    Optimize = False
+    Variables.Data = {
+      0400000002000000180000003A00500052004F00470052004500530053004900
+      56004F00030000000000000000000000220000003A004D004500530045005F00
+      5200490046004500520049004D0045004E0054004F000C000000000000000000
+      0000}
+    Left = 360
+    Top = 72
+  end
+  object selT065Limiti: TOracleDataSet
+    SQL.Strings = (
+      'select '
+      '  T070.DATA,'
+      '  oreminuti(T070.SALDO_COMPLESSIVO) SALDO_COMPLESSIVO, '
+      '  oreminuti(nvl(T077.VALORE_MAN,T077.VALORE_AUT)) STRAORD_ESC,'
+      
+        '  T065a.ORE_DALIQUIDARE,T065a.ORE_DACOMPENSARE,T065b.ORE_DACOMPE' +
+        'NSARE_PREC'
+      'from '
+      '  T070_SCHEDARIEPIL T070,'
+      '  T077_DATISCHEDA T077,'
+      '  (select '
+      '     nvl(sum(oreminuti(ORE_DALIQUIDARE)),0) ORE_DALIQUIDARE,'
+      '     nvl(sum(oreminuti(ORE_DACOMPENSARE)),0) ORE_DACOMPENSARE'
+      '   from VT065_RICHIESTESTRAORDINARI '
+      '   where PROGRESSIVO = :PROGRESSIVO'
+      '   and   DATA = :DATA'
+      '   and   T065ROWID <> :IDRIGA'
+      '   and   ID_CONGUAGLIO >= 0'
+      '   and   COD_ITER <> '#39'AUTO'#39
+      
+        '   and   TIPO_RICHIESTA <> '#39'L'#39' --non ancora liquidato sulla sche' +
+        'da riepil.'
+      '  ) T065a,'
+      
+        '  (select nvl(sum(oreminuti(ORE_DACOMPENSARE)),0) ORE_DACOMPENSA' +
+        'RE_PREC'
+      '   from VT065_RICHIESTESTRAORDINARI '
+      '   where PROGRESSIVO = :PROGRESSIVO'
+      '   and   MESE_RIFERIMENTO = :DATA'
+      '   and   T065ROWID <> :IDRIGA'
+      '   and   ID_CONGUAGLIO = -1'
+      '   and   COD_ITER <> '#39'AUTO'#39'    --gi'#224' destinato'
+      
+        '   and   TIPO_RICHIESTA <> '#39'L'#39' --non ancora liquidato sulla sche' +
+        'da riepil.'
+      '  ) T065b'
+      'where T070.PROGRESSIVO = :PROGRESSIVO'
+      'and   T070.DATA = :DATA'
+      'and   T070.PROGRESSIVO = T077.PROGRESSIVO(+)'
+      'and   T070.DATA = T077.DATA(+)'
+      'and   T077.DATO(+) = '#39'STRAORD_ESC'#39
+      '')
+    Optimize = False
+    Variables.Data = {
+      0400000003000000180000003A00500052004F00470052004500530053004900
+      56004F000300000000000000000000000A0000003A0044004100540041000C00
+      000000000000000000000E0000003A0049004400520049004700410005000000
+      0000000000000000}
+    Left = 432
+    Top = 72
+  end
+end

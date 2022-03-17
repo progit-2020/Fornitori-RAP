@@ -1,0 +1,70 @@
+{%DocType%}
+<html>
+  <head>
+  </style>
+  </head>
+  <body>
+    {%T000Intestazione%}
+    <div class="dipendente">{%lnkDipendente%} {%cmbDipendentiDisponibili%}</div>
+
+    <div class="RigaDatiColorata">{%lblFiltroProgetti%} {%cmbFiltroProgetti%}</div>
+    <!--
+    <div class="align_center RigaDatiColorataNoPad">{%lblMessaggio%}</div>
+    {%grdRiepilogo%}
+    -->
+
+    <table id="filtriIter">
+      <tr>
+        <td id="filtroVis">
+          <div class="groupbox">
+            <fieldset>
+              <legend>{%lblFiltroVis%}</legend>
+              {%grdFiltroVis%}
+            </fieldset>
+          </div>
+        </td>
+        <td id="filtroStruttura">
+          <div class="groupbox fs100">
+            <fieldset>
+              <legend>{%lblFiltroStruttura%}</legend>
+              {%cmbFiltroStruttura%}
+            </fieldset>
+          </div>
+        </td>
+        <td id="filtroPeriodo">
+          <div class="groupbox">
+            <fieldset>
+              <legend>{%lblPeriodo%}</legend>
+              {%rgpPeriodo%} {%lblPeriodoDal%} {%edtPeriodoDal%} {%lblPeriodoAl%} {%edtPeriodoAl%}
+            </fieldset> 
+          </div>
+        </td>
+        <td id="pulsantiAzione">
+          {%btnFiltra%} {%btnTuttiSi%} {%btnTuttiNo%} {%btnConfermaPianificazione%} {%btnStampa%}
+        </td>
+      </tr>
+    </table>    
+
+     
+    <!-- elenco richieste -->
+    <!-- 
+    <div class="clearDiv spazio_verticale"></div>
+    <div class="grigliaDatiNav">
+    {%PagNavBarRichieste%}
+    </div>
+    <div class="grigliaDati">
+    {%grdRichieste%}
+    </div>
+     -->
+
+    {%tabRichiestaRendiProj%}
+    <div>{%Wc01RichiesteRG%} {%Wc01ProspettoRG%}</div>
+
+    {%<frm>WC002FDatiAnagraficiFM</frm>%}
+    {%<frm>WC012FVisualizzaFileFM</frm>%}
+    {%<frm>WC018FRiepilogoIterFM</frm>%}
+    {%<frm>Wc01FModificaTabelloneFM</frm>%}
+
+  </body>
+</html>
+

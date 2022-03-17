@@ -1,0 +1,155 @@
+/*!
+* vedere defaultTheme.css 
+* jquery.fixedHeaderTable. The jQuery fixedHeaderTable plugin
+*
+* Copyright (c) 2011 Mark Malek
+* http://fixedheadertable.com
+*
+* Licensed under MIT
+* http://www.opensource.org/licenses/mit-license.php
+* 
+* http://docs.jquery.com/Plugins/Authoring
+* jQuery authoring guidelines
+*
+* Launch  : October 2009
+* Version : 1.3
+* Released: May 9th, 2011
+*
+* 
+* all CSS sizing (width,height) is done in pixels (px)
+*/
+
+/* @group Reset */
+/*
+.fht-table,
+.fht-table thead,
+.fht-table tfoot,
+.fht-table tbody,
+.fht-table tr ,
+.fht-table th,
+.fht-table td  {
+  margin: 0;
+  
+  padding: 0;
+
+  font-size: 100%;
+  font: inherit;
+  vertical-align: top;
+  }
+
+.fht-table {
+    border-collapse: collapse;
+    border-spacing: 0;
+  }
+  */
+
+/* @end */
+
+/* daniloc */
+.fht-table thead th {
+  font-weight: bold;
+}
+
+.fht-table tbody td {
+  /*font-size: 11px;*/
+}
+/* daniloc.fine */
+
+
+/* @group Content */
+
+.fht-table-wrapper,
+.fht-table-wrapper .fht-thead,
+.fht-table-wrapper .fht-tfoot,
+.fht-table-wrapper .fht-fixed-column .fht-tbody,
+.fht-table-wrapper .fht-fixed-body .fht-tbody,
+.fht-table-wrapper .fht-tbody {
+  overflow: hidden;
+  position: relative;
+}
+
+.fht-table-wrapper .fht-fixed-body .fht-tbody,
+.fht-table-wrapper .fht-tbody {
+  overflow: auto;
+}
+
+.fht-table-wrapper .fht-table .fht-cell {
+  overflow: hidden;
+  height: 1px;
+}
+
+.fht-table-wrapper .fht-fixed-column,
+.fht-table-wrapper .fht-fixed-body {
+  top: 0;
+  left: 0;
+  position: absolute;
+}
+
+
+/* daniloc - workaround fixedColumns > 0 */
+.fht-table-wrapper .fht-fixed-body {
+  position: static;
+}
+/* daniloc.fine */
+
+.fht-table-wrapper .fht-fixed-column {
+  z-index: 1;
+}
+
+/* @end */
+
+
+/*.gridFixedHead  tbody {height:15em;overflow:auto;}*/
+/*.gridFixedHead thead > tr{display:block;}*/
+
+
+/*
+.gridFixedHead {
+ width: 90%;       
+  height: 320px;   
+  overflow: auto;
+  margin: 0 auto;
+}
+
+
+.gridFixedHead table {
+  width: 97%; 
+  border: none;
+  border-spacing: 0px;
+  background-color: transparent;
+}
+
+.gridFixedHead table>tbody {
+  overflow: auto;
+  height: 280px;
+  overflow-x: hidden;
+}
+
+.gridFixedHead table>tbody tr {
+  height: auto;
+}
+
+.gridFixedHead table>thead tr {
+  position:relative;
+  top: 0px;
+}
+
+*/
+/*
+.gridFixedHead th {
+  width:30px;
+  }
+
+.gridFixedHead td {
+  width:30px;
+  }
+
+.gridFixedHead thead {
+  display:block;
+  }
+  
+.gridFixedHead tbody {
+  overflow-y: scroll; overflow-x: hidden; height: 50px;
+  display:block;
+  }
+*/

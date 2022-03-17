@@ -1,0 +1,73 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title> Scheda di valutazione </title>
+<link rel="stylesheet" type="text/css" href="stylesheet.css">
+<meta name="Generator" content="Author-it">
+<meta name="Keywords" content="Scheda di valutazione">
+<link rel="stylesheet" type="text/css" href="44.css">
+</head>
+<body text="#000000" link="#0000A0" alink="#008000" vlink="#FF0000"><table class="relatedtopics aboveheading" cellpadding="0" cellspacing="0" border="0">
+<tr valign="top">
+<td width= "18">
+<p class="testo"><a href="W036P0.htm" target="_self"><img id="f125" src="125.gif" class="embeddediconfiletemplate" alt="Previous Topic" height="17" width="18" vspace="0" hspace="0" align="bottom" border="0"></a></p></td>
+<td width= "18">
+<p class="testo"><a href="W022P1.htm" target="_self"><img id="f124" src="124.gif" class="embeddediconfiletemplate" alt="Next Topic" height="17" width="18" vspace="0" hspace="0" align="bottom" border="0"></a></p></td>
+<td width= "48">
+<p class="testo"><a href="toc212415.htm" target="TOC"><img id="f122" src="122.png" class="embeddediconfiletemplate" alt="Book Contents" height="17" width="48" vspace="0" hspace="0" align="bottom" border="0"></a></p></td>
+<td width= "48">
+<p class="testo"><a href="indexpage.htm" target="TOC"><img id="f123" src="123.gif" class="embeddediconfiletemplate" alt="Book Index" height="17" width="48" vspace="0" hspace="0" align="bottom" border="0"></a></p></td>
+</tr>
+</table>
+<h2 id="t2700" class="heading2">Scheda di valutazione</h2>
+<p class="paragrafo">Introduzione</p>
+<p class="testo"><span class="normale">Questa scheda permette al personale incaricato di valutare i dipendenti.</span></p>
+<p class="testo"><span class="normale">Le valutazioni solitamente hanno carattere annuale</span>, ma il <span class="nomedato">Supervisore delle Valutazioni</span> ha la possibilità di inserire più schede nell'anno. Esse possono essere create soltanto per quei dipendenti che, nel periodo tra inizio anno e la data di valutazione, hanno avuto un totale di giorni di servizio superiore al valore specificato nel campo <span class="nomedato">Giorni di servizio minimi nell'anno di valutazione</span> della funzione Regole valutazioni, oppure se rientrano nella categoria identificata dal parametro <span class="nomedato">Ignora gg minimi per dip. di ruolo cessati nell'anno</span>. Verranno considerati i periodi di lavoro dei dipendenti che presentano sulla Scheda anagrafica un <span class="nomedato">Tipo rapporto</span> tra quelli elencati nel campo <span class="nomedato">Tipi rapporto dei dipendenti da valutare</span> della funzione Regole valutazioni. Da questi periodi lavorativi saranno esclusi i giorni in cui è stato utilizzato un giustificativo di assenza che presenti valorizzato il flag <span class="nomedato">Abbatte il periodo di valutazione</span> nella pagina <span class="nomeargomento">Regole di inserimento</span> della funzione Causali di assenza.</p>
+<p class="testo">I vari dati relativi alle valutazioni vengono considerati alla data di fine <span class="nomedato">Anno valutazione</span> selezionato o alla data della scheda, se interna all'anno. Nel caso in cui il periodo lavorativo di un dipendente cessi durante l'<span class="nomedato">Anno valutazione</span>, i dati verranno considerati alla data di <span class="nomedato">Fine rapporto</span> presente sulla Scheda anagrafica.</p>
+<p class="testo">E' fondamentale che la somma di <span class="nomedato">Peso %</span> delle aree di valutazione (definiti nella funzione Gestione aree e valutazioni) assegnate al dipendente selezionato (tramite la funzione Profili aree) sia uguale a <span class="nomecostante">100</span>.</p>
+<p class="testo">Per ogni area è possibile gestire degli elementi di valutazione personalizzati, in numero compreso nel range definito nel campo <span class="nomedato">Elementi personalizzati da..a</span> della funzione Gestione aree e valutazioni. Il <span class="nomedato">Cod. elem.</span> di tali elementi sarà obbligatorio (come anche la relativa <span class="nomedato">Descrizione</span>), e dovrà essere diverso da quelli già definiti a parità di area in Gestione aree e valutazioni e dagli altri elementi personalizzati già inseriti nella scheda.</p>
+<p class="testo">Per avere l'abilitazione anagrafica completa, bisogna accedere al programma con un operatore al quale sono stati associati dei permessi che presentano valorizzato il flag <span class="nomedato">Supervisore delle Valutazioni</span>, nel riquadro <span class="nomeelemento">Valutazioni</span> della finestra <span class="nomeargomento">Moduli accessori</span> della pagina <span class="nomeargomento">Permessi</span> nella maschera Aziende/Operatori. In caso contrario, verranno gestiti soltanto i dipendenti assegnati all'operatore tramite il filtro anagrafe e la funzione Legami valutatore-dipendente. In ogni caso, verranno visualizzati soltanto i dipendenti che hanno effettuato almeno un giorno di lavoro nell'<span class="nomedato">Anno valutazione</span>.</p>
+<p class="testo">Ogni scheda viene presentata sempre al massimo stato di avanzamento raggiunto.</p>
+<p class="testo"><span class="nomeargomento">Arrotondamenti</span></p>
+<p class="testo">Quando vengono caricati dall'operatore, il peso delle aree e il peso e il punteggio degli elementi contengono al massimo due cifre decimali.</p>
+<p class="testo">Nei calcoli, il peso e il punteggio pesato delle aree e il peso e il punteggio pesato degli elementi sono sempre arrotondati alla quinta cifra decimale; sul modulo stampato, a causa dello spazio limitato, vengono tutti visualizzati arrotondati alla terza cifra decimale.</p>
+<p class="testo">Il punteggio finale pesato è sempre arrotondato alla seconda cifra decimale.</p>
+<p class="paragrafo">Riferimenti sul database</p>
+<p class="testo">SG710_TESTATA_VALUTAZIONI</p>
+<p class="testo">SG711_VALUTAZIONI_DIPENDENTE</p>
+<p class="paragrafo">Dettaglio scheda</p>
+<p class="testo"><span class="nomedato">Periodicità</span></p>
+<p class="testoindentato">Permette di abilitare l'inserimento di più schede nell'anno. Disponibile soltanto per il <span class="nomedato">Supervisore delle Valutazioni</span>.</p>
+<ul class="elencopuntato2"><li class="elencopuntato2"><span class="nomecostante">Una scheda per anno: </span>permette di inserire l'<span class="nomedato">Anno valutazione</span></li><li class="elencopuntato2"><span class="nomecostante">Più schede durante l'anno: </span>permette di inserire la <span class="nomedato">Data valutazione</span></li></ul><p class="testo"><span class="nomedato">Anno (o Data) valutazione</span></p>
+<p class="testoindentato">Indica l'anno (o la data) della valutazione che si intende inserire e, se premuto il pulsante <span class="pulsante">Applica</span>, aggiorna la selezione anagrafica in base alla data di fine anno specificato (o alla data specificata).</p>
+<p class="testo"><span class="nomedato">Visualizza anche dipendenti non valutabili</span></p>
+<p class="testoindentato">Nella lista dei dipendenti disponibili, vengono sempre esclusi quelli:</p>
+<ul class="elencopuntato2"><li class="elencopuntato2">senza giorni di servizio nell'<span class="nomedato">Anno valutazione</span>,</li><li class="elencopuntato2">esterni al filtro anagrafe assegnato all'utente del valutatore,</li><li class="elencopuntato2">assegnati ad altro valutatore.<p class="testoindentato">Se viene selezionata questa opzione, nell'elenco verranno visualizzati anche quei dipendenti che, sebbene soddisfino i criteri basilari, rientrano in una delle seguenti categorie:</p>
+</li><li class="elencopuntato2">mancata assegnazione delle regole</li><li class="elencopuntato2">tipo rapporto non valutabile</li><li class="elencopuntato2">giorni minimi di servizio non coperti</li><li class="elencopuntato2">mancata assegnazione delle aree di valutazione</li><li class="elencopuntato2">inserimento inibito all'operatore corrente</li><li class="elencopuntato2">impostazione da parte dell'ufficio<p class="testoindentato">Dato che tali dipendenti non sono valutabili, anche se presenti nell'elenco, non sarà possibile creare la relativa scheda di valutazione. Per i dipendenti non valutabili perché 'impostati dall'ufficio', sarà comunque possibile accedere alla scheda creata precedentemente.</p>
+</li></ul><p class="testo"><span class="pulsante">Applica</span></p>
+<p class="testoindentato">Permette di applicare la modifica effettuata all'<span class="nomedato">Anno (o Data) valutazione</span>. Aggiorna la selezione anagrafica in base alla data di fine anno specificato (o alla data specificata).</p>
+<p class="testo"><span class="pulsante">Riepilogo</span></p>
+<p class="testoindentato">Permette di visualizzare, e successivamente di esportare in Excel, il riepilogo delle schede di valutazione dei dipendenti presenti nella selezione anagrafica, in riferimento all'<span class="nomedato">Anno (o Data) valutazione</span>.</p>
+<p class="testo"><span class="pulsante">Dipendenti disponibili:</span></p>
+<p class="testoindentato">Permette di accedere alla maschera <a id="h2172" class="jumptemplate" title="Scheda anagrafica" href="W002P2.htm" target="_self">Scheda anagrafica</a> visualizzando i dati anagrafici del dipendente selezionato dalla lista; la lista contiene tutti i dipendenti selezionati nella maschera precedente <a id="h2171" class="jumptemplate" title="Elenco anagrafe" href="W002P1.htm" target="_self">Elenco anagrafe</a>, esclusi quelli non abilitati al valutatore. (vedi <span class="nomedato">Visualizza anche dipendenti non valutabili</span>)</p>
+<p class="testo"><span class="nomeelemento">Griglia</span></p>
+<p class="testoindentato">Visualizza la situazione delle schede di valutazione per il dipendente selezionato.</p>
+<p class="testoindentato"><span class="nomedato">1a colonna</span></p>
+<p class="testoindentato2">Pulsanti di inserimento, accesso e cancellazione della scheda. Il pulsante <span class="pulsante">Inserisci</span> si abilita solo sulla riga relativa all'<span class="nomedato">Anno (o Data) valutazione</span>. Il pulsante <span class="pulsante">Accedi</span> apre la pagina con i dati dettagliati della scheda (<a id="h2703" class="jumptemplate" title="Dettaglio scheda di valutazione" href="W022P1.htm" target="_self">Dettaglio scheda di valutazione</a>), eventualmente modificabili. Il pulsante <span class="pulsante">Cancella</span> viene abilitato solo se la scheda esiste, non è <span class="nomecostante">definitiva</span> e si trova al primo <span class="nomedato">Stato</span> disponibile.</p>
+<p class="testoindentato"><span class="nomedato">2a colonna</span></p>
+<p class="testoindentato2">Pulsante di <span class="pulsante">stampa</span> della scheda.</p>
+<p class="testoindentato"><span class="nomedato">Anno valutazione</span></p>
+<p class="testoindentato2">Indica l'anno (o data) di valutazione.</p>
+<p class="testoindentato"><span class="nomedato">Valutatore</span></p>
+<p class="testoindentato2">Indica la matricola e il nominativo dei valutatori che sono intervenuti sulla scheda. L'abilitazione è data in base ai permessi e al filtro anagrafe dell'utente e alla funzione Legami valutatore-dipendente.</p>
+<p class="testoindentato"><span class="nomedato">Stato</span></p>
+<p class="testoindentato2">Indica il massimo stato di avanzamento raggiunto dalla scheda o la motivazione per cui non è disponibile. L'ultimo stadio raggiungibile è la <span class="nomecostante">Scheda definitiva</span>.</p>
+<p class="testoindentato"><span class="nomedato">Punteggio finale pesato</span></p>
+<p class="testoindentato2">Contiene il punteggio finale della scheda.</p>
+<p class="testoindentato"><span class="nomedato">Periodo di compilazione</span></p>
+<p class="testoindentato2">Riporta la finestra temporale abilitata per la compilazione della scheda allo <span class="nomedato">Stato</span> corrente.</p>
+<p class="listnote"></p>
+
+</body>
+</html>
