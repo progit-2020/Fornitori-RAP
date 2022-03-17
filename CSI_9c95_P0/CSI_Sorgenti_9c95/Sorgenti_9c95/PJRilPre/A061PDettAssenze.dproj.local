@@ -1,9 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<BorlandProject>
-	<Transactions>
-    <Transaction>2014/06/04 10.00.00.000.347,C:\SVN\Sviluppo\PJRilPre\Unit1.dfm=C:\SVN\Sviluppo\Copy\C020UVisualizzaDataSet.dfm</Transaction>
-    <Transaction>2014/06/04 10.00.00.000.347,C:\SVN\Sviluppo\PJRilPre\Unit1.pas=C:\SVN\Sviluppo\Copy\C020UVisualizzaDataSet.pas</Transaction>
-    <Transaction>2014/06/04 10.00.00.000.780,=C:\SVN\Sviluppo\PJRilPre\Unit1.pas</Transaction>
-    <Transaction>2015/08/20 10.00.00.000.248,=C:\SVN\CSI\CSI_Sviluppo\MWRilPre\R600.pas</Transaction>
-  </Transactions>
-</BorlandProject>

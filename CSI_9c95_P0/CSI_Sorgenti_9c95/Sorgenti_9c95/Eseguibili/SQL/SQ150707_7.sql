@@ -1,8 +1,0 @@
-update MONDOEDP.I011_DIZIONARIO_DATISCHEDA set ORDINAMENTO = 7 where DATO = 'BLOCCO_T860';
-	
-insert into MONDOEDP.I011_DIZIONARIO_DATISCHEDA (DATO,TIPO,DESCRIZIONE,ORDINAMENTO)
-values ('BLOCCO_T860A_USR','S','Utente prevalidazione iter cartellino',6)/*--NOLOG--*/;
-
-insert into MONDOEDP.I011_DIZIONARIO_DATISCHEDA (DATO,TIPO,DESCRIZIONE,ORDINAMENTO)
-values ('BLOCCO_T860_USR','S','Utente apertura iter valid. cartellino',8)/*--NOLOG--*/;
-
