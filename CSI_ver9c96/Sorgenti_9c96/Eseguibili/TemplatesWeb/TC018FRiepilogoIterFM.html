@@ -1,0 +1,33 @@
+{%DocType%}
+<html>
+  <head>
+  </head>
+  <body>
+  <style type="text/css">
+  .WC018data {
+    max-width: 8em;
+    text-align: center;
+  }
+  .WC018note {
+    min-width: 18em;
+    *width: 18em; /* solo per IE */
+  }
+  .WC018memoheight {
+    height: 4em;
+  }
+  </style>
+
+  <div class="grigliaDatiNav">
+  {%PagNavBarIter%}
+  </div>
+  <div class="grigliaDati" style="height:auto; overflow:auto;">
+   {%grdIter%}
+  </div>
+
+  <div class="align_right" style="width: 100%; margin-top: 1em;">
+    <div style="margin-right: 2px;">
+    {%btnApplica%} {%btnChiudi%}
+    </div>
+  </div>
+  </body> 
+</html>

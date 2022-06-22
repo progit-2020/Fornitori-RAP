@@ -1,0 +1,19 @@
+CREATE OR REPLACE TRIGGER T040_AFTERDEL_T031
+  after delete on T040_GIUSTIFICATIVI
+  for each row
+declare
+  X integer;
+begin
+  select count(*) into X
+  from T265_CAUASSENZE T265, T031_DATACARTELLINO T031
+  where T265.CODICE = :OLD.CAUSALE 
+  and T265.TIPOCUMULO in ('I','O')
+  and T031.PROGRESSIVO = :OLD.PROGRESSIVO 
+  and T031.DATA = :OLD.DATA
+  and T031.TIPO = '1';
+  
+  if X > 0 then
+    T031P_PULISCI_NUOVO_PERIODO(:OLD.PROGRESSIVO,:OLD.DATA,:OLD.CAUSALE,:OLD.PROGRCAUSALE);
+  end if;
+end;
+/

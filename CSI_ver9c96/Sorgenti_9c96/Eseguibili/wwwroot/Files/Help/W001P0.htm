@@ -1,0 +1,111 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title> Login </title>
+<link rel="stylesheet" type="text/css" href="stylesheet.css">
+<meta name="Generator" content="Author-it">
+<meta name="Keywords" content="Login">
+<link rel="stylesheet" type="text/css" href="44.css">
+</head>
+<body text="#000000" link="#0000A0" alink="#008000" vlink="#FF0000"><table class="relatedtopics aboveheading" cellpadding="0" cellspacing="0" border="0">
+<tr valign="top">
+<td width= "18">
+<p class="testo"><a href="110.htm" target="_self"><img id="f125" src="125.gif" class="embeddediconfiletemplate" alt="Previous Topic" height="17" width="18" vspace="0" hspace="0" align="bottom" border="0"></a></p></td>
+<td width= "18">
+<p class="testo"><a href="2205.htm" target="_self"><img id="f124" src="124.gif" class="embeddediconfiletemplate" alt="Next Topic" height="17" width="18" vspace="0" hspace="0" align="bottom" border="0"></a></p></td>
+<td width= "48">
+<p class="testo"><a href="toc.htm" target="TOC"><img id="f122" src="122.png" class="embeddediconfiletemplate" alt="Book Contents" height="17" width="48" vspace="0" hspace="0" align="bottom" border="0"></a></p></td>
+<td width= "48">
+<p class="testo"><a href="indexpage.htm" target="TOC"><img id="f123" src="123.gif" class="embeddediconfiletemplate" alt="Book Index" height="17" width="48" vspace="0" hspace="0" align="bottom" border="0"></a></p></td>
+</tr>
+</table>
+<h1 id="t2208" class="heading1">Login</h1>
+<p class="paragrafo">Configurazione applicativo IrisWeb</p>
+<p class="testo">La configurazione di IrisWeb viene salvata nel file <span class="nomecostante">IrisWeb.ini,</span> all'interno della cartella root dell'applicativo.</p>
+<p class="testo">Per i dettagli sui parametri vedere la pagina B000 Configurazione applicativi web</p>
+<p class="paragrafo">Accesso all'applicativo</p>
+<p class="testo">Il database proposto è quello scritto nel parametro di impostazioni operative <span class="messaggi">DATABASE</span>; dopo l'accesso all'applicativo viene scritta la stringa di connessione utilizzata, altrimenti rimane quella precedente.</p>
+<p class="testo">E' possibile attivare il riconoscimento automatico dell'azienda in funzione del nome utente: vedere la pagina A008 Gestione aziende</p>
+<p class="testo"><span class="testoenfatizzato">Nota:</span> Se IrisWeb è configurato nell'ambiente IIS, e la password dell'utente Oracle <span class="nomecostante">MONDOEDP </span>risulta modificata, si rende necessario posizionare il file <span class="messaggi">IrisWIN.ini</span> contenente la password corretta nella cartella <span class="messaggi">C:\WINDOWS\system32\inetsrv</span>.</p>
+<p class="testo">Al momento del login l'applicativo chiede di selezionare un profilo per l'utente (i profili assegnati ad un utente possono essere anche più di uno) se non viene selezionato alcun profilo, IrisWeb proporrà l'elenco dei profili disponibili. Se è disponibile un solo profilo per l'utente con cui si desidera effettuare l'accesso IrisWin utilizzerà automaticamente quel singolo profilo, anche se non viene indicato in modo esplicito.</p>
+<p class="testo">La variabile <span class="messaggi">PORT</span> serve solo nel caso di utilizzo dell'eseguibile <span class="messaggi">W000PIrisWEB.exe</span>, e non nel caso più usuale che prevede l'installazione all'interno di WebServer quali <span class="messaggi">IIS </span>o <span class="messaggi">Apache</span>. Indica la porta sulla quale l'applicativo si pone in ascolto per le richieste delle sessioni client. Il valore di default è 5000.</p>
+<p class="testo">La fase di login può essere automatizzata in due modalità differenti, denominate <span class="messaggi">GET </span>e <span class="messaggi">POST</span>. </p>
+<p class="testo">Queste modalità sono particolarmente utili quando l'utente si è già precedentemente loggato, ad esempio alla propria intranet, e si desidera passare nome utente e password al server IrisWEB affinché ci si possa autenticare ad esso automaticamente, evitando di reintrodurre i dati di login.</p>
+<p class="paragrafo">Modalità GET</p>
+<p class="testo">Con la modalità <span class="messaggi">GET</span>, di più semplice realizzazione, è possibile specificare nella querystring della url i parametri dell'account di connessione.</p>
+<p class="testo">I parametri validi da utilizzare nella querystring sono questi (validi ovviamente anche per la modalità POST, descritta di seguito):</p>
+<ul class="elencopuntato"><li class="elencopuntato">azienda</li><li class="elencopuntato">usr</li><li class="elencopuntato">pwd</li><li class="elencopuntato">profilo</li><li class="elencopuntato">database</li><li class="elencopuntato">loginesterno</li><li class="elencopuntato">wsauth</li></ul><p class="testo">Ad es., per indicare automaticamente l'azienda AZIN si deve utilizzare il seguente metodo:</p>
+<p class="testo"><span class="messaggi">http://serverXX/irisweb/W000PIrisWEB_IIS.dll/?azienda=AZIN</span></p>
+<p class="testo">Per specificare azienda, utente e profilo occorre invece impostare i parametri in questo modo:</p>
+<p class="testo"><span class="messaggi">http://serverXX/irisweb/W000PIrisWEB_IIS.dll/?azienda=AZIN&amp;usr=NOMEUTENTE&amp;profilo=RESPONSABILE</span></p>
+<p class="testo">Un url così strutturato può ovviamente essere utilizzato sia nel codice <span class="messaggi">HTML</span>, per automatizzare il login, che direttamente nella barra degli indirizzi del browser per, ad esempio, essere memorizzato tra i siti preferiti.</p>
+<p class="testo"><span class="testoenfatizzato">Nota:</span> i parametri passati nella querystring sovrascrivono le impostazioni di default specificate eventualmente nelle chiavi di registro.</p>
+<p class="paragrafo">Modalità POST</p>
+<p class="testo">Con la modalità <span class="messaggi">POST</span>, invece, i parametri dell'account (quali nome utente e password) possono essere memorizzati in un form che invii tali dati al server di IrisWin in modo nascosto, ovvero con dei campi non visibili all'utente.</p>
+<p class="testo">L'utilizzo di campi nascosti permette di rendere più gradevole la pagina da passare al server IrisWin. Un esempio di pagina di accesso in modalità <span class="messaggi">POST </span>può essere il seguente (il nome del form è ininfluente):</p>
+<p class="testo"></p>
+<p class="testo"><span class="messaggi">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot;&gt;</span></p>
+<p class="testo"><span class="messaggi">&lt;html&gt;</span></p>
+<p class="testo"><span class="messaggi">&lt;head&gt;</span></p>
+<p class="testo"><span class="messaggi">&lt;title&gt;Login automatico di IrisWeb&lt;/title&gt;</span></p>
+<p class="testo"><span class="messaggi">&lt;/head&gt;</span></p>
+<p class="testo"><span class="messaggi">&lt;body&gt;</span></p>
+<p class="testo"><span class="messaggi">Autenticazione di IrisWeb in corso...</span></p>
+<p class="testo"><span class="messaggi">&lt;form name=&quot;formIris&quot; method=&quot;post&quot; action=&quot;http://serverXX/IRISWEB/W000PIrisWEB_IIS.dll/&quot;&gt;</span></p>
+<p class="testo"><span class="messaggi">    &lt;input type=&quot;hidden&quot; name=&quot;azienda&quot; value=&quot;AZIN&quot;&gt;</span></p>
+<p class="testo"><span class="messaggi">    &lt;input type=&quot;hidden&quot; name=&quot;usr&quot; value=&quot;nomeUtente&quot;&gt;</span></p>
+<p class="testo"><span class="messaggi">    &lt;input type=&quot;hidden&quot; name=&quot;pwd&quot; value=&quot;myPass&quot;&gt;</span></p>
+<p class="testo"><span class="messaggi">    &lt;input type=&quot;hidden&quot; name=&quot;database&quot; value=&quot;ORCL&quot;&gt;</span></p>
+<p class="testo"><span class="messaggi">    &lt;script type=&quot;text/javascript&quot;&gt;</span></p>
+<p class="testo"><span class="messaggi">    &lt;!--</span></p>
+<p class="testo"><span class="messaggi">        document.forms[&quot;formIris&quot;].submit();		</span></p>
+<p class="testo"><span class="messaggi">    //--&gt;</span></p>
+<p class="testo"><span class="messaggi">    &lt;/script&gt;</span></p>
+<p class="testo"><span class="messaggi">    &lt;noscript&gt;</span></p>
+<p class="testo"><span class="messaggi">        &lt;input type=&quot;submit&quot; name=&quot;SubIrisWeb&quot; value=&quot;Avvia IrisWeb&quot;&gt;</span></p>
+<p class="testo"><span class="messaggi">    &lt;/noscript&gt;</span></p>
+<p class="testo"><span class="messaggi">&lt;/form&gt;</span></p>
+<p class="testo"><span class="messaggi">&lt;/body&gt;</span></p>
+<p class="testo"><span class="messaggi">&lt;/html&gt;</span></p>
+<p class="testo"><span class="testoenfatizzato">Nota:</span> i parametri passati con il metodo POST sovrascrivono le impostazioni di default specificate eventualmente nelle chiavi di registro.</p>
+<p class="paragrafo">Recupero della password</p>
+<p class="testo">E' possibile attivare la funzionalità di recupero password via mail mediante l'attivazione del parametro avanzato <span class="nomecostante">RECUPERO_PASSWORD</span>.</p>
+<p class="testo">Per il corretto funzionamento di questa funzione è necessario disporre di un server smtp aziendale, e aver impostato gli indirizzi email dei dipendenti sulle utenze web.</p>
+<p class="testo">Nel form di login viene visualizzato un link denominato <span class="nomedato">Recupera password</span> che permette di effettuare l'invio di una mail all'indirizzo (o elenco di indirizzi) specificato nei dati dell'utenza web del dipendente.</p>
+<p class="testo"><span class="testoenfatizzato">Importante</span>: questa funzione non è disponibile nel caso di single sign-on o autenticazione su dominio.</p>
+<p class="paragrafo">Personalizzazione delle pagine</p>
+<p class="testo">Tramite l'applicativo di configurazione <span class="messaggi">B000PConfigIrisWEB.exe</span> è possibile indicare per ogni pagina quali componenti si vuole nascondere indicandoli nella sezione <span class="nomeelemento">Campi da non visualizzare</span>. L'esempio classico è quello di non visualizzare alcuni componenti della pagina di login quali <span class="nomedato">Azienda</span> e <span class="nomedato">Database</span>: in questo caso è necessario indicare <span class="nomecostante">W001FLogin </span>come <span class="nomedato">Pagina</span> e come <span class="nomedato">Componenti </span><span class="nomecostante">lblAzienda, edtAzienda, lblDatabase, edtDatabase</span>, premendo per ciacuno il bottone con la freccia<span class="nomecostante">.</span></p>
+<p class="testo">Ciascuna pagina inoltre permette di inserire un contenuto esterno all'inizio e alla fine del corpo della pagina. Il contenuto che si vuole inserire deve essere salvato nella cartella <span class="messaggi">Template </span>di IrisWEB, e deve essere chiamato <span class="messaggi">P01_nomepagina.htm</span> (se all'inizio) o <span class="messaggi">P02_nomepagina.htm</span> (se alla fine). Il file verrà quindi incluso nel file <span class="messaggi">nomepagina.htm </span>in corrispondenza dei tag <span class="messaggi">{%P01_nomepagina.htm%}</span></p>
+<p class="testo">Per esempio, se si vuole aggiungere del contenuto nella pagina W009 StampaCartellino, questa fa riferimento al template <span class="messaggi">T009StampaCartellino.htm</span>, per cui è possibile includere i files <span class="messaggi">P01_T009StampaCartellino.htm</span> o <span class="messaggi">P02_T009StampaCartellino.htm</span>. Il file <span class="messaggi">P01_T009StampaCartellino.htm </span>verrà incuso all'inizio del corpo della pagina, sotto l'intestazione, mentre il file <span class="messaggi">P02_T009StampaCartellino.htm </span>verrà incuso alla fine dela pagina.</p>
+<p class="paragrafo">Sicurezza</p>
+<p class="testo">E' inoltre possibile rendere sicura la trasmissione dei dati al server di IrisWeb mediante una connessione <span class="messaggi">HTTPS </span>che permette di cifrare automaticamente i dati che viaggiano tra il browser dell'utente ed il server.</p>
+<p class="testo">In questo modo nessuno potrà intromettersi nella comunicazione tra browser e server per cercare di carpire azienda, nome utente e password.</p>
+<p class="testo">Per far questo, dopo essersi assicurati che il server IrisWeb sia opportunamente configurato, sarà sufficiente accedere a IrisWeb specificando nell'url <span class="messaggi">HTTPS </span>anziché <span class="messaggi">HTTP</span>, sia nella modalità <span class="messaggi">GET </span>sia in <span class="messaggi">POST</span>.</p>
+<p class="testo">E' da notare che, nel caso in cui sia necessario utilizzare la modalità <span class="messaggi">HTTPS</span>, nel server di IrisWeb si dovrà necessariamente installare un <span class="messaggi">Certificato Digitale SSL</span>.</p>
+<p class="paragrafo">Gestione dei messaggi di log</p>
+<p class="testo">L'applicativo può generare un log di determinati eventi, selezionabili dal programma di configurazione di IrisWEB:<span class="messaggi"> B000PConfigIrisWEB.exe</span></p>
+<p class="testo">I messaggi riportati possono essere messaggi di errore, oppure relativi al comportamento dell'applicativo relativamente al consumo di memoria e alle connessioni al database utilizzate, ecc.</p>
+<p class="testo">Nel momento in cui si attiva uno o più elementi di log, tutti i messaggi relativi vengono registrati sul database se possibile, altrimenti su un file denominato <span class="messaggi">W000.log</span> e posizionato nella stessa directory dell'applicativo web.</p>
+<p class="testo">In situazioni di funzionamento normale si consiglia di non attivare nessuno di questi log, mentre se si vuole tracciare l'applicativo per trovare eventuali errori o anomalie, è bene includere tutte le stringhe, e poi valutare di conseguenza se togliere quelle superflue.</p>
+<p class="testo">Ciascuna riga di log riporta fra parentesi angolari le prime due lettere del tipo di messaggio registrato (per es. &lt;Er&gt; per Errore, &lt;Ac&gt; per Accesso, ecc...).</p>
+<p class="paragrafo">Gestione del timeout della sessione</p>
+<p class="testo">Per gestire la terminazione della sessione, quando questa è rimasta attiva perché l'utente ha chiuso il browser senza eseguire il logout, è previsto un timeout in minuti, oltre il quale la sessione viene chiusa automaticamente. In questo caso, se l'utente ha ancora il browser attivo e utilizza le funzionalità dell'applicativo, verrà visualizzata una pagina di errore, e l'utente dovrà necessariamente richiamare la home page dell'applicativo.</p>
+<p class="testo">Il timeout di default è impostato a 30 minuti per l'operatore IrisWin, e a 5 minuti per il dipendente.</p>
+<p class="testo">Per ridefinire tali valori, intervenire sulle impostazioni <span class="messaggi">TIMEOUT_OPERATORE</span> e <span class="messaggi">TIMEOUT_DIPENDENTE</span> indicando i minuti desiderati.</p>
+<p class="testo">Il timeout corrispondente viene assegnato alla sessione dopo essere stati autenticati, e quindi dopo che l'account è stato riconosciuto come operatore o dipendente.</p>
+<p class="testo">Il timeout predefinito al momento del login, prima dell'autenticazione, viene impostato come il minimo fra i due valori di cui sopra.</p>
+<p class="paragrafo">Gestione delle connessioni al database</p>
+<p class="testo">Ogni sessione web si collega ad un pool di sessioni Oracle gestite dall'applicativo stesso. Il numero di sessioni Oracle disponibili dipende dalle sessioni web attive, dedicando ad ogni sessione Oracle tutte le sessioni web possibili nei limiti del numero massimo di cursori gestibili per ogni sessione Oracle.</p>
+<p class="testo">Per default, viene assunto come utilizzo medio 10 cursori per sessione web, e considerando 1000 come numero massimo numero di cursori per sessione Oracle, ciascuna può gestire fino a 100 sessioni web.</p>
+<p class="testo">Poichè l'utilizzo effettivo dei cursori dipende dal numero di utenti attivi contemporaneamente e dalle funzionalità usate, è possibile ridefinire questi parametri, intervenendo sulle impostazioni di sistema <span class="messaggi">CURSORI_SESSIONE</span> e <span class="messaggi">MAX_OPEN_CURSORS</span> indicando rispettivamente i cursori (ipotizzati) utilizzati per ogni sessione e il parametro <span class="messaggi">OPEN_CURSORS </span>dell'istanza Oracle.</p>
+<p class="testo">Poichè al momento del login la procedura di autenticazione utilizza un altro pool di connessioni Oracle, diverso da quello descritto prima, è possibile allo stesso modo intervenire sui cursori usati in questa fase per ciascuna connessione web, tramite la chiave <span class="messaggi">CURSORI_LOGIN</span>. Il valore di default è 12, e rappresenta gli effettivi cursori utilizzati, ma il valore è comunque modificabile nel caso si verificassero problemi di connettività al database.</p>
+<p class="paragrafo">Controlli avanzati dell'applicativo</p>
+<p class="testo">Tramite l'impostazione <span class="messaggi">PARAMETRI_AVANZATI</span>, è possibile parametrizzare alcuni comportamenti dell'applicativo, nel caso in cui le normali impostazioni dovessero dare problemi di funzionamento.</p>
+<p class="testo">Si veda la pagina B000 Configurazione applicativi web</p>
+<p class="testo"><span class="testoenfatizzato">Questi parametri sono attivabili solo dietro confronto col fornitore.</span></p>
+<p class="paragrafo">Termine della sessione di lavoro</p>
+<p class="testo">Cliccando sul link <span class="nomedato">Esci</span>, il comportamento di default prevede di richiamare una pagina bianca indicante la chiusura della sessione. In alternativa, è possibile valorizzare l'impostazione <span class="messaggi">HOME</span>, indicando l'URL della pagina a cui si vuole accedere dopo aver cliccato su Esci.</p>
+
+</body>
+</html>

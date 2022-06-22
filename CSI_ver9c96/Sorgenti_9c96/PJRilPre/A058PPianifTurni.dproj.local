@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<ProjectSortOrder AutoSort="0" SortType="0">
+    <File Path="..\..\CSI"/>
+    <File Path="..\Componenti"/>
+    <File Path="..\Componenti\SelAnagrafe.pas"/>
+    <File Path="..\Componenti\SelAnagrafe.dfm"/>
+    <File Path="..\Repositary"/>
+    <File Path="..\Repositary\R002UQREP.pas"/>
+    <File Path="..\Repositary\R002UQREP.dfm"/>
+    <File Path="A058UCoperturaSquadra.pas"/>
+    <File Path="A058UCoperturaSquadra.dfm"/>
+    <File Path="A058UCopiaPianificazione.pas"/>
+    <File Path="A058UCopiaPianificazione.dfm"/>
+    <File Path="A058UDettaglioGiornata.pas"/>
+    <File Path="A058UDettaglioGiornata.dfm"/>
+    <File Path="A058UDettaglioTipiOperatori.pas"/>
+    <File Path="A058UDettaglioTipiOperatori.dfm"/>
+    <File Path="A058UGrigliaPianif.pas"/>
+    <File Path="A058UGrigliaPianif.dfm"/>
+    <File Path="A058UModPianif.pas"/>
+    <File Path="A058UModPianif.dfm"/>
+    <File Path="A058UPianifTurni.pas"/>
+    <File Path="A058UPianifTurni.dfm"/>
+    <File Path="A058UPianifTurniDtm1.pas"/>
+    <File Path="A058UPianifTurniDtm1.dfm"/>
+    <File Path="A058UStampaAssenze.pas"/>
+    <File Path="A058UStampaAssenze.dfm"/>
+    <File Path="A058UStampaRiepTimb.pas"/>
+    <File Path="A058UStampaRiepTimb.dfm"/>
+    <File Path="A058UTabellone.pas"/>
+    <File Path="A058UTabellone.dfm"/>
+    <File Path="A058UValidaAssenze.pas"/>
+    <File Path="A058UValidaAssenze.dfm"/>
+  </ProjectSortOrder>
+</BorlandProject>

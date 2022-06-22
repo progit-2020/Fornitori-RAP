@@ -1,0 +1,100 @@
+{%DocType%}
+
+<html>
+  <head>
+	  <style type="text/css">
+		/* Form di login */
+		
+		#loginForm {
+		  position: absolute;
+		  background-image: url(../img/logo_irisweb_login.png);
+			background-position: center center;
+		  background-repeat: no-repeat;
+		  background-size: auto auto;
+		  background-color: azure;
+		  left: 1em;
+		  width: 97%;    
+		  height: 80%;
+		}
+		
+		#loginTable {
+		  position: absolute;
+		  top: 20%;
+		  left: 40%;
+			height: 0em;
+		  width: 0em;
+		  border-collapse: inherit;
+		  padding: 1.5em;
+		  opacity: 0.75;
+		  background: #A5D0EB; /*#C5D5EB; */
+		  background: -webkit-linear-gradient(left bottom, #FFFFFF 0%, #C3E2E2 50%, #FFFFFF 100%); /* Chrome10+,Safari5.1+ */
+		  background:    -moz-linear-gradient(left bottom, #FFFFFF 0%, #C3E2E2 50%, #FFFFFF 100%); /* FF3.6+ */
+		  background:     -ms-linear-gradient(left bottom, #FFFFFF 0%, #C3E2E2 50%, #FFFFFF 100%); /* IE10+ */
+		  background:         linear-gradient(left bottom, #FFFFFF 0%, #C3E2E2 50%, #FFFFFF 100%); /* W3C */
+		  /*filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#FFFFFF', endColorstr='#C3E2E2',GradientType=1); /* IE6-9   */
+		  background:none;
+		  border-radius: 10px;
+		  box-shadow: 2px 2px 2px #DADADA;
+		  box-shadow: 0px 0px 2px 3px #DADADA;
+		}
+		
+		#loginTable td {
+		  /*padding: 0.1em 0;
+		  width: 50%;
+		  */
+		}
+		
+		#loginInProgress {
+		  font-size: 13px;
+		  width: 99%;
+		  text-align: center;
+		  margin-top: 5em;
+		}
+	  </style>
+  </head>
+  <body>
+    {%T000Intestazione%}
+    <div id="loginForm" class="invisibile">
+      <table id="loginTable">
+          <tr><td>
+          <table>	
+          <tr>
+            <td class="align_right">{%lblAzienda%}</td>
+            <td class="align_left">{%edtAzienda%}</td>
+          </tr>
+          <tr>
+            <td class="align_right">{%lblUtente%}</td>
+            <td class="align_left">{%edtUtente%}</td>
+          </tr>
+          <tr>
+            <td class="align_right">{%lblPassword%}</td>
+            <td class="align_left">{%edtPassword%}</td>
+          </tr>
+          <tr>
+            <td class="align_right">{%lblNomeProfilo%}</td>
+            <td class="align_left">{%cmbNomeProfilo%} {%edtNomeProfilo%}</td>
+          </tr>
+          <tr>
+            <td class="align_right">{%lblDatabase%}</td>
+            <td class="align_left">{%edtDatabase%}</td>
+          </tr>
+          <tr>
+          	<td class="align_right">&nbsp;</td>
+            <td class="align_right" style="padding-top: 1em">{%btnAccedi%}</td>
+          </tr>
+          </table>
+          </td></tr>
+          <tr>
+            <td class="align_right" style="padding-top: 0.5em">{%lnkRecuperaPassword%}</td>
+            <!--
+            <td class="align_left" style="padding-left: 2.5em;">{%lnkRecuperaPassword%}</td>
+            -->
+          </tr>
+      </table>
+    </div>
+    <div id="browserWarning"></div>
+
+    {%<frm>WC012FVisualizzaFileFM</frm>%}
+  </body>
+</html>
+

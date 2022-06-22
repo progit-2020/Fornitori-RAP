@@ -1,0 +1,102 @@
+{%DocType%}
+<html>
+  <head>
+    <style>
+      #w040Destinazione {
+        display: inline-block;
+        /*margin-top: 0.5em;*/
+        height: 95%;
+        width: 100%;
+      }
+      #w040Cartelle,
+      #w040File {
+        border: 1px solid #CCCCCC;
+        float: left;
+        height: 100%;
+      }
+      #w040Cartelle {
+        width: 55%;
+        border-right: 0 none;
+        overflow: auto;
+        /*background-color: #111;*/
+      }
+      #TRVCARTELLEContainer > span {
+        padding: 0.5em;
+        display: block;
+      }
+      #w040File {
+        width: 43%;
+        overflow: auto;
+        text-overflow: ellipsis;
+        /*background-color: #777;*/
+      }
+      #LSTFILE {
+        margin: 0.5em;
+      }
+      #LSTFILE td {
+        padding: 2px;
+        color: #000000;
+        cursor: default;
+      }
+      #LSTFILE tr:hover td {
+        background-color: #C5D5EB !important; 
+        background-image: -webkit-linear-gradient(top, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0.1) 91%, rgba(255,255,255,0.0) 100%);  Chrome10+,Safari5.1+ 
+        background-image: -moz-linear-gradient(center top , rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.3) 50%, rgba(255, 255, 255, 0.1) 91%, rgba(255, 255, 255, 0) 100%) !important;
+      }
+      #LSTFILE tr:hover td td {
+        background-color: transparent !important;
+        background-image: none !important;
+      }
+    </style>
+  </head>
+  <body>
+    {%T000Intestazione%}
+
+    <!-- selezione della tipologia di documento -->
+    <div class="groupbox width80chr fs100">
+      <fieldset>
+        <legend>{%lblTipologie%}</legend>
+        <table>
+          <tbody>
+            <tr>
+              <td>{%cmbTipologie%}</td>
+              <td style="padding-left: 0.5em; cursor: default;">{%lblDescTipologia%}</td>
+            </tr>
+          </tbody>
+        </table>
+      </fieldset>
+    </div>
+    <div class="clearDiv"></div>
+
+    <!-- struttura cartelle e elenco file -->
+    <div class="groupbox width80chr fs100" style="margin-top: 1em; height: 25em; min-height: 25em;">
+      <fieldset>
+        <legend>{%lblDestinazione%}</legend>
+        <div id="w040Destinazione">
+          <div id="w040Cartelle">
+            {%trvCartelle%}
+          </div>
+          <div id="w040File">
+            {%lstFile%}
+          </div>
+        </div>
+      </fieldset>
+    </div>
+    <div class="clearDiv"></div>
+
+    <!-- upload file -->
+    <div class="groupbox width80chr fs100" style="margin-top: 1em;">
+      <fieldset>
+        <legend>{%lblFile%}</legend>
+        {%IWFile%}
+        <br/>
+        {%lblInfoFile%}
+      </fieldset>
+    </div>
+	<div class="invisibile">
+		{%btnHdnUpload%}
+	</div>
+
+    {%<frm>WC012FVisualizzaFileFM</frm>%}
+  </body>
+</html>
