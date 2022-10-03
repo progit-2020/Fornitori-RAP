@@ -1,0 +1,86 @@
+{%DocType%}
+<html>
+  <head>
+  </head>
+  <body>
+    <div id="grdRiepilogo2" class="grid">
+      <table>
+        <tr>
+          <td style="padding: 0;" colspan="2"><!--padding necessario, margin e border-collapse no-->
+            <table style="border-collapse: collapse; border: 0;"><!--border e border-collapse necessari, margin e padding no-->
+              <tr><!--border, border-collapse, margin e padding non necessari-->
+                <td class="riga_intestazione">{%lblProfiloAssenze%}</td><!--border, border-collapse e margin non necessari, padding vietato-->
+                <td class="riga_colorata">{%lblProfiloAssenzeVal%}</td>
+              </tr>
+            </table>
+          </td>
+          <td style="padding: 0;" colspan="2"><!--padding necessario, margin e border-collapse no-->
+            <table style="border-collapse: collapse; border: 0;"><!--border e border-collapse necessari, margin e padding no-->
+              <tr><!--border, border-collapse, margin e padding non necessari-->
+                <td class="riga_intestazione">{%lblPeriodoCumulo%}</td><!--border, border-collapse e margin non necessari, padding vietato-->
+                <td class="riga_colorata">{%lblPeriodoCumuloVal%}</td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td class="riga_intestazione">{%lblCompLordeAC%}</td>
+          <td class="riga_bianca align_right">{%lblCompLordeACVal%}</td>
+          <td class="riga_intestazione" colspan="2">{%lblPartTime%}</td>
+        </tr>
+        <tr>
+          <td class="riga_intestazione">{%lblVarPeriodiRapporto%}</td>
+          <td class="riga_colorata align_right">{%lblVarPeriodiRapportoVal%}</td>
+          <td style="padding: 0;" rowspan="3" colspan="2">{%memPartTimeVal%}</td>
+        </tr>
+        <tr>
+          <td class="riga_intestazione">{%lblAbbattiAssCess%}</td>
+          <td class="riga_bianca align_right">{%lblAbbattiAssCessVal%}</td>
+        </tr>
+        <tr>
+          <td class="riga_intestazione">{%lblDecurtazNonMatura%}</td>
+          <td class="riga_colorata align_right">{%lblDecurtazNonMaturaVal%}</td>
+        </tr>
+        <tr>
+          <td class="riga_intestazione">{%lblVarPartTime%}</td>
+          <td class="riga_bianca align_right">{%lblVarPartTimeVal%}</td>
+          <td class="riga_intestazione">{%lblFruizMinimaAC%}</td>
+          <td class="riga_bianca align_right">{%lblFruizMinimaACVal%}</td>
+        </tr>
+        <tr>
+          <td class="riga_intestazione">{%lblVarAbilitazioneAnagrafica%}</td>
+          <td class="riga_colorata align_right">{%lblVarAbilitazioneAnagraficaVal%}</td>
+          <td class="riga_colorata" colspan="2"></td>
+        </tr>
+        <tr>
+          <td class="riga_intestazione">{%lblVarCompManuale%}</td>
+          <td class="riga_bianca align_right">{%lblVarCompManualeVal%}</td>
+          <td class="riga_bianca" colspan="2"></td>
+        </tr>
+        <tr class="cumuloF">
+          <td class="riga_intestazione">{%lblVarFruizMMInteri%}</td>
+          <td class="riga_bianca align_right">{%lblVarFruizMMInteriVal%}</td>
+          <td class="riga_bianca" colspan="2"></td>
+        </tr>
+        <tr class="cumuloF">
+          <td class="riga_intestazione">{%lblVarMaxIndividuale%}</td>
+          <td class="riga_colorata align_right">{%lblVarMaxIndividualeVal%}</td>
+          <td class="riga_colorata" colspan="2"></td>
+        </tr>
+        <tr class="cumuloF">
+          <td class="riga_intestazione">{%lblVarFruizMMContinuativi%}</td>
+          <td class="riga_bianca align_right">{%lblVarFruizMMContinuativiVal%}</td>
+          <td class="riga_bianca" colspan="2"></td>
+        </tr>
+        <tr>
+          <td class="riga_intestazione">{%lblCompNetteAC%}</td>
+          <td class="riga_colorata align_right">{%lblCompNetteACVal%}</td>
+          <td class="riga_colorata" colspan="2"></td>
+        </tr>
+      </table>
+    </div>
+    <div style="width: 100%;  margin-top: 1em;" align="right">
+      <div style="margin-right: 1em;">{%btnChiudi%}{%btnNewFrame%}</div>
+    </div>
+  </body>
+</html>

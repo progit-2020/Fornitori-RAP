@@ -1,0 +1,55 @@
+{%DocType%}
+<html>
+  <body>
+    {%T000Intestazione%}
+
+    <div class="dipendente">{%lnkDipendente%} {%cmbDipendentiDisponibili%}</div>
+    <div class="RigaDatiColorata">{%rgpTipoIscrizioni%}{%rgpTipoRichieste%}</div>
+    <div class="RigaBase"> {%lblCorso%} {%btnVisCorsi%}{%cmbCorso%}</div>
+    <div class="RigaDatiColorataNoPad">{%lblEdizione%} {%cmbEdizione%}</div>
+    <div class="RigaBaseNoPad">{%lblGiornata%} {%cmbGiornata%}</div>
+    <div class="RigaDatiColorataNoPad">{%lblDurataDesc%} {%lblDurata%}</div>
+    <div class="RigaBaseNoPad">
+      {%lblTipoDesc%} {%lblTipo%}
+      {%lblLuogoDesc%} {%lblLuogo%}
+      {%lblModoDesc%} {%lblModo%}
+      {%lblMetodoDesc%} {%lblMetodo%}
+    </div>
+    <div class="RigaDatiColorataNoPad">
+      {%lblMaxIscrDesc%} {%lblMaxIscr%}
+      {%lblMaxPartecDesc%} {%lblMaxPartec%}
+      {%lblIscrittiDesc%} {%lblIscritti%}
+      {%lblNumCreditiDesc%} {%lblNumCrediti%}
+    </div>
+    <div class="RigaBaseNoPad">{%lblNoteDesc%} {%lblNote%}</div>
+    <div class="RigaBaseNoPad">{%lnkLink%}</div>
+    <div class="RigaDatiColorataNoPad">
+      <span>{%rgpTipoDettaglio%}</span>
+      <span>{%lblCorsiDal%} {%edtDtInizio%}</span>
+      <span>{%lblCorsiAl%} {%edtDtFine%}</span>
+      <span>{%btnVisualizza%} {%btnConferma%}</span>
+    </div>
+
+    <!-- riepilogo -->
+    <div class="BordoDiv">
+      <div class="FloatSinistra">
+        <div class="Riepilogo">{%btnRiepilogo%} {%lblRiepAl%} {%edtRiepAl%}</div>
+      </div>
+      <div class="FloatDestra">{%grdRiepilogo%}</div>
+    </div>
+
+    <!-- elenco richieste -->
+    <div class="clearDiv spazio_verticale"></div>
+    <div class="grigliaDatiNav">
+      {%PagNavBarCorsi%}
+    </div>
+    <div class="grigliaDati">
+      {%grdCorsi%}
+    </div>
+
+    {%<frm>WC002FDatiAnagraficiFM</frm>%}
+    {%<frm>WC012FVisualizzaFileFM</frm>%}
+    {%<frm>W014FRiepilogoProfiliFM</frm>%}    
+
+  </body>
+</html>

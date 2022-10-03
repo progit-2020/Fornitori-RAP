@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2014/10/15 14:00:00.000.590,D:\SVN\Sviluppo\PJRilPre\A126PBloccoRiepiloghi.dproj=D:\SVN\Sviluppo\PJRilPre\GroupDA.dproj</Transaction>
+    <Transaction>2014/10/15 14:00:00.000.431,D:\SVN\Sviluppo\PJRilPre\GroupDA.dproj=D:\SVN\Sviluppo\PJRilPre\A126PBloccoRiepiloghi.dproj</Transaction>
+  </Transactions>  <ProjectSortOrder AutoSort="0" SortType="0">
+    <File Path="..\..\CSI_Sviluppo"/>
+    <File Path="..\Componenti"/>
+    <File Path="..\Componenti\SelAnagrafe.pas"/>
+    <File Path="..\Componenti\SelAnagrafe.dfm"/>
+    <File Path="..\Copy"/>
+    <File Path="..\Copy\A000UMessaggi.pas"/>
+    <File Path="..\MWRilPre"/>
+    <File Path="..\MWRilPre\A126UBloccoRiepiloghiMW.pas"/>
+    <File Path="..\MWRilPre\A126UBloccoRiepiloghiMW.dfm"/>
+    <File Path="..\Repositary"/>
+    <File Path="..\Repositary\R005UDataModuleMW.pas"/>
+    <File Path="..\Repositary\R005UDataModuleMW.dfm"/>
+    <File Path="A126UBloccoRiepiloghi.pas"/>
+    <File Path="A126UBloccoRiepiloghi.dfm"/>
+    <File Path="A126UBloccoRiepiloghiDtM1.pas"/>
+    <File Path="A126UBloccoRiepiloghiDtM1.dfm"/>
+  </ProjectSortOrder>
+</BorlandProject>

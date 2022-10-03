@@ -1,0 +1,4 @@
+Indicare dopo la parola chiave '@EXESERVER=' il percorso dove si trova il file di allineamento versioni lato server
+Indicare dopo la parola chiave '@EXECLIENT=' il nome del file eseguibile che si desidera lanciare sul client dopo il controllo delle versioni
+#@EXESERVER=\\Server\IrisWIN\B011PAllineamentoServer.exe
+@EXECLIENT=A002PAnagrafe.exe

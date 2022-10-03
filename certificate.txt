@@ -4,3 +4,5 @@ certifico x aggiornamento token 25112021
 certifico x aggiornamento token 13122021
 certifico x aggiornamento token 22062022
 certifico per aggiornamento token 27/07/2022
+certifico CSI_9c97_P0_DocSisInfo documentazione RAP fornitore 03/10/2022
+certifico CSI_Sorgenti_9c97 sorgenti 03/10/2022

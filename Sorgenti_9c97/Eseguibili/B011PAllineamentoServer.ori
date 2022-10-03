@@ -1,0 +1,13 @@
+Indicare i files che si vogliono aggiornare sui clients nel formato: '@Sorgente#Destinazione'.
+I File indicati devono risiedere nella stessa cartella del programma di aggiornamento...
+@P001Standard.bpl#P001Standard.bpl
+@A002PAnagrafe.exe#A002PAnagrafe.exe
+@P000PStipendi.exe#P000PStipendi.exe
+@S000PStatoGiuridico.exe#S000PStatoGiuridico.exe
+@PCalcolatrice.exe#PCalcolatrice.exe
+@TMVW_medp.exe#TMVW_medp.exe
+@Help\IrisWIN.chm#Help\IrisWIN.chm
+@Help\Stipendi.chm#Help\Stipendi.chm
+@Help\Statogiuridico.chm#Help\Statogiuridico.chm
+@Help\IrisWIN_note.pdf#Help\IrisWIN_note.pdf
+@Immagini\*.*#Immagini\

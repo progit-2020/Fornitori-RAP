@@ -1,0 +1,53 @@
+{%DocType%}
+<html>
+  <head>
+  </head>
+  <body>
+    <div class="medpTabRegion"style="position:relative;">
+     <div style="position:relative;width:100%;">
+      <table style="position:relative;width:100%;">
+	<tr><td>{%lblEtichettaMatricola%}</td><td>{%lblMatricola%}</td><td>{%lblEtichettaDataFamRif%}</td><td>{%lblDataFamRif%}</td></tr>
+	<tr><td>{%lblEtichettaNome%}</td><td>{%lblNome%}</td><td>{%lblEtichettaPeriodoCumulo%}</td><td>{%lblPeriodoCumulo%}</td></tr>
+	<tr><td>{%lblEtichettaCausale%}</td><td>{%lblCausale%}</td><td>{%lblEtichettaNumeroFruizioni%}</td><td>{%lblNumeroFruizioni%}</td></tr>
+      </table>    	
+     </div>	
+     <div class="clearDiv"></div>     
+     <div class="groupbox" style="position:relative;margin-top:0.5em;width:98%;">
+	<fieldset style="width:100%">
+	  <legend>{%lblRaggruppamento%}</legend>  
+          <table style="position:relative;width:100%;">
+	  <tr>
+	   <td style="width:60%">
+      	    <table style="position:relative;width:100%;">
+		<tr><td>{%lblEtichettaCompTotale%}</td><td>{%lblCompTotale%}</td></tr>
+		<tr><td>{%lblEtichettaPeriodiRapporto%}</td><td>{%lblPeriodiRapporto%}</td></tr>
+		<tr><td>{%lblEtichettaCompArrotondata%}</td><td>{%lblCompArrotondata%}</td></tr>
+		<tr><td>{%lblEtichettaCompSoloFerie%}</td><td>{%lblCompSoloFerie%}</td></tr>
+		<tr><td>{%lblEtichettaPartTime%}</td><td>{%lblPartTime%}</td></tr>
+		<tr><td>{%lblEtichettaAbilAnagr%}</td><td>{%lblAbilAnagr%}</td></tr>
+		<tr><td>{%lblEtichettaDecurtazione%}</td><td>{%lblDecurtazione%}</td></tr>
+		<tr><td>{%lblEtichettaFruizMMInteri%}</td><td>{%lblFruizMMInteri%}</td></tr>
+		<tr><td>{%lblEtichettaFruizMMContinuativi%}</td><td>{%lblFruizMMContinuativi%}</td></tr>
+		<tr><td>{%lblEtichettaMaxIndividuale%}</td><td>{%lblMaxIndividuale%}</td></tr>
+		<tr><td>{%lblEtichettaCompFinale%}</td><td>{%lblCompFinale%}</td></tr>
+	    </table>    	
+	  </td>
+	  <td style="width:40%;vertical-align:top;padding-left:3em">
+	    <table style="width:100%;">
+	      <tr><td>{%lblEtichettaPartTimeApplicato%}</td><td>&nbsp;</td></tr>
+	      <tr><td colspan="2">{%lblPartTimeApplicato%}</td></tr>
+	      <tr><td colspan="2">&nbsp;</td></tr>
+	      <tr><td>{%lblEtichettaFruizMinima%}</td><td>{%lblFruizMinima%}</td></tr>
+	    </table>		
+	  </td>
+         </tr>
+	 </table> 
+	</fieldset>
+     </div>
+     <div class="clearDiv"></div>
+     <div style="margin-top:0.5em;margin-bottom:0em;position:relative width:98%;height: 18em;overflow-y:auto;overflow-x: auto;">
+	{%grdRiepilogo%}
+     </div>
+    </div>
+  </body>
+</html>

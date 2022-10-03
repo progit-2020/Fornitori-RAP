@@ -1,0 +1,90 @@
+{%DocType%}
+<html>
+  <head>
+  </head>
+  <body> 
+    <div class="medpTabRegion" style="position:relative;">
+
+      <!-- dettaglio messaggio -->
+      <a id="contenuto_pagina_1" class="font_nascosto">Dettaglio del messaggio selezionato</a>
+      <div id="w035Dettaglio">
+        <h3>{%lblDettaglio%}</h3>
+        <div>
+          <table style="width: 100%">
+            <tbody>
+              <tr>
+                <td style="width: 5%;">{%lblDestinatari%}</td>
+                <td style="width: 95%;">{%grdC700NavigatorBar%} {%imgScegliDestOperatori%} {%edtDestinatari%} {%btnDestinatari%} {%edtIDOriginale%}</td>
+              </tr>
+              <tr>
+                <td style="width: 5%;">{%lblOggetto%}</td>
+                <td style="width: 95%;">{%edtOggetto%}</td>
+              </tr>
+              <tr>
+              <tr>
+                <td rowspan="2" style="width: 5%; vertical-align: top; padding-top: 0.5em;">{%lblAllegati%}</td>
+                <td style="width: 95%;">{%grdAllegati%}</td>
+              </tr>
+              <tr>
+                <td style="width: 95%;">{%lblNoAllegati%}{%IWFile%}</td>
+              </tr>
+              <tr>
+                <td style="width: 5%;  vertical-align: top;">{%lblTesto%}</td>
+                <td style="width: 95%; vertical-align: top;">{%memTesto%}</td>
+              </tr>
+               <tr>
+                <td style="width: 5%;">&nbsp;</td>
+                <td style="width: 95%;">{%chkLetturaObbligatoria%}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- tabella dei filtri -->
+      <a id="contenuto_pagina_2" class="font_nascosto">Filtri di visualizzazione dei messaggi</a>
+      <div id="w035FiltroMessaggi" class="groupbox fs100" style="margin-top: 5px;">
+        <fieldset>
+          <legend>{%lblFiltro%}</legend>
+          <table>
+            <tbody>
+              <tr>
+                <td colspan="3">
+                  {%rgpFiltroDaLeggere%}
+                  {%chkStatoSospeso%} {%chkStatoInviato%} {%lblPeriodoDal%} {%edtPeriodoDal%} {%lblPeriodoAl%} {%edtPeriodoAl%} {%chkStatoCancellato%} {%chkStatoTutti%}
+                </td>
+              </tr>
+              <tr>
+                <td>{%lblFiltroMittente%} {%cmbFiltroMittente%}</td>
+                <td>{%lblFiltroSelezione%} {%cmbFiltroSelezione%}</td>
+                <td>{%edtRicerca%}</td>
+              </tr>
+              <tr>
+                <td colspan="3">{%btnFiltra%}</td>
+              </tr>
+            </tbody>
+          </table>
+        </fieldset>
+      </div>
+
+      <!-- pulsanti di azione -->
+      <div class="pulsanti">
+        <div style="margin-bottom: 1em;">{%btnRispondi%}</div>
+        {%btnStorico%}
+      </div>
+
+      <!-- elenco messaggi -->
+      <a id="contenuto_pagina_3" class="font_nascosto">Tabella di visualizzazione dei messaggi</a>
+      <div class="grigliaDatiNav">
+        {%PagNavBarMessaggi%}
+      </div>
+      <div class="grigliaDati">
+        {%grdMessaggi%}
+      </div>
+	  <div class="invisibile">
+		{%btnHdnUpload%}
+   	  </div>
+
+    </div>
+  </body>
+</html>

@@ -1,0 +1,91 @@
+{%DocType%}
+<html>
+  <body>
+    {%T000Intestazione%}
+
+    <div class="dipendente">{%lnkDipendente%} {%cmbDipendentiDisponibili%}</div>
+
+    <div class="RigaDatiColorata">{%lblParametrizzazione%} {%cmbParametrizzazione%}</div>
+    <div class="RigaBase">{%chkParametrizzazioniTipoCartellino%}</div>
+    <div class="RigaBase">{%chkAutoGiustificazione%} {%chkAggiornamentoScheda%}</div>
+    <div class="RigaBase">{%chkAggiornamentoBuoniPasto%} {%chkAggiornamentoAccessiMensa%}</div>
+    
+    <div class="RigaDatiColorata">
+      <span>{%lblElabDal%} {%edtDal%}</span>
+      <span>{%lblElabAl%} {%edtAl%}</span>
+      <span>{%btnAggiornamento%}</span>
+      <span>{%btnStampa%}</span>
+      <span>{%chkVisRiepiloghi%}</span>
+    </div>
+
+    <div id="iterT860" class="invisibile">
+      <table id="filtriIter">
+      <tr>
+        <td id="filtroVis">
+          <div class="groupbox">
+            <fieldset>
+              <legend>{%lblFiltroVis%}</legend>
+              {%grdFiltroVis%}
+            </fieldset>
+          </div>
+        </td>
+        <td id="filtroStruttura">
+          <div class="groupbox fs100">
+            <fieldset>
+              <legend>{%lblFiltroStruttura%}</legend>
+              {%cmbFiltroStruttura%}
+            </fieldset>
+          </div>
+        </td>
+        <td id="filtroPeriodo">
+          <div class="groupbox fs100 width30chr">
+            <fieldset>
+              <legend>{%lblPeriodo%}</legend>
+              {%rgpPeriodo%} {%lblPeriodoDal%} {%edtPeriodoDal%} {%lblPeriodoAl%} {%edtPeriodoAl%}
+            </fieldset> 
+          </div>
+        </td>
+        <td id="pulsantiAzione">
+          {%btnFiltra%} {%btnTuttiSi%} 
+        </td>
+      </tr>
+      </table>
+			<table id="filtriAllegati">	
+				<tr>
+					<td>
+						<div class="groupbox">
+							<fieldset>
+								<legend>{%lblAllegati%}</legend>
+								{%rgAllegati%}
+							</fieldset>
+						</div>				
+					</td>
+					<td colspan="5">
+						<div class="groupbox">
+							<fieldset>
+								<legend>{%lblCondizAllegato%}</legend>
+								{%rgCondizAllegato%}
+							</fieldset>
+						</div>				
+					</td>
+				</tr>
+			</table>
+			
+      <!-- elenco richieste -->
+      <a id="contenuto_pagina_5" class="font_nascosto">Tabella di visualizzazione delle richieste e validazioni della stampa cartellino</a>
+      <div class="clearDiv spazio_verticale"></div>
+      <div class="grigliaDatiNav">
+        {%PagNavBarRichieste%}
+      </div>
+      <div class="grigliaDati">
+        {%grdRichieste%}
+      </div>
+    </div>
+
+    {%<frm>WC002FDatiAnagraficiFM</frm>%}
+    {%<frm>WC012FVisualizzaFileFM</frm>%}
+    {%<frm>WC018FRiepilogoIterFM</frm>%}
+    {%<frm>WC026FAllegatiIterFM</frm>%}
+  </body>
+</html>
+
